@@ -1,25 +1,25 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-// استيراد المكونات المشتركة
+// المكونات الاساسية
 import Header from './components/Header';
 import Footer from './components/Footer';
 import WelcomeSection from './components/WelcomeSection';
 import WhyMadarSection from './components/WhyMadarSection';
 
-// استيراد مكونات الصفحات الرئيسية
+// هاذ خاص في حق البرقر 
 import TutorialsPage from './pages/TutorialsPage';
 import ToolsPage from './pages/ToolsPage';
 import AboutPage from './pages/AboutPage';
 import NotesPage from './pages/NotesPage';
 
-// استيراد مكونات المقالات
+// هنا بيستورد المقالات
 import IntroPentestingArticle from './articles/IntroPentestingArticle';
 import MalwareHandlingArticle from './articles/MalwareHandlingArticle';
 import SqlInjectionArticle from './articles/SqlInjectionArticle';
 import WifiSecurityArticle from './articles/WifiSecurityArticle';
 
-// بيانات الموقع الثابتة
+// هاذي البيانات الثابته ياعزوز لاتغيرها
 const pageData = {
   header: {
     logoText: 'Madar',
@@ -101,7 +101,7 @@ function App() {
           <Route path="/tutorials/sql-injection" element={<SqlInjectionArticle />} />
           <Route path="/tutorials/wifi-security" element={<WifiSecurityArticle />} />
 
-          {/* صفحة 404 */}
+          {/*  404 */}
           <Route
             path="*"
             element={
