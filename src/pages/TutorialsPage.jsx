@@ -23,7 +23,7 @@ function TutorialsPage() {
             </p>
             {/* تم التعديل هنا */}
             <Link to="/tutorials/intro-pentesting" className="ui-btn">
-              <span>اقرأ الشرح</span>
+              <span>Read</span>
             </Link>
           </div>
 
@@ -34,7 +34,7 @@ function TutorialsPage() {
             </p>
             {/* تم التعديل هنا */}
             <Link to="/tutorials/sql-injection" className="ui-btn">
-              <span>اقرأ الشرح</span>
+              <span>Read</span>
             </Link>
           </div>
 
@@ -45,7 +45,7 @@ function TutorialsPage() {
             </p>
             {/* تم التعديل هنا */}
             <Link to="/tutorials/wifi-security" className="ui-btn">
-              <span>اقرأ الشرح</span>
+              <span>Read</span>
             </Link>
           </div>
 
@@ -56,7 +56,7 @@ function TutorialsPage() {
             </p>
             {/* تم التعديل هنا */}
             <Link to="/tutorials/malware-handling" className="ui-btn">
-              <span>اقرأ الشرح</span>
+              <span>Read</span>
             </Link>
           </div>
         </div>
