@@ -1,5 +1,6 @@
+// src/components/TutorialsPage.jsx (أو src/TutorialsPage.jsx)
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'; // هذا يتطلب React Router
 
 function TutorialsPage() {
   return (
@@ -21,7 +22,6 @@ function TutorialsPage() {
             <p className="card-content">
               دليل شامل للمبتدئين حول أساسيات اختبار الاختراق وأهميته في حماية الأنظمة.
             </p>
-            {/* تم التعديل هنا */}
             <Link to="/tutorials/intro-pentesting" className="ui-btn">
               <span>Read</span>
             </Link>
@@ -32,7 +32,6 @@ function TutorialsPage() {
             <p className="card-content">
               شرح مفصل لثغرات حقن SQL وكيفية استغلالها وطرق الحماية منها.
             </p>
-            {/* تم التعديل هنا */}
             <Link to="/tutorials/sql-injection" className="ui-btn">
               <span>Read</span>
             </Link>
@@ -43,7 +42,6 @@ function TutorialsPage() {
             <p className="card-content">
               خطوات عملية لتعزيز أمن شبكة Wi-Fi الخاصة بك وحمايتها من الاختراق.
             </p>
-            {/* تم التعديل هنا */}
             <Link to="/tutorials/wifi-security" className="ui-btn">
               <span>Read</span>
             </Link>
@@ -54,7 +52,6 @@ function TutorialsPage() {
             <p className="card-content">
               كيفية اكتشاف وإزالة أنواع مختلفة من البرمجيات الخبيثة وحماية جهازك.
             </p>
-            {/* تم التعديل هنا */}
             <Link to="/tutorials/malware-handling" className="ui-btn">
               <span>Read</span>
             </Link>

@@ -1,3 +1,5 @@
+/* style.css */
+
 :root {
     --bg-color: #000000;
     --primary-color: #7e2eff;
@@ -8,8 +10,8 @@
     --card-bg: #0a0a0a;
     --red-color: #ff4c4c;
     --accent-green: #39ff14;
-    --header-bg-color: rgba(0, 0, 0, 0.6); /* Assuming this was missing or implicit */
-    --card-bg-color: var(--card-bg); /* Ensuring this is defined for certificate-card */
+    --header-bg-color: rgba(0, 0, 0, 0.6);
+    --card-bg-color: var(--card-bg);
 }
 
 * {
@@ -18,59 +20,53 @@
     box-sizing: border-box;
 }
 
-/* مثال على CSS يمكنك إضافته أو تعديله في style.css */
 .code-block {
-    background-color: #282c34; /* خلفية داكنة (شائعة في محررات الأكواد) */
-    color: #abb2bf; /* لون النص الفاتح */
-    border-radius: 8px; /* حواف دائرية */
-    padding: 15px 20px; /* حشو داخلي */
-    margin: 25px 0; /* مسافة أعلى وأسفل المربع */
-    overflow-x: auto; /* لتمكين التمرير الأفقي إذا كان الكود طويلاً جداً */
+    background-color: #282c34;
+    color: #abb2bf;
+    border-radius: 8px;
+    padding: 15px 20px;
+    margin: 25px 0;
+    overflow-x: auto;
     font-size: 0.95em;
     line-height: 1.5;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* ظل للمربع */
-    border: 1px solid #3e4451; /* حدود خفيفة */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 1px solid #3e4451;
 }
 
 .code-block pre {
-    margin: 0; /* إزالة الهوامش الافتراضية للـ pre */
-    padding: 0; /* إزالة الحشو الافتراضي للـ pre */
+    margin: 0;
+    padding: 0;
 }
 
 .code-block code {
-    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', monospace; /* خط أحادي العرض */
-    direction: ltr !important; /* فرض الاتجاه من اليسار لليمين بقوة */
-    text-align: left !important; /* ضمان محاذاة النص لليسار */
-    display: block; /* لجعل الكود يشغل سطرًا جديدًا ويستجيب للاتجاه */
-    unicode-bidi: embed; /* يدعم LTR داخل RTL */
-    white-space: pre-wrap; /* للحفاظ على تنسيق المسافات والأسطر */
-    word-break: break-all; /* لضمان كسر الكلمات الطويلة بدلاً من الخروج من المربع */
+    font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', monospace;
+    direction: ltr !important;
+    text-align: left !important;
+    display: block;
+    unicode-bidi: embed;
+    white-space: pre-wrap;
+    word-break: break-all;
 }
 
-/* تنسيق الكود المضمن داخل النصوص العادية (مثل `SLEEP()`) */
 code {
-    background-color: rgba(126, 46, 255, 0.1); /* خلفية خفيفة مميزة */
-    color: var(--primary-color); /* لون نص مميز */
+    background-color: rgba(126, 46, 255, 0.1);
+    color: var(--primary-color);
     padding: 3px 6px;
     border-radius: 4px;
     font-family: 'Fira Code', 'Cascadia Code', 'Consolas', 'Monaco', monospace;
     font-size: 0.95em;
-    direction: ltr !important; /* فرض الاتجاه من اليسار لليمين */
-    white-space: nowrap; /* يمنع الكسر التلقائي للسطر */
+    direction: ltr !important;
+    white-space: nowrap;
 }
-
-
-
 
 body {
     background-color: var(--bg-color);
-    /* الدمج هنا: إضافة الصورة كخلفية */
     background-image:
         linear-gradient(45deg, rgba(125, 55, 255, 0.342) 1px, transparent 1px),
         linear-gradient(-45deg, rgba(157, 71, 255, 0.3) 1px, transparent 1px);
-    background-size: 250px 250px, 25px 25px, 25px 25px; /* حجم الصورة، ثم حجم الشبكتين الأخريين */
-    background-repeat: repeat, repeat, repeat; /* تكرار الصورة */
-    background-blend-mode: lighten, lighten, lighten; /* وضع الدمج للصورة والتدرجات */
+    background-size: 250px 250px, 25px 25px, 25px 25px;
+    background-repeat: repeat, repeat, repeat;
+    background-blend-mode: lighten, lighten, lighten;
     font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
     color: var(--text-color);
     min-height: 100vh;
@@ -93,12 +89,12 @@ a {
     justify-content: space-between;
     align-items: center;
     padding: 15px 5%;
-    background: var(--header-bg-color); /* Using the new variable */
+    background: var(--header-bg-color);
     backdrop-filter: blur(10px);
     border-bottom: 1px solid var(--border-color);
     z-index: 1000;
     transition: background 0.3s;
-    min-height: 60px; /* From the second .main-header block */
+    min-height: 60px;
 }
 
 .site-logo {
@@ -106,7 +102,7 @@ a {
     font-weight: bold;
     color: var(--primary-color);
     text-shadow: 0 0 10px var(--primary-glow);
-    text-decoration: none; /* From the second .site-logo block */
+    text-decoration: none;
 }
 
 .site-logo .red {
@@ -123,8 +119,8 @@ a {
     box-shadow: none;
     padding: 0;
     z-index: auto;
-    direction: ltr; /* From nav#main-nav */
-    user-select: none; /* From nav#main-nav */
+    direction: ltr;
+    user-select: none;
 }
 
 .main-nav ul {
@@ -140,8 +136,8 @@ a {
     font-weight: 500;
     color: var(--text-color);
     transition: color 0.3s, text-shadow 0.3s;
-    text-decoration: none; /* From .main-nav ul li a */
-    padding: 5px 10px; /* From .main-nav ul li a */
+    text-decoration: none;
+    padding: 5px 10px;
 }
 
 .main-nav a:hover,
@@ -453,7 +449,7 @@ main {
 }
 
 .entry:hover {
-    transform: translateY(-10px); /* Inherited from base-card-style */
+    transform: translateY(-10px);
     box-shadow: 0 5px 20px rgba(0,0,0,0.3);
 }
 
@@ -553,7 +549,7 @@ main {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s ease-in-out;
-        display: block; /* Ensure it's not 'none' here to allow max-height transition */
+        display: block;
     }
 
     .main-nav.active {
@@ -686,163 +682,158 @@ main {
     }
 }
 
-
 /* From Uiverse.io by Galahhad - UI Button Styles */
 .ui-btn {
-  --btn-default-bg: rgb(41, 41, 41);
-  --btn-padding: 15px 20px;
-  --btn-hover-bg: rgb(51, 51, 51);
-  --btn-transition: .3s;
-  --btn-letter-spacing: .1rem;
-  --btn-animation-duration: 1.2s;
-  --btn-shadow-color: rgba(0, 0, 0, 0.137);
-  --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
-  --hover-btn-color: #FAC921;
-  --default-btn-color: #fff;
-  --font-size: 16px;
-  /* 👆 this field should not be empty */
-  --font-weight: 600;
-  --font-family: Menlo,Roboto Mono,monospace;
-  /* 👆 this field should not be empty */
+    --btn-default-bg: rgb(41, 41, 41);
+    --btn-padding: 15px 20px;
+    --btn-hover-bg: rgb(51, 51, 51);
+    --btn-transition: .3s;
+    --btn-letter-spacing: .1rem;
+    --btn-animation-duration: 1.2s;
+    --btn-shadow-color: rgba(0, 0, 0, 0.137);
+    --btn-shadow: 0 2px 10px 0 var(--btn-shadow-color);
+    --hover-btn-color: #FAC921;
+    --default-btn-color: #fff;
+    --font-size: 16px;
+    --font-weight: 600;
+    --font-family: Menlo,Roboto Mono,monospace;
 }
 
-/* button settings 👆 */
-
 .ui-btn {
-  box-sizing: border-box;
-  padding: var(--btn-padding);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--default-btn-color);
-  font: var(--font-weight) var(--font-size) var(--font-family);
-  background: var(--btn-default-bg);
-  border: none;
-  cursor: pointer;
-  transition: var(--btn-transition);
-  overflow: hidden;
-  box-shadow: var(--btn-shadow);
-  text-decoration: none; /* مهم للروابط */
+    box-sizing: border-box;
+    padding: var(--btn-padding);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--default-btn-color);
+    font: var(--font-weight) var(--font-size) var(--font-family);
+    background: var(--btn-default-bg);
+    border: none;
+    cursor: pointer;
+    transition: var(--btn-transition);
+    overflow: hidden;
+    box-shadow: var(--btn-shadow);
+    text-decoration: none;
 }
 
 .ui-btn span {
-  letter-spacing: var(--btn-letter-spacing);
-  transition: var(--btn-transition);
-  box-sizing: border-box;
-  position: relative;
-  background: inherit;
+    letter-spacing: var(--btn-letter-spacing);
+    transition: var(--btn-transition);
+    box-sizing: border-box;
+    position: relative;
+    background: inherit;
 }
 
 .ui-btn span::before {
-  box-sizing: border-box;
-  position: absolute;
-  content: "";
-  background: inherit;
+    box-sizing: border-box;
+    position: absolute;
+    content: "";
+    background: inherit;
 }
 
 .ui-btn:hover, .ui-btn:focus {
-  background: var(--btn-hover-bg);
+    background: var(--btn-hover-bg);
 }
 
 .ui-btn:hover span, .ui-btn:focus span {
-  color: var(--hover-btn-color);
+    color: var(--hover-btn-color);
 }
 
 .ui-btn:hover span::before, .ui-btn:focus span::before {
-  animation: chitchat linear both var(--btn-animation-duration);
+    animation: chitchat linear both var(--btn-animation-duration);
 }
 
 @keyframes chitchat {
-  0% {
-    content: "#";
-  }
+    0% {
+        content: "#";
+    }
 
-  5% {
-    content: ".";
-  }
+    5% {
+        content: ".";
+    }
 
-  10% {
-    content: "^{";
-  }
+    10% {
+        content: "^{";
+    }
 
-  15% {
-    content: "-!";
-  }
+    15% {
+        content: "-!";
+    }
 
-  20% {
-    content: "#$_";
-  }
+    20% {
+        content: "#$_";
+    }
 
-  25% {
-    content: "№:0";
-  }
+    25% {
+        content: "№:0";
+    }
 
-  30% {
-    content: "#{+.";
-  }
+    30% {
+        content: "#{+.";
+    }
 
-  35% {
-    content: "@}-?";
-  }
+    35% {
+        content: "@}-?";
+    }
 
-  40% {
-    content: "?{4@%";
-  }
+    40% {
+        content: "?{4@%";
+    }
 
-  45% {
-    content: "=.,^!";
-  }
+    45% {
+        content: "=.,^!";
+    }
 
-  50% {
-    content: "?2@%";
-  }
+    50% {
+        content: "?2@%";
+    }
 
-  55% {
-    content: "\;1}]";
-  }
+    55% {
+        content: "\;1}]";
+    }
 
-  60% {
-    content: "?{%:%";
-    right: 0;
-  }
+    60% {
+        content: "?{%:%";
+        right: 0;
+    }
 
-  65% {
-    content: "|{f[4";
-    right: 0;
-  }
+    65% {
+        content: "|{f[4";
+        right: 0;
+    }
 
-  70% {
-    content: "{4%0%";
-    right: 0;
-  }
+    70% {
+        content: "{4%0%";
+        right: 0;
+    }
 
-  75% {
-    content: "'1_0<";
-    right: 0;
-  }
+    75% {
+        content: "'1_0<";
+        right: 0;
+    }
 
-  80% {
-    content: "{0%";
-    right: 0;
-  }
+    80% {
+        content: "{0%";
+        right: 0;
+    }
 
-  85% {
-    content: "]>'";
-    right: 0;
-  }
+    85% {
+        content: "]>'";
+        right: 0;
+    }
 
-  90% {
-    content: "4";
-    right: 0;
-  }
+    90% {
+        content: "4";
+        right: 0;
+    }
 
-  95% {
-    content: "2";
-    right: 0;
-  }
+    95% {
+        content: "2";
+        right: 0;
+    }
 
-  100% {
-    content: "";
-    right: 0;
-  }
+    100% {
+        content: "";
+        right: 0;
+    }
 }
