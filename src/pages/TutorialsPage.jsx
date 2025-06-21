@@ -15,14 +15,15 @@ function TutorialsPage() {
 
       <section className="container">
         <h2 className="page-title">أحدث المقالات والشروحات</h2>
-        <div className="grid"> 
+        <div className="grid">
           <div className="card">
             <h3 className="card-title">مقدمة في اختبار الاختراق</h3>
             <p className="card-content">
               دليل شامل للمبتدئين حول أساسيات اختبار الاختراق وأهميته في حماية الأنظمة.
             </p>
-            <Link to="/tutorials/intro-pentesting" className="card-link">
-              اقرأ الشرح
+            {/* تم التعديل هنا */}
+            <Link to="/tutorials/intro-pentesting" className="ui-btn">
+              <span>اقرأ الشرح</span>
             </Link>
           </div>
 
@@ -31,8 +32,9 @@ function TutorialsPage() {
             <p className="card-content">
               شرح مفصل لثغرات حقن SQL وكيفية استغلالها وطرق الحماية منها.
             </p>
-            <Link to="/tutorials/sql-injection" className="card-link">
-              اقرأ الشرح
+            {/* تم التعديل هنا */}
+            <Link to="/tutorials/sql-injection" className="ui-btn">
+              <span>اقرأ الشرح</span>
             </Link>
           </div>
 
@@ -41,8 +43,9 @@ function TutorialsPage() {
             <p className="card-content">
               خطوات عملية لتعزيز أمن شبكة Wi-Fi الخاصة بك وحمايتها من الاختراق.
             </p>
-            <Link to="/tutorials/wifi-security" className="card-link">
-              اقرأ الشرح
+            {/* تم التعديل هنا */}
+            <Link to="/tutorials/wifi-security" className="ui-btn">
+              <span>اقرأ الشرح</span>
             </Link>
           </div>
 
@@ -51,8 +54,9 @@ function TutorialsPage() {
             <p className="card-content">
               كيفية اكتشاف وإزالة أنواع مختلفة من البرمجيات الخبيثة وحماية جهازك.
             </p>
-            <Link to="/tutorials/malware-handling" className="card-link">
-              اقرأ الشرح
+            {/* تم التعديل هنا */}
+            <Link to="/tutorials/malware-handling" className="ui-btn">
+              <span>اقرأ الشرح</span>
             </Link>
           </div>
         </div>
