@@ -24,7 +24,7 @@ const pageData = {
   header: {
     logoText: 'Madar',
     navLinks: [
-      { name: 'Home', path: '/madar', active: true },
+      { name: 'Home', path: '/', active: true },
       { name: 'Tutorials', path: '/tutorials' },
       { name: 'Tools', path: '/tools' },
       { name: 'who am i', path: '/about' },
@@ -89,7 +89,7 @@ function App() {
         <Header data={pageData.header} />
 
         <Routes>
-          <Route path="/madar" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/tutorials" element={<TutorialsPage />} />
           <Route path="/tools" element={<ToolsPage />} />
           <Route path="/about" element={<AboutPage />} />
