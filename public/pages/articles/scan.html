@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="file:///D:/UST/web/img/icon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <title>MADAR - حماية الأجهزة من البرمجيات الخبيثة</title>
+    <style>
+        /* CSS Variables for easy theme management */
+        :root {
+            --bg-color: #000000;
+            --primary-color: #7e2eff;
+            --primary-glow: #6e44ff;
+            --secondary-glow: #a200ff;
+            --border-color: #5a14dd;
+            --text-color: #e0e0e0;
+            --card-bg: #0a0a0a;
+            --red-color: #ff4c4c;
+            --accent-green: #39ff14;
+        }
+
+        /* Basic Setup */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            background-image:
+                linear-gradient(45deg, rgba(125, 55, 255, 0.342) 1px, transparent 1px),
+                linear-gradient(-45deg, rgba(157, 71, 255, 0.3) 1px, transparent 1px);
+            background-size: 25px 25px;
+            background-blend-mode: lighten;
+            font-family: 'Tahoma', 'Segoe UI', Arial, sans-serif;
+            color: var(--text-color);
+            padding-top: 80px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* --- Header & Navigation --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            transition: background 0.3s;
+        }
+
+        .site-logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--primary-glow);
+        }
+
+        .site-logo .red {
+            color: var(--red-color);
+        }
+
+        .main-nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .main-nav a {
+            font-size: 1.1rem;
+            font-weight: 500;
+            color: var(--text-color);
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .main-nav a:hover, .main-nav a.active {
+            color: var(--primary-color);
+            text-shadow: 0 0 8px var(--primary-glow);
+        }
+
+        #burger-icon {
+            display: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: color 0.3s;
+        }
+
+        #burger-icon:hover {
+            color: var(--primary-color);
+        }
+
+        /* --- Main Content --- */
+        main {
+            flex-grow: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2.5rem;
+            border-radius: 12px;
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 15px var(--primary-glow);
+        }
+
+        /* Article Content (General text, paragraphs, lists) */
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.9;
+            text-align: justify;
+            margin-bottom: 2rem;
+        }
+
+        .article-content h2 {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--primary-glow);
+            text-align: right; /* لمحاذاة العناوين الفرعية إلى اليمين */
+        }
+
+        .article-content h3 {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-top: 2rem;
+            margin-bottom: 0.8rem;
+            text-align: right; /* لمحاذاة العناوين الفرعية إلى اليمين */
+        }
+
+        .article-content p {
+            margin-bottom: 1rem;
+        }
+
+        .article-content ul {
+            list-style: none; /* إزالة النقاط الافتراضية */
+            padding-right: 20px; /* مسافة بادئة للقائمة */
+            margin-bottom: 1rem;
+        }
+
+        .article-content ul li {
+            position: relative;
+            margin-bottom: 0.5rem;
+            padding-right: 15px; /* مسافة للنقطة المخصصة */
+        }
+
+        .article-content ul li::before {
+            content: '•'; /* استخدام نقطة مخصصة */
+            color: var(--primary-color);
+            position: absolute;
+            right: 0;
+            top: 0;
+            font-size: 1.2em;
+        }
+
+        .article-content strong {
+            color: var(--primary-glow);
+        }
+
+        /* Blockquote for examples/warnings */
+        blockquote {
+            background-color: rgba(var(--primary-color-rgb, 126, 46, 255), 0.1);
+            border-right: 4px solid var(--primary-color);
+            padding: 10px 20px;
+            margin: 1.5rem 0;
+            border-radius: 5px;
+        }
+
+        /* Code Block Styling */
+        .code-block {
+            background-color: #1a1a1a;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            position: relative;
+            font-family: 'Fira Code', 'Cascadia Code', 'Consolas', monospace;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #c9d1d9;
+            direction: ltr; /* Ensure LTR for code */
+            text-align: left; /* Ensure left-aligned for code */
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap; /* Wrap long lines */
+            word-wrap: break-word;
+        }
+
+        .code-block .copy-btn {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: background-color 0.3s;
+        }
+
+        .code-block .copy-btn:hover {
+            background-color: var(--primary-glow);
+        }
+
+        /* Tables styling */
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden; /* For rounded corners on table */
+        }
+
+        .article-content th,
+        .article-content td {
+            border: 1px solid var(--border-color);
+            padding: 12px 15px;
+            text-align: right;
+        }
+
+        .article-content th {
+            background-color: var(--primary-color);
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+        }
+
+        .article-content tr:nth-child(even) {
+            background-color: rgba(10, 10, 10, 0.7); /* لون خلفية للأسطر الزوجية */
+        }
+
+        .article-content tr:hover {
+            background-color: rgba(10, 10, 10, 0.9);
+        }
+
+        /* Two-column layout for comparison */
+        .comparison-section {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+
+        .comparison-column {
+            flex: 1;
+            min-width: 300px; /* Minimum width before wrapping */
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+        }
+
+        .comparison-column h3 {
+            text-align: center;
+            color: var(--accent-green);
+            margin-bottom: 1.5rem;
+            text-shadow: 0 0 8px rgba(57, 255, 20, 0.5);
+        }
+
+        .comparison-column ul {
+            padding-right: 0; /* Reset padding for nested lists */
+        }
+        .comparison-column ul li {
+            padding-right: 15px;
+            margin-bottom: 0.8rem;
+        }
+         .comparison-column ul li::before {
+            content: '✅'; /* Green checkmark for comparison lists */
+            color: var(--accent-green);
+        }
+
+
+        /* --- Footer --- */
+        .main-footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+            background-color: rgba(10, 10, 10, 0.5);
+            border-top: 1px solid var(--border-color);
+            width: 100%;
+        }
+
+        .social-links a {
+            font-size: 1.5rem;
+            margin: 0 15px;
+            color: #aaa;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .social-links a:hover {
+            color: var(--primary-color);
+            transform: scale(1.2);
+        }
+
+        /* --- Responsive Design for Mobile --- */
+        @media (max-width: 768px) {
+            .main-nav {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                width: 100%;
+                background: rgba(0, 0, 0, 0.95);
+                display: none;
+                transition: all 0.3s ease-in-out;
+            }
+
+            .main-nav.active {
+                display: block;
+            }
+
+            .main-nav ul {
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 0;
+            }
+
+            .main-nav ul li {
+                border-bottom: 1px solid var(--border-color);
+            }
+
+            .main-nav ul li:last-child {
+                border-bottom: none;
+            }
+
+            .main-nav a {
+                display: block;
+                padding: 15px;
+            }
+
+            #burger-icon {
+                display: block;
+            }
+
+            .page-title {
+                font-size: 2rem;
+            }
+
+            .article-content {
+                font-size: 1rem;
+            }
+            .article-content h2 {
+                font-size: 1.7rem;
+            }
+            .article-content h3 {
+                font-size: 1.3rem;
+            }
+            .comparison-section {
+                flex-direction: column;
+            }
+            .comparison-column {
+                min-width: unset;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 1.5rem;
+            }
+
+            .page-title {
+                font-size: 1.8rem;
+            }
+            .article-content h2 {
+                font-size: 1.5rem;
+            }
+            .article-content h3 {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="main-header">
+        <a href="index.html" class="site-logo">M<span class="red">a</span>dar</a>
+        <nav class="main-nav" id="main-nav">
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="Tutorials.html" class="active">Tutorials</a></li>
+                <li><a href="tools.html">Tools</a></li>
+                <li><a href="about.html">whoami</a></li>
+            </ul>
+        </nav>
+        <div id="burger-icon">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+    </header>
+
+    <main>
+        <section class="container">
+            <h1 class="page-title">🛡️ حماية الأجهزة من البرمجيات الخبيثة (Malware)</h1>
+
+            <div class="article-content">
+                <h2>✅ أولًا: وش معنى البرمجيات الخبيثة (Malware)؟</h2>
+                <p>البرمجيات الخبيثة هي برامج أو أكواد تنزرع بجهازك بدون إذنك، وهدفها تخريب، تجسس، سرقة بيانات، أو حتى التحكم بجهازك.</p>
+                <p>أنواعها كثيرة، وأشهرها:</p>
+                <ul>
+                    <li><strong>الفيروسات:</strong> تنتشر عن طريق نسخ نفسها، وتخرب الملفات.</li>
+                    <li><strong>الديدان (Worms):</strong> تنتشر بالشبكة بدون تدخل منك.</li>
+                    <li><strong>أحصنة طروادة (Trojans):</strong> تجي كأنها برنامج نظيف، وهي تخبي أشياء ضارة.</li>
+                    <li><strong>برامج التجسس (Spyware):</strong> تتجسس على نشاطك وبياناتك، مثل كلمات السر والايميلات.</li>
+                    <li><strong>برامج الفدية (Ransomware):</strong> تقفّل ملفاتك وتطلب فدية.</li>
+                    <li><strong>Rootkits وKeyloggers:</strong> تتحكم بالنظام أو تسرق كل شي تكتبه.</li>
+                </ul>
+
+                ---
+                <h2>🧠 ثانياً: كيف تكتشف إن جهازك مصاب؟</h2>
+                <p>علامات واضحة تقول إن فيه شي مو طبيعي:</p>
+                <ul>
+                    <li>الجهاز صار بطيء فجأة.</li>
+                    <li>فيه برامج ما تعرفها منصبة.</li>
+                    <li>النظام ينهار أو يعلّق كثير.</li>
+                    <li>المتصفح يفتح صفحات لحاله.</li>
+                    <li>يوصلك تنبيه من مضاد الفيروسات.</li>
+                    <li>الحرارة ترتفع، والمراوح تشتغل على أعلى صوت.</li>
+                    <li>يظهر استهلاك عالي للـ <span style="direction: ltr; display: inline-block;">CPU</span> أو <span style="direction: ltr; display: inline-block;">RAM</span> وانت ما تشغل شي.</li>
+                </ul>
+
+                ---
+                <h2>🔎 ثالثًا: كيف تتأكد وتفحص جهازك؟</h2>
+                <h3>1. افتح إدارة المهام (<span style="direction: ltr; display: inline-block;">Task Manager</span>):</h3>
+                <p>اضغط <span style="direction: ltr; display: inline-block;">Ctrl + Shift + Esc</span>.</p>
+                <ul>
+                    <li>شف البرامج اللي تستهلك <span style="direction: ltr; display: inline-block;">CPU</span> أو <span style="direction: ltr; display: inline-block;">RAM</span> واجد.</li>
+                    <li>أي اسم غريب؟ روح جوجل واكتب اسمه.</li>
+                </ul>
+                <h3>2. فحص كامل بمضاد الفيروسات:</h3>
+                <p>لو عندك ويندوز، استخدم:</p>
+                <ul>
+                    <li><span style="direction: ltr; display: inline-block;"><strong>Windows Defender:</strong></span> قوي ومجاني.</li>
+                    <li>رح للإعدادات > الخصوصية والأمان > أمان Windows > الحماية من الفيروسات والتهديدات > فحص كامل.</li>
+                </ul>
+                <h3>3. استخدم أدوات ثانية للفحص العميق:</h3>
+                <ul>
+                    <li>🔹 <span style="direction: ltr; display: inline-block;"><strong>Malwarebytes:</strong></span> ممتاز للكشف عن أشياء مخفية.</li>
+                    <li>🔹 <span style="direction: ltr; display: inline-block;"><strong>[Kaspersky Rescue Disk]:</strong></span> تقلع من <span style="direction: ltr; display: inline-block;">USB</span> وتفحص النظام من خارج الويندوز.</li>
+                </ul>
+
+                ---
+                <h2>🧹 رابعًا: كيف تنظف جهازك لو طلع مصاب؟</h2>
+                <h3>✅ خطوات التنظيف:</h3>
+                <ul>
+                    <li><strong>افصل الإنترنت</strong> عشان توقف انتشار أي تهديد.</li>
+                    <li><strong>شغل الجهاز بوضع الأمان (<span style="direction: ltr; display: inline-block;">Safe Mode</span>):</strong>
+                        <p>أعد التشغيل واضغط <span style="direction: ltr; display: inline-block;">F8</span> أو من الإعدادات > الاسترداد > بدء التشغيل المتقدم > الوضع الآمن مع الشبكة.</p>
+                    </li>
+                    <li>شغّل <span style="direction: ltr; display: inline-block;">Malwarebytes</span> أو <span style="direction: ltr; display: inline-block;">Defender</span> وسوّ فحص كامل.</li>
+                    <li>احذف البرامج الغريبة من "إضافة أو إزالة البرامج".</li>
+                    <li><strong>امسح ملفات مؤقتة ومشبوهة:</strong>
+                        <p>استخدم <span style="direction: ltr; display: inline-block;">Disk Cleanup</span> أو أداة زي <span style="direction: ltr; display: inline-block;">[CCleaner]</span>.</p>
+                    </li>
+                    <li>تفقد الإضافات بالمتصفحات واحذف أي إضافة ما تعرفها.</li>
+                </ul>
+
+                ---
+                <h2>🛡️ خامسًا: كيف تحمي جهازك بعد التنظيف؟ (هنا مربط الفرس)</h2>
+                <ul>
+                    <li>✳️ <strong>1. ركّب برنامج حماية محترم:</strong>
+                        <p><span style="direction: ltr; display: inline-block;">Windows Defender</span> زين، بس ممكن تضيف <span style="direction: ltr; display: inline-block;">Malwarebytes</span> كطبقة ثانية. لا تثبت أكثر من مضاد فيروسات رئيسي، ممكن يتضاربون.</p>
+                    </li>
+                    <li>✳️ <strong>2. حدّث النظام أول بأول:</strong>
+                        <p>التحديثات تسد ثغرات يستغلها الهكر.</p>
+                    </li>
+                    <li>✳️ <strong>3. لا تفتح روابط ولا ملفات من ناس ما تعرفهم:</strong>
+                        <p>حتى لو جاك إيميل أو رابط على الواتساب من واحد يقول لك "شف هالشي".</p>
+                    </li>
+                    <li>✳️ <strong>4. فعّل الجدار الناري (<span style="direction: ltr; display: inline-block;">Firewall</span>):</strong>
+                        <p>تلقاه مفعل بويندوز، لا تطفيه.</p>
+                    </li>
+                    <li>✳️ <strong>5. خلك صمصوم على الشبكات العامة:</strong>
+                        <p>لا تدخل بياناتك البنكية  او اي تسجيل دخول على واي فاي مقهى أو مفتوح في اي مكان.</p>
+                    </li>
+                    <li>✳️ <strong>6. سو نسخة احتياطية:</strong>
+                        <p>استخدم هاردسك خارجي أو خدمة سحابية، تضمن بياناتك لو جاك برنامج فدية.</p>
+                    </li>
+                </ul>
+
+                <h3>💡 نصائح خبير لأهل الهوايات التقنية مثلك:</h3>
+                <ul>
+                    <li>استخدم مدير مهام احترافي مثل: <span style="direction: ltr; display: inline-block;">Process Explorer</span> من <span style="direction: ltr; display: inline-block;">Microsoft</span>.</li>
+                    <li>راقب التشغيل التلقائي ببرنامج <span style="direction: ltr; display: inline-block;">Autoruns</span>.</li>
+                    <li><strong>لو تبي تفحص ملف مشبوه:</strong>
+                        <p>ارفعه على <a href="https://www.virustotal.com" target="_blank">VirusTotal.com</a> ويشيك عليه بكل المحركات.</p>
+                    </li>
+                </ul>
+
+                ---
+                <h2>🌐 حماية لينكس: لا تستهين بالموضوع!</h2>
+                <p>يا سعيد، بما إنك تستخدم لينكس (وخاصة توزيعات مثل كالي أو نكسوس)، خلني أشرح لك كيف تكتشف وتحذف البرمجيات الخبيثة وتحمي نظامك لينكس كنك حارس عليه بالسلاح 😎</p>
+
+                <h3>✅ أولًا: هل لينكس يجيه فايروسات مثل ويندوز؟</h3>
+                <p>هو صح إن لينكس أكثر أمان، لكن لا تصدق اللي يقولك ما يجيه برمجيات خبيثة. يجيه، بس:</p>
+                <ul>
+                    <li>أقل انتشاراً من ويندوز.</li>
+                    <li>أغلب الهجمات تستهدف السيرفرات أو المستخدمين اللي ما ينتبهون (مثلاً يسوون <span style="direction: ltr; display: inline-block;">sudo</span> على سكريبت مشبوه).</li>
+                </ul>
+
+                <h3>🧠 ثانياً: وش أنواع التهديدات على لينكس؟</h3>
+                <ul>
+                    <li><span style="direction: ltr; display: inline-block;"><strong>Rootkits</strong></span> – تنزرع بالكرنل أو النظام وتخفي نفسها.</li>
+                    <li><span style="direction: ltr; display: inline-block;"><strong>Trojans</strong></span> – سكريبتات أو برامج مزروعة في أدوات تثبّتها من مصادر مشبوهة.</li>
+                    <li><span style="direction: ltr; display: inline-block;"><strong>Backdoors</strong></span> – تفتح منفذ سري للهكر.</li>
+                    <li><span style="direction: ltr; display: inline-block;"><strong>Crypto Miners</strong></span> – تستهلك موارد جهازك عشان يعدنون عملات.</li>
+                    <li><span style="direction: ltr; display: inline-block;"><strong>Worms & Network Exploits</strong></span> – تستغل ثغرات وتنتشر داخل الشبكة.</li>
+                </ul>
+
+                <h3>🔎 ثالثًا: كيف تكتشف إن جهازك لينكس مصاب؟</h3>
+                <h4>✳️ علامات عامة:</h4>
+                <ul>
+                    <li>بطء الجهاز بدون سبب واضح.</li>
+                    <li>المعالج (<span style="direction: ltr; display: inline-block;">CPU</span>) شغّال دايم (<span style="direction: ltr; display: inline-block;">top</span> أو <span style="direction: ltr; display: inline-block;">htop</span>).</li>
+                    <li>فيه اتصالات غريبة بالشبكة (<span style="direction: ltr; display: inline-block;">netstat</span> أو <span style="direction: ltr; display: inline-block;">ss</span>).</li>
+                    <li>مجلدات أو ملفات ما تدري وش مصدرها.</li>
+                    <li>مستخدمين جدد مضافين بدون علمك.</li>
+                    <li>سكربتات تشتغل لحالها (<span style="direction: ltr; display: inline-block;">ps aux</span> يفيدك).</li>
+                </ul>
+
+                <h3>🔧 رابعًا: أدوات تفيدك في الكشف عن البرمجيات الخبيثة في لينكس</h3>
+                <h4>1. <span style="direction: ltr; display: inline-block;">chkrootkit</span></h4>
+                <p>يبحث عن <span style="direction: ltr; display: inline-block;">rootkits</span> معروفة:</p>
+                <div class="code-block">
+                    <pre><code>sudo apt install chkrootkit
+sudo chkrootkit</code></pre>
+                </div>
+                <h4>2. <span style="direction: ltr; display: inline-block;">rkhunter</span></h4>
+                <p>أداة أقوى تكشف <span style="direction: ltr; display: inline-block;">rootkits</span> و <span style="direction: ltr; display: inline-block;">backdoors</span>:</p>
+                <div class="code-block">
+                    <pre><code>sudo apt install rkhunter
+sudo rkhunter --update
+sudo rkhunter --check</code></pre>
+                </div>
+                <h4>3. <span style="direction: ltr; display: inline-block;">ClamAV</span> (مضاد فيروسات مفتوح المصدر):</h4>
+                <div class="code-block">
+                    <pre><code>sudo apt install clamav
+sudo freshclam
+sudo clamscan -r /home</code></pre>
+                </div>
+                <h4>4. <span style="direction: ltr; display: inline-block;">Lynis</span> – فاحص أمني شامل:</h4>
+                <div class="code-block">
+                    <pre><code>sudo apt install lynis
+sudo lynis audit system</code></pre>
+                </div>
+                <p>يعطيك تقرير عن أمان النظام والضعف اللي ممكن تستغله البرمجيات الخبيثة.</p>
+
+                <h3>🧹 خامسًا: كيف تحذف البرمجيات الخبيثة من لينكس؟</h3>
+                <ul>
+                    <li>افصل النت فوراً.</li>
+                    <li>ادخل على وضع الإنقاذ (<span style="direction: ltr; display: inline-block;">Rescue Mode</span>) أو استخدم <span style="direction: ltr; display: inline-block;">Live USB</span>.</li>
+                    <li>استخدم أدوات مثل <span style="direction: ltr; display: inline-block;">rkhunter</span> و <span style="direction: ltr; display: inline-block;">clamav</span> لفحص المسارات.</li>
+                    <li><strong>احذف الملفات المشبوهة يدويًا:</strong>
+                        <div class="code-block">
+                            <pre><code>sudo rm -rf /path/to/malware</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>راجع الـ <span style="direction: ltr; display: inline-block;">cron jobs</span>:</strong>
+                        <div class="code-block">
+                            <pre><code>crontab -l
+sudo ls /etc/cron*</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>راجع الـ <span style="direction: ltr; display: inline-block;">.bashrc</span> و <span style="direction: ltr; display: inline-block;">.profile</span> عند كل مستخدم:</strong>
+                        <div class="code-block">
+                            <pre><code>cat ~/.bashrc</code></pre>
+                        </div>
+                    </li>
+                    <li><strong>تأكد ما فيه مستخدمين مشبوهين:</strong>
+                        <div class="code-block">
+                            <pre><code>cat /etc/passwd</code></pre>
+                        </div>
+                    </li>
+                </ul>
+
+                <h3>🛡️ سادسًا: كيف تحمي جهازك الينكساوي؟</h3>
+                <ul>
+                    <li>✳️ <strong>1. لا تثبّت أي سكربت أو برنامج إلا من مصادر موثوقة.</strong></li>
+                    <li>✳️ <strong>2. عط صلاحيات <span style="direction: ltr; display: inline-block;">sudo</span> بس للمستخدمين اللي تثق فيهم.</strong></li>
+                    <li>✳️ <strong>3. استخدم جدار ناري:</strong>
+                        <div class="code-block">
+                            <pre><code>sudo ufw enable
+sudo ufw status</code></pre>
+                        </div>
+                    </li>
+                    <li>✳️ <strong>4. فعّل <span style="direction: ltr; display: inline-block;">AppArmor</span> أو <span style="direction: ltr; display: inline-block;">SELinux</span> إذا كانت مدعومة في التوزيعة.</strong></li>
+                    <li>✳️ <strong>5. شف الخدمات اللي تشتغل دايمًا:</strong>
+                        <div class="code-block">
+                            <pre><code>sudo systemctl list-units --type=service</code></pre>
+                        </div>
+                    </li>
+                    <li>✳️ <strong>6. سوّ مراقبة دورية للنظام بأدوات زي:</strong>
+                        <ul>
+                            <li><span style="direction: ltr; display: inline-block;">auditd</span></li>
+                            <li><span style="direction: ltr; display: inline-block;">fail2ban</span></li>
+                            <li><span style="direction: ltr; display: inline-block;">tripwire</span></li>
+                        </ul>
+                    </li>
+                    <li>✳️ <strong>7. إذا تبي تسوي عزل للبرامج الخطرة:</strong>
+                        <p>استخدم:</p>
+                        <ul>
+                            <li><span style="direction: ltr; display: inline-block;">Firejail</span></li>
+                            <li><span style="direction: ltr; display: inline-block;">Docker</span> (لو اضطرّيت تشغّل سكربت مشبوه – شغّله بعزل)</li>
+                        </ul>
+                    </li>
+                </ul>
+
+                <h3>💡 فلسفة زايدة:</h3>
+                <ul>
+                    <li><strong>تحليل يدوي للملفات:</strong>
+                        <p>استخدم <span style="direction: ltr; display: inline-block;">strings, hexdump, objdump</span> لو تبي تشوف الكود داخل الملفات التنفيذية.</p>
+                    </li>
+                    <li><strong>ارفع الملف على <span style="direction: ltr; display: inline-block;">VirusTotal</span> عشان يفحصه لك ولاتتطمن لأنه يمكن تجاوز الحماية لأنه لايوجد حماية كاملة</strong>
+
+                    </li>
+                    <li><strong>مراقبة الشبكة:</strong>
+                        <p>استخدم <span style="direction: ltr; display: inline-block;">iftop, nethogs</span>, أو <span style="direction: ltr; display: inline-block;">wireshark</span> عشان تشوف من اللي قاعد يطلع أو يدخل لجهازك.</p>
+                    </li>
+                </ul>
+
+                ---
+                <h2>🎯 الخلاصة ياوحش:</h2>
+                <div class="comparison-section">
+                    <div class="comparison-column">
+                        <h3>ويندوز 💻</h3>
+                        <ul>
+                            <li><strong>الفحص:</strong> <span style="direction: ltr; display: inline-block;">Malwarebytes</span>، <span style="direction: ltr; display: inline-block;">Windows Defender</span></li>
+                            <li><strong>الحماية:</strong> تحديثات، جدار ناري، سلوك واعي</li>
+                            <li><strong>الإزالة:</strong> أدوات مضادة، حذف يدوي</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-column">
+                        <h3>لينكس 🐧</h3>
+                        <ul>
+                            <li><strong>الفحص:</strong> <span style="direction: ltr; display: inline-block;">rkhunter</span>، <span style="direction: ltr; display: inline-block;">chkrootkit</span>، <span style="direction: ltr; display: inline-block;">clamAV</span></li>
+                            <li><strong>الحماية:</strong> <span style="direction: ltr; display: inline-block;">sudo</span> محدود، <span style="direction: ltr; display: inline-block;">firewall</span>، مراقبة النظام</li>
+                            <li><strong>الإزالة:</strong> أدوات فحص + حذف يدوي + تحليل سلوك</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p>الحماية ما هي بس برنامج فيروسات، لا يا طويل العمر، هي عادات ووعي تقني.</p>
+                <p>لا تثق بأي شي تحمّله، وخل عينك دايم على جهازك.</p>
+                <p>والأهم: خذ نسخة احتياطية قبل لا تندم، لأن البرمجيات الخبيثة ما تمزح.</p>
+
+                  <p style="text-align: center; font-size: 1.2rem; font-weight: bold; color: var(--primary-glow); margin-top: 2rem;">"ترقبو يمكن نحلل مالويرات في الشرح الجاي👻 "</p>
+
+
+            </div>
+        </section>
+    </main>
+
+    <footer class="main-footer">
+        <div class="social-links">
+            <a href="https://x.com/sb3ly" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            <a href="https://github.com/sb3ly" aria-label="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- وظيفة قائمة البرجر (Burger Menu) ---
+            const burgerIcon = document.getElementById('burger-icon');
+            const mainNav = document.getElementById('main-nav');
+
+            if (burgerIcon && mainNav) {
+                burgerIcon.addEventListener('click', function() {
+                    mainNav.classList.toggle('active');
+                    const icon = burgerIcon.querySelector('i');
+                    if (mainNav.classList.contains('active')) {
+                        icon.classList.remove('fa-bars');
+                        icon.classList.add('fa-times');
+                    } else {
+                        icon.classList.remove('fa-times');
+                        icon.classList.add('fa-bars');
+                    }
+                });
+
+                const navLinks = mainNav.querySelectorAll('a');
+                navLinks.forEach(link => {
+                    link.addEventListener('click', () => {
+                        if (mainNav.classList.contains('active')) {
+                            mainNav.classList.remove('active');
+                            const icon = burgerIcon.querySelector('i');
+                            icon.classList.remove('fa-times');
+                            icon.classList.add('fa-bars');
+                        }
+                    });
+                });
+            }
+
+            // --- وظيفة زر النسخ (Copy Button) ---
+            window.copyCode = function(button) {
+                const codeBlock = button.nextElementSibling.querySelector('code');
+                const textToCopy = codeBlock.innerText;
+
+                navigator.clipboard.writeText(textToCopy).then(() => {
+                    button.textContent = 'تم النسخ!';
+                    setTimeout(() => {
+                        button.textContent = 'نسخ';
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy text: ', err);
+                });
+            };
+        });
+    </script>
+</body>
+</html>
