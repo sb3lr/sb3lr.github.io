@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:title" content="madar" />
+    <meta property="og:description" content="CYS with madar!" />
+    <meta property="og:image" content="https://raw.githubusercontent.com/sb3lr/sb3lr.github.io/refs/heads/main/public/img/black-hole.ico" />
+    <meta property="og:url" content="https://sb3lr.github.io/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="madar" />
+    <meta property="og:locale" content="ar_AR" />
+    <title>Madar - التصنيفات</title>
+    <link rel="stylesheet" href="/src/styles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <link rel="icon" type="image/x-icon" href="https://raw.githubusercontent.com/sb3lr/sb3lr.github.io/refs/heads/main/public/img/black-hole.ico" />
+</head>
+<body>
+    <div id="root">
+        <div class="app-wrapper">
+            <header class="main-header">
+                <a href="/" class="site-logo">
+                    M<span class="red">a</span>dar
+                </a>
+                <nav class="main-nav" id="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/tutorials.html" class="active">Tutorials</a></li>
+                        <li><a href="/tools.html">Tools</a></li>
+                        <li><a href="/about.html">whoami</a></li>
+                        <li><a href="/notes.html">notes</a></li>
+                    </ul>
+                </nav>
+                <div id="burger-icon">
+                    <i class="fa-solid fa-bars"></i>
+                </div>
+            </header>
+
+            <main>
+                <section class="container">
+                    <h1 class="page-title">
+                        اختر تصنيف <span style="color: var(--primary-color);">الشروحات</span>
+                    </h1>
+                    <p class="intro-description">
+                        كل تصنيف يحتوي على مقالات متخصصة وشروحات مرتبة تسهّل عليك الوصول للمعلومة المطلوبة.
+                    </p>
+                </section>
+
+                <section class="container">
+                    <div class="grid">
+                        <div class="card">
+                            <h3 class="card-title">الأمن السيبراني</h3>
+                            <p class="card-content">مقالات حول حماية الشبكات، كشف الثغرات، المالوير، وغير ذلك.</p>
+                            <a href="/articles/security/index.html" class="ui-btn">
+                                <span>عرض</span>
+                            </a>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">Bug Bounty</h3>
+                            <p class="card-content">كل ما يخص برامج مكافآت الثغرات، وأساليب الصيد والتحليل.</p>
+                            <a href="/articles/bugbounty/index.html" class="ui-btn">
+                                <span>عرض</span>
+                            </a>
+                        </div>
+
+                        <div class="card">
+                            <h3 class="card-title">الشبكات</h3>
+                            <p class="card-content">مفاهيم تحليل الشبكة، البروتوكولات، وطرق الهجوم والدفاع.</p>
+                            <a href="/articles/network/index.html" class="ui-btn">
+                                <span>عرض</span>
+                            </a>
+                        </div>
+                    </div>
+                </section>
+            </main>
+
+            <footer class="main-footer">
+                <div class="social-links">
+                    <a href="https://x.com/0xsb3lr" aria-label="Twitter" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://github.com/sb3lr" aria-label="GitHub" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="#" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+                <p class="copyright">© 2025 Madar. جميع الحقوق محفوظة.</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('burger-icon').addEventListener('click', function () {
+            document.getElementById('main-nav').classList.toggle('active');
+        });
+        document.querySelectorAll('.main-nav ul li a').forEach(item => {
+            item.addEventListener('click', () => {
+                document.getElementById('main-nav').classList.remove('active');
+            });
+        });
+    </script>
+</body>
+</html>
