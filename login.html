@@ -1,0 +1,1566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 
+      SECURITY HEADER: Content Security Policy (CSP)
+      This helps prevent XSS by only allowing scripts and styles from self or trusted sources.
+      'unsafe-inline' is used here only because this is a single-file demo. 
+      In production, move JS/CSS to external files and remove 'unsafe-inline'.
+    -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com;">
+    
+    <title>Neon Cyber Login [SECURED]</title>
+    <style>
+        /* Neon Cyber Login Form - Complete & Self-Contained */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', 'SF Mono', 'Monaco', 'Inconsolata', monospace;
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            line-height: 1.4;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Cyber Grid Background */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .grid-line {
+            position: absolute;
+            background: linear-gradient(90deg, transparent, #ff0000, transparent);
+            opacity: 0.1;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        .grid-h-1 {
+            top: 20%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            animation-delay: 0s;
+        }
+
+        .grid-h-2 {
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            animation-delay: 1.5s;
+        }
+
+        .grid-h-3 {
+            top: 80%;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            animation-delay: 3s;
+        }
+
+        .grid-v-1 {
+            top: 0;
+            left: 25%;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(0deg, transparent, #ff0000, transparent);
+            animation-delay: 0.75s;
+        }
+
+        .grid-v-2 {
+            top: 0;
+            left: 75%;
+            width: 1px;
+            height: 100%;
+            background: linear-gradient(0deg, transparent, #ff0000, transparent);
+            animation-delay: 2.25s;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.1; }
+            50% { opacity: 0.3; }
+        }
+
+        .cyber-glitch {
+            position: absolute;
+            width: 200px;
+            height: 2px;
+            background: #ff0080;
+            opacity: 0;
+            animation: glitchFlash 6s ease-in-out infinite;
+        }
+
+        .glitch-1 {
+            top: 30%;
+            left: 10%;
+            animation-delay: 2s;
+        }
+
+        .glitch-2 {
+            top: 70%;
+            right: 10%;
+            animation-delay: 4s;
+        }
+
+        @keyframes glitchFlash {
+            0%, 95%, 100% { opacity: 0; transform: scaleX(0); }
+            96%, 99% { opacity: 0.8; transform: scaleX(1); }
+        }
+
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cyber-terminal {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #ff0000;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 30px rgba(0, 255, 65, 0.3), inset 0 0 0 1px rgba(0, 255, 65, 0.1);
+            position: relative;
+        }
+
+        .terminal-header {
+            background: linear-gradient(90deg, #1a1a1a, #2a2a2a);
+            padding: 12px 16px;
+            border-bottom: 1px solid #00ff41;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 8px;
+        }
+
+        .term-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .btn-red {
+            background: #ff5555;
+            box-shadow: 0 0 8px rgba(255, 85, 85, 0.5);
+        }
+
+        .btn-yellow {
+            background: #ffff55;
+            box-shadow: 0 0 8px rgba(255, 255, 85, 0.5);
+        }
+
+        .btn-green {
+            background: #55ff55;
+            box-shadow: 0 0 8px rgba(85, 255, 85, 0.5);
+        }
+
+        .terminal-title {
+            color: #ff0000;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cyber-content {
+            padding: 40px 32px;
+        }
+
+        .neon-header {
+            text-align: center;
+            margin-bottom: 36px;
+        }
+
+        .cyber-logo {
+            position: relative;
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .logo-frame {
+            position: relative;
+            z-index: 2;
+            color: #ff0000;
+            border: 2px solid #ff0000;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 255, 65, 0.05);
+            animation: logoScan 3s ease-in-out infinite;
+        }
+
+        @keyframes logoScan {
+            0%, 100% { 
+                border-color: #ff0000; 
+                box-shadow: 0 0 10px rgba(255, 0, 0, 0.3); 
+            }
+            50% { 
+                border-color: #ff0080; 
+                box-shadow: 0 0 15px rgba(255, 0, 128, 0.5); 
+            }
+        }
+
+        .logo-scanner {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.6), transparent);
+            animation: scanLine 2s linear infinite;
+        }
+
+        @keyframes scanLine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .neon-glow {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(0, 255, 65, 0.2) 0%, transparent 70%);
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.2); opacity: 0.8; }
+        }
+
+        .cyber-title {
+            color: #00ff41;
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .title-glitch {
+            position: relative;
+            display: inline-block;
+            animation: textGlitch 4s ease-in-out infinite;
+        }
+
+        @keyframes textGlitch {
+            0%, 90%, 100% { 
+                transform: translate(0); 
+                filter: hue-rotate(0deg); 
+            }
+            91%, 95% { 
+                transform: translate(-2px, 1px); 
+                filter: hue-rotate(90deg); 
+            }
+            96%, 99% { 
+                transform: translate(1px, -1px); 
+                filter: hue-rotate(180deg); 
+            }
+        }
+
+        .access-text {
+            color: #ff0080;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Cyber Form Fields */
+        .cyber-field {
+            position: relative;
+            margin-bottom: 28px;
+        }
+
+        .field-frame {
+            position: relative;
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .field-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 1px solid transparent;
+            border-radius: 4px;
+            background: linear-gradient(45deg, #00ff41, #ff0080) border-box;
+            -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: destination-out;
+            mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .cyber-field input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            padding: 16px 60px 16px 16px;
+            color: #00ff41;
+            font-size: 14px;
+            font-weight: bold;
+            outline: none;
+            position: relative;
+            z-index: 2;
+            font-family: inherit;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cyber-field input::placeholder {
+            color: transparent;
+        }
+
+        .cyber-field label {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(0, 255, 65, 0.6);
+            font-size: 14px;
+            font-weight: bold;
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 3;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cyber-field input:focus + label,
+        .cyber-field input:not(:placeholder-shown) + label {
+            top: 8px;
+            font-size: 10px;
+            color: #00ff41;
+            transform: translateY(0);
+        }
+
+        .cyber-field input:focus ~ .field-border {
+            opacity: 1;
+        }
+
+        .cyber-scanner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .scan-line {
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.3), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .cyber-field input:focus ~ .cyber-scanner .scan-line {
+            left: 100%;
+            animation: continuousScan 2s linear infinite;
+        }
+
+        @keyframes continuousScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* Cyber Toggle */
+        .cyber-field:has(.cyber-toggle) input {
+            padding-right: 100px;
+        }
+
+        .cyber-toggle {
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 4;
+            padding: 4px;
+        }
+
+        .toggle-frame {
+            width: 24px;
+            height: 24px;
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #00ff41;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.8);
+        }
+
+        .cyber-toggle:hover .toggle-frame {
+            border-color: #00ff41;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+        }
+
+        .eye-blocked {
+            display: none;
+        }
+
+        .cyber-toggle.toggle-active .eye-scan {
+            display: none;
+        }
+
+        .cyber-toggle.toggle-active .eye-blocked {
+            display: block;
+        }
+
+        /* Cyber Options */
+        .cyber-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .neon-checkbox {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            font-size: 12px;
+            color: #00ff41;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .neon-checkbox input[type="checkbox"] {
+            display: none;
+        }
+
+        .checkbox-matrix {
+            width: 20px;
+            height: 20px;
+            margin-right: 12px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .matrix-frame {
+            width: 100%;
+            height: 100%;
+            border: 1px solid rgba(0, 255, 65, 0.5);
+            background: rgba(0, 0, 0, 0.8);
+            transition: all 0.3s ease;
+            position: absolute;
+        }
+
+        .checkbox-matrix svg {
+            color: transparent;
+            transition: color 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .neon-checkbox input[type="checkbox"]:checked + .checkbox-matrix .matrix-frame {
+            background: rgba(0, 255, 65, 0.2);
+            border-color: #00ff41;
+            box-shadow: 0 0 8px rgba(0, 255, 65, 0.3);
+        }
+
+        .neon-checkbox input[type="checkbox"]:checked + .checkbox-matrix svg {
+            color: #00ff41;
+        }
+
+        .cyber-link {
+            color: #ff0080;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .cyber-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #ff0080;
+            transition: width 0.3s ease;
+        }
+
+        .cyber-link:hover::after {
+            width: 100%;
+        }
+
+        .cyber-link:hover {
+            color: #ff4da6;
+            text-shadow: 0 0 5px rgba(255, 0, 128, 0.5);
+        }
+
+        /* Neon Button */
+        .neon-button {
+            width: 100%;
+            background: transparent;
+            color: #00ff41;
+            border: 2px solid #00ff41;
+            border-radius: 4px;
+            padding: 0;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 14px;
+            font-weight: bold;
+            position: relative;
+            margin-bottom: 32px;
+            overflow: hidden;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+        
+        .neon-button:disabled {
+            border-color: #555;
+            color: #555;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
+        .btn-matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .neon-button:hover {
+            border-color: #ff0080;
+            color: #ff0080;
+            box-shadow: 0 0 15px rgba(255, 0, 128, 0.5);
+        }
+
+        .neon-button:hover .btn-matrix {
+            background: rgba(255, 0, 128, 0.1);
+        }
+
+        .neon-button:active {
+            transform: scale(0.98);
+        }
+
+        .btn-text {
+            position: relative;
+            z-index: 2;
+            transition: opacity 0.3s ease;
+        }
+
+        .btn-loader {
+            position: absolute;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .matrix-loader {
+            display: flex;
+            gap: 4px;
+        }
+
+        .matrix-bar {
+            width: 3px;
+            height: 16px;
+            background: #00ff41;
+            animation: matrixPulse 1.2s ease-in-out infinite;
+        }
+
+        .matrix-bar:nth-child(2) { animation-delay: 0.1s; }
+        .matrix-bar:nth-child(3) { animation-delay: 0.2s; }
+        .matrix-bar:nth-child(4) { animation-delay: 0.3s; }
+
+        @keyframes matrixPulse {
+            0%, 80%, 100% { transform: scaleY(0.5); opacity: 0.5; }
+            40% { transform: scaleY(1); opacity: 1; }
+        }
+
+        .neon-button.loading .btn-text {
+            opacity: 0;
+        }
+
+        .neon-button.loading .btn-loader {
+            opacity: 1;
+        }
+
+        .btn-glow {
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: #00ff41;
+            border-radius: 6px;
+            opacity: 0;
+            filter: blur(8px);
+            transition: opacity 0.3s ease;
+            z-index: -1;
+        }
+
+        .neon-button:hover .btn-glow {
+            opacity: 0.3;
+        }
+
+        /* Cyber Divider */
+        .cyber-divider {
+            display: flex;
+            align-items: center;
+            margin: 32px 0;
+            gap: 16px;
+        }
+
+        .divider-grid {
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 65, 0.3), transparent);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .divider-grid::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, #00ff41, transparent);
+            animation: dividerScan 3s linear infinite;
+        }
+
+        @keyframes dividerScan {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .divider-text {
+            color: rgba(0, 255, 65, 0.7);
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Matrix Social */
+        .matrix-social {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .social-matrix {
+            flex: 1;
+            background: transparent;
+            color: #00ff41;
+            border: 1px solid rgba(0, 255, 65, 0.3);
+            border-radius: 4px;
+            padding: 12px 16px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 11px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+            min-height: 44px;
+            position: relative;
+            overflow: hidden;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .social-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.9);
+            transition: all 0.3s ease;
+        }
+
+        .social-matrix:hover {
+            border-color: #00ff41;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        .social-matrix:hover .social-frame {
+            background: rgba(0, 255, 65, 0.1);
+        }
+
+        .social-matrix span,
+        .social-matrix svg {
+            position: relative;
+            z-index: 2;
+        }
+
+        .social-glow {
+            position: absolute;
+            top: -1px;
+            left: -1px;
+            right: -1px;
+            bottom: -1px;
+            background: rgba(0, 255, 65, 0.2);
+            border-radius: 5px;
+            opacity: 0;
+            filter: blur(4px);
+            transition: opacity 0.3s ease;
+            z-index: 0;
+        }
+
+        .social-matrix:hover .social-glow {
+            opacity: 1;
+        }
+
+        /* Matrix Signup */
+        .matrix-signup {
+            text-align: center;
+            font-size: 12px;
+            color: rgba(0, 255, 65, 0.7);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .matrix-link {
+            color: #ff0080;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .matrix-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: #ff0080;
+            transition: width 0.3s ease;
+        }
+
+        .matrix-link:hover::after {
+            width: 100%;
+        }
+
+        .matrix-link:hover {
+            color: #ff4da6;
+            text-shadow: 0 0 5px rgba(255, 0, 128, 0.5);
+        }
+
+        /* Cyber Error */
+        .cyber-error {
+            color: #ff0080;
+            font-size: 11px;
+            font-weight: bold;
+            margin-top: 6px;
+            opacity: 0;
+            transform: translateY(-4px);
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 5;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cyber-error.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .cyber-field.error .field-frame {
+            border-color: #ff0080;
+        }
+
+        .cyber-field.error .field-border {
+            opacity: 1;
+        }
+
+        .cyber-field.error label {
+            color: #ff0080;
+        }
+
+        /* Cyber Success */
+        .cyber-success {
+            display: none;
+            text-align: center;
+            padding: 40px 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s ease;
+        }
+
+        .cyber-success.show {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .success-matrix {
+            position: relative;
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .matrix-rings {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .success-ring {
+            position: absolute;
+            border: 2px solid #00ff41;
+            border-radius: 50%;
+            animation: matrixExpand 1.5s ease-out forwards;
+            opacity: 0;
+        }
+
+        .ring-1 {
+            width: 60px;
+            height: 60px;
+            top: 20px;
+            left: 20px;
+            animation-delay: 0s;
+        }
+
+        .ring-2 {
+            width: 80px;
+            height: 80px;
+            top: 10px;
+            left: 10px;
+            animation-delay: 0.3s;
+        }
+
+        .ring-3 {
+            width: 100px;
+            height: 100px;
+            top: 0;
+            left: 0;
+            animation-delay: 0.6s;
+        }
+
+        @keyframes matrixExpand {
+            0% { opacity: 0; transform: scale(0); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 0.8; transform: scale(1); }
+        }
+
+        .success-core {
+            position: relative;
+            z-index: 2;
+            color: #00ff41;
+            animation: coreActivate 0.8s ease-out 0.9s forwards;
+            opacity: 0;
+        }
+
+        @keyframes coreActivate {
+            0% { opacity: 0; transform: scale(0); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        .success-title {
+            color: #00ff41;
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .success-desc {
+            color: rgba(0, 255, 65, 0.7);
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+            }
+            
+            .cyber-terminal {
+                border-radius: 4px;
+            }
+            
+            .cyber-content {
+                padding: 32px 24px;
+            }
+            
+            .cyber-title {
+                font-size: 1.5rem;
+            }
+            
+            .cyber-logo {
+                width: 60px;
+                height: 60px;
+            }
+            
+            .logo-frame {
+                width: 50px;
+                height: 50px;
+            }
+            
+            .cyber-options {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 16px;
+            }
+            
+            .matrix-social {
+                flex-direction: column;
+            }
+            
+            .grid-line {
+                opacity: 0.05;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-grid">
+        <div class="grid-line grid-h-1"></div>
+        <div class="grid-line grid-v-1"></div>
+        <div class="grid-line grid-h-2"></div>
+        <div class="grid-line grid-v-2"></div>
+        <div class="grid-line grid-h-3"></div>
+        <div class="cyber-glitch glitch-1"></div>
+        <div class="cyber-glitch glitch-2"></div>
+    </div>
+
+    <div class="login-container">
+        <div class="cyber-terminal">
+            <div class="terminal-header">
+                <div class="terminal-buttons">
+                    <div class="term-btn btn-red"></div>
+                    <div class="term-btn btn-yellow"></div>
+                    <div class="term-btn btn-green"></div>
+                </div>
+                <div class="terminal-title">NEW_LOGIN.exe</div>
+            </div>
+            
+            <div class="cyber-content">
+                <div class="neon-header">
+                    <div class="cyber-logo">
+                        <div class="logo-frame">
+                            <div class="logo-core">
+                                <svg width="40" height="40" viewBox="0 0 40 40" fill="none">
+                                    <path d="M20 4L36 12v16L20 36L4 28V12L20 4z" stroke="currentColor" stroke-width="2" fill="none"/>
+                                    <circle cx="20" cy="20" r="6" stroke="currentColor" stroke-width="1.5"/>
+                                    <path d="M14 14l12 12M26 14l-12 12" stroke="currentColor" stroke-width="1"/>
+                                </svg>
+                            </div>
+                            <div class="logo-scanner"></div>
+                        </div>
+                        <div class="neon-glow"></div>
+                    </div>
+                    <h1 class="cyber-title">
+                        <span class="title-glitch" data-text="CYPHER_NET">CYPHER_NET</span>
+                    </h1>
+                    <p class="access-text">ACCESS_LOGIN_REQUIRED</p>
+                </div>
+                
+                <form class="neon-form" id="loginForm" novalidate>
+                    <!-- 
+                        CSRF Protection: 
+                        A hidden field to store the random token generated by JS.
+                        In a real app, this value comes from the server session.
+                    -->
+                    <input type="hidden" id="csrf_token" name="csrf_token" value="">
+
+                    <div class="cyber-field">
+                        <div class="field-frame">
+                            <div class="field-border"></div>
+                            <!-- SECURITY: Max length prevents buffer overflows (rare in web, but good practice). Pattern regex for HTML5 validation. -->
+                            <input type="text" id="email" name="email" required autocomplete="username" maxlength="50" pattern="[a-zA-Z0-9_]+"> 
+                            <label for="email">&gt; USERNAME</label>
+                            <div class="cyber-scanner">
+                                <div class="scan-line"></div>
+                            </div>
+                        </div>
+                        <span class="cyber-error" id="emailError"></span>
+                    </div>
+
+                    <div class="cyber-field">
+                        <div class="field-frame">
+                            <div class="field-border"></div>
+                            <input type="password" id="password" name="password" required autocomplete="current-password" maxlength="64">
+                            <label for="password">&gt; PASSWORD</label>
+                            <button type="button" class="cyber-toggle" id="passwordToggle" aria-label="Toggle password visibility">
+                                <div class="toggle-frame">
+                                    <svg class="eye-scan" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                        <path d="M9 3c-4 0-7 3-8 6 1 3 4 6 8 6s7-3 8-6c-1-3-4-6-8-6zm0 10a4 4 0 110-8 4 4 0 010 8zm0-6a2 2 0 100 4 2 2 0 000-4z" fill="currentColor"/>
+                                    </svg>
+                                    <svg class="eye-blocked" width="18" height="18" viewBox="0 0 18 18" fill="none">
+                                        <path d="M3 3l12 12M7 7a3 3 0 003 3m3-3C13 7 10 4 9 4c-1 0-3 1-4 2M9 14c4 0 7-3 8-6-1-1-2-2-3-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            </button>
+                            <div class="cyber-scanner">
+                                <div class="scan-line"></div>
+                            </div>
+                        </div>
+                        <span class="cyber-error" id="passwordError"></span>
+                    </div>
+
+                    <div class="cyber-options">
+                        <label class="neon-checkbox">
+                            <input type="checkbox" id="remember" name="remember">
+                            <span class="checkbox-matrix">
+                                <div class="matrix-frame"></div>
+                                <svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+                                    <path d="M1 4l2.5 2.5L9 1" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </span>
+                            <span class="checkbox-text">MAINTAIN_SESSION</span>
+                        </label>
+                        <a href="#" class="cyber-link">RECOVER_ACCESS</a>
+                    </div>
+
+                    <button type="submit" class="neon-button">
+                        <div class="btn-matrix"></div>
+                        <span class="btn-text">[ INITIALIZE_CONNECTION ]</span>
+                        <div class="btn-loader">
+                            <div class="matrix-loader">
+                                <div class="matrix-bar"></div>
+                                <div class="matrix-bar"></div>
+                                <div class="matrix-bar"></div>
+                                <div class="matrix-bar"></div>
+                            </div>
+                        </div>
+                        <div class="btn-glow"></div>
+                    </button>
+                </form>
+
+                <div class="cyber-divider">
+                    <div class="divider-grid"></div>
+                    <span class="divider-text">[ ALT_PROTOCOLS ]</span>
+                    <div class="divider-grid"></div>
+                </div>
+
+              
+                <div class="matrix-signup">
+                    <span class="signup-prefix">[ NEW_USER_DETECTED ]</span>
+                    <a href="#" class="matrix-link">CREATE_PROFILE</a>
+                </div>
+
+                <div class="cyber-success" id="successMessage">
+                    <div class="success-matrix">
+                        <div class="matrix-rings">
+                            <div class="success-ring ring-1"></div>
+                            <div class="success-ring ring-2"></div>
+                            <div class="success-ring ring-3"></div>
+                        </div>
+                        <div class="success-core">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none">
+                                <path d="M10 16l6 6 12-12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="success-title">[ CONNECTION_ESTABLISHED ]</h3>
+                    <p class="success-desc">Accessing neural interface...</p>
+                </div>
+            </div>
+            
+            <div id="cyberDashboard" style="display:none; padding: 40px 32px; text-align: center;">
+                <div class="terminal-header" style="border-bottom: 0;">
+                    <div class="terminal-buttons">
+                        <div class="term-btn btn-red"></div>
+                        <div class="term-btn btn-yellow"></div>
+                        <div class="term-btn btn-green"></div>
+                    </div>
+                    <div class="terminal-title dashboard-terminal-title">ACCESS_CONTROL.cfg</div>
+                </div>
+
+                <h3 class="success-title" id="dashboardWelcome" style="margin-top: 20px; font-size: 1.5rem;">[ ACCESS_GRANTED ]</h3>
+                
+                <p id="roleInfo" style="color: #00ff41; font-size: 14px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 1px;"></p>
+                
+                <button id="logoutBtn" class="neon-button" style="width: 100%;">
+                    <div class="btn-matrix"></div>
+                    <span class="btn-text">[ TERMINATE_SESSION ]</span>
+                    <div class="btn-glow"></div>
+                </button>
+            </div>
+            </div>
+    </div>
+
+    <script>
+    // Neon Cyber Login Form JavaScript
+    class NeonCyberLoginForm {
+        constructor() {
+            this.form = document.getElementById('loginForm');
+            this.emailInput = document.getElementById('email');
+            this.passwordInput = document.getElementById('password');
+            this.passwordToggle = document.getElementById('passwordToggle');
+            this.submitButton = this.form.querySelector('.neon-button');
+            this.successMessage = document.getElementById('successMessage');
+            this.socialButtons = document.querySelectorAll('.social-matrix');
+            this.dashboardElement = document.getElementById('cyberDashboard'); 
+            this.csrfTokenInput = document.getElementById('csrf_token');
+
+            // SECURITY: Brute Force Protection (Counter)
+            this.failedAttempts = 0;
+            this.isLocked = false;
+            
+            // SECURITY: CSRF Token Generation
+            // In a real app, this is done by the server. We simulate it here.
+            this.sessionCsrfToken = this.generateSecureToken();
+            this.csrfTokenInput.value = this.sessionCsrfToken;
+
+            // Users list (simulating backend database)
+            this.users = [
+                { user: 'admin1', pass: '123456', role: 'admin' },
+                { user: 'user1', pass: '111111', role: 'user' }
+            ];
+
+            this.init();
+        }
+        
+        init() {
+            this.bindEvents();
+            this.setupPasswordToggle();
+            this.setupSocialButtons();
+            this.setupCyberEffects();
+            
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => this.handleLogout());
+            }
+        }
+        
+        generateSecureToken() {
+            // Generates a random string to simulate a CSRF token
+            return Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+        }
+
+        bindEvents() {
+            this.form.addEventListener('submit', (e) => this.handleSubmit(e));
+            this.emailInput.addEventListener('blur', () => this.validateUsername());
+            this.passwordInput.addEventListener('blur', () => this.validatePassword());
+            this.emailInput.addEventListener('input', () => this.clearError('email'));
+            this.passwordInput.addEventListener('input', () => this.clearError('password'));
+            
+            this.emailInput.setAttribute('placeholder', ' ');
+            this.passwordInput.setAttribute('placeholder', ' ');
+        }
+        
+        setupPasswordToggle() {
+            this.passwordToggle.addEventListener('click', () => {
+                const type = this.passwordInput.type === 'password' ? 'text' : 'password';
+                this.passwordInput.type = type;
+                this.passwordToggle.classList.toggle('toggle-active', type === 'text');
+                this.triggerCyberGlitch(this.passwordToggle);
+            });
+        }
+        
+        setupSocialButtons() {
+            this.socialButtons.forEach(button => {
+                button.addEventListener('click', (e) => {
+                    // SECURITY: In real implementations, sanitize data attributes or content before use
+                    const provider = button.querySelector('span').textContent.trim();
+                    this.handleSocialLogin(provider, button);
+                });
+            });
+        }
+        
+        setupCyberEffects() {
+            [this.emailInput, this.passwordInput].forEach(input => {
+                input.addEventListener('focus', (e) => {
+                    this.triggerCyberScan(e.target.closest('.cyber-field'));
+                });
+                
+                input.addEventListener('blur', (e) => {
+                    this.stopCyberScan(e.target.closest('.cyber-field'));
+                });
+            });
+            this.startRandomGlitches();
+        }
+        
+        triggerCyberScan(field) {
+            const scanner = field.querySelector('.cyber-scanner');
+            scanner.style.opacity = '1';
+        }
+        
+        stopCyberScan(field) {
+            const scanner = field.querySelector('.cyber-scanner');
+            scanner.style.opacity = '0.3';
+        }
+        
+        triggerCyberGlitch(element) {
+            element.style.filter = 'hue-rotate(180deg)';
+            setTimeout(() => {
+                element.style.filter = '';
+            }, 200);
+        }
+        
+        startRandomGlitches() {
+            setInterval(() => {
+                const titleGlitch = document.querySelector('.title-glitch');
+                if (Math.random() < 0.1) { 
+                    titleGlitch.style.animation = 'none';
+                    titleGlitch.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px)`;
+                    titleGlitch.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+                    
+                    setTimeout(() => {
+                        titleGlitch.style.animation = '';
+                        titleGlitch.style.transform = '';
+                        titleGlitch.style.filter = '';
+                    }, 100);
+                }
+            }, 2000);
+        }
+        
+        validateUsername() {
+            const username = this.emailInput.value.trim();
+            
+            if (!username) {
+                this.showError('email', '[ ERROR: USER_NAME_REQUIRED ]');
+                return false;
+            }
+
+            // SECURITY: SQL Injection Defense (Client Side)
+            // Reject specific characters often used in SQLi (' " ; --)
+            // Ideally, allow only alphanumeric characters for usernames.
+            const unsafeChars = /['";\-\s]/;
+            if (unsafeChars.test(username)) {
+                this.showError('email', '[ ERROR: INVALID_CHARACTERS_DETECTED ]');
+                return false;
+            }
+            
+            this.clearError('email');
+            return true;
+        }
+        
+        validatePassword() {
+            const password = this.passwordInput.value;
+            
+            if (!password) {
+                this.showError('password', '[ ERROR: ACCESS_CODE_REQUIRED ]');
+                return false;
+            }
+            
+            this.clearError('password');
+            return true;
+        }
+        
+        showError(field, message) {
+            const cyberField = document.getElementById(field).closest('.cyber-field');
+            const errorElement = document.getElementById(`${field}Error`);
+            
+            cyberField.classList.add('error');
+            errorElement.textContent = message;
+            errorElement.classList.add('show');
+            this.triggerCyberGlitch(cyberField);
+        }
+        
+        clearError(field) {
+            const cyberField = document.getElementById(field).closest('.cyber-field');
+            const errorElement = document.getElementById(`${field}Error`);
+            
+            cyberField.classList.remove('error');
+            errorElement.classList.remove('show');
+            setTimeout(() => {
+                errorElement.textContent = '';
+            }, 300);
+        }
+        
+        async handleSubmit(e) {
+            e.preventDefault();
+            
+            // SECURITY: Brute Force Protection
+            if (this.isLocked) {
+                this.showError('password', '[ SYSTEM_LOCKED: TRY_LATER ]');
+                return;
+            }
+
+            // SECURITY: CSRF Check
+            // Verify that the token in the form matches our session token
+            const submittedToken = this.csrfTokenInput.value;
+            if (submittedToken !== this.sessionCsrfToken) {
+                this.showError('password', '[ ERROR: CSRF_TOKEN_INVALID ]');
+                this.triggerSystemGlitch();
+                return;
+            }
+
+            const isUsernameValid = this.validateUsername();
+            const isPasswordValid = this.validatePassword();
+            
+            if (!isUsernameValid || !isPasswordValid) {
+                this.triggerSystemGlitch();
+                return;
+            }
+            
+            this.setLoading(true);
+
+            // Sanitize inputs before usage (trim whitespace)
+            const username = this.emailInput.value.trim();
+            const password = this.passwordInput.value;
+            
+            const user = this.users.find(u => 
+                u.user === username && u.pass === password
+            );
+            
+            try {
+                // Simulate cyber authentication process
+                await new Promise(resolve => setTimeout(resolve, 3000));
+                
+                if (user) {
+                    // Reset failed attempts on success
+                    this.failedAttempts = 0;
+                    this.showMatrixSuccess(user);
+                } else {
+                    // SECURITY: Brute Force Counter
+                    this.failedAttempts++;
+                    this.showError('password', '[ ERROR: AUTHENTICATION_FAILED ]');
+                    this.triggerSystemGlitch();
+
+                    // Lockout after 3 failed attempts
+                    if (this.failedAttempts >= 3) {
+                        this.isLocked = true;
+                        this.showError('password', '[ SYSTEM_LOCKOUT_INITIATED ]');
+                        // Unlock after 10 seconds
+                        setTimeout(() => {
+                            this.isLocked = false;
+                            this.failedAttempts = 0;
+                            this.clearError('password');
+                        }, 10000);
+                    }
+                }
+
+            } catch (error) {
+                this.showError('password', '[ ERROR: CONNECTION_FAILED ]');
+            } finally {
+                this.setLoading(false);
+            }
+        }
+        
+        async handleSocialLogin(provider, button) {
+            console.log(`[ CONNECTING TO ${provider.toUpperCase()}_PROTOCOL ]`);
+            
+            const originalHTML = button.innerHTML;
+            button.style.pointerEvents = 'none';
+            button.style.opacity = '0.7';
+            
+            const loadingHTML = `
+                <div class="social-frame"></div>
+                <div style="display: flex; gap: 2px;">
+                    <div style="width: 2px; height: 12px; background: #00ff41; animation: matrixPulse 1.2s ease-in-out infinite;"></div>
+                    <div style="width: 2px; height: 12px; background: #00ff41; animation: matrixPulse 1.2s ease-in-out infinite; animation-delay: 0.1s;"></div>
+                    <div style="width: 2px; height: 12px; background: #00ff41; animation: matrixPulse 1.2s ease-in-out infinite; animation-delay: 0.2s;"></div>
+                    <div style="width: 2px; height: 12px; background: #00ff41; animation: matrixPulse 1.2s ease-in-out infinite; animation-delay: 0.3s;"></div>
+                </div>
+                <span>CONNECTING...</span>
+                <div class="social-glow"></div>
+            `;
+            
+            button.innerHTML = loadingHTML;
+            
+            try {
+                await new Promise(resolve => setTimeout(resolve, 2500));
+                console.log(`[ REDIRECTING TO ${provider.toUpperCase()}_MATRIX ]`);
+            } catch (error) {
+                console.error(`[ ${provider.toUpperCase()}_CONNECTION_ERROR: ${error.message} ]`);
+            } finally {
+                button.style.pointerEvents = 'auto';
+                button.style.opacity = '1';
+                button.innerHTML = originalHTML;
+            }
+        }
+        
+        setLoading(loading) {
+            this.submitButton.classList.toggle('loading', loading);
+            this.submitButton.disabled = loading;
+            
+            this.socialButtons.forEach(button => {
+                button.style.pointerEvents = loading ? 'none' : 'auto';
+                button.style.opacity = loading ? '0.5' : '1';
+            });
+            
+            if (loading) {
+                this.startLoadingGlitches();
+            }
+        }
+        
+        startLoadingGlitches() {
+            const glitchInterval = setInterval(() => {
+                if (!this.submitButton.classList.contains('loading')) {
+                    clearInterval(glitchInterval);
+                    return;
+                }
+                
+                const terminal = document.querySelector('.cyber-terminal');
+                terminal.style.filter = 'hue-rotate(180deg)';
+                setTimeout(() => {
+                    terminal.style.filter = '';
+                }, 50);
+            }, 500);
+        }
+        
+        triggerSystemGlitch() {
+            const terminal = document.querySelector('.cyber-terminal');
+            terminal.style.animation = 'none';
+            terminal.style.transform = 'translate(2px, -1px)';
+            terminal.style.filter = 'hue-rotate(270deg)';
+            
+            setTimeout(() => {
+                terminal.style.animation = '';
+                terminal.style.transform = '';
+                terminal.style.filter = '';
+            }, 200);
+        }
+        
+        showMatrixSuccess(user) {
+            this.form.style.transform = 'scale(0.9)';
+            this.form.style.opacity = '0';
+            this.form.style.filter = 'blur(2px)';
+            
+            setTimeout(() => {
+                this.form.style.display = 'none';
+                document.querySelector('.matrix-social').style.display = 'none';
+                document.querySelector('.matrix-signup').style.display = 'none';
+                document.querySelector('.cyber-divider').style.display = 'none';
+                
+                this.successMessage.classList.add('show');
+                this.triggerSuccessGlitch();
+                
+            }, 300);
+            
+            setTimeout(() => {
+                console.log('[ ACCESS_GRANTED - ENTERING_CYBERSPACE ]');
+                this.showDashboard(user);
+            }, 4000);
+        }
+        
+        showDashboard(user) {
+            this.successMessage.classList.remove('show');
+            document.querySelector('.cyber-content').style.display = 'none';
+            this.dashboardElement.style.display = 'block';
+
+            // SECURITY: XSS Protection
+            // Use textContent instead of innerHTML to prevent script injection if username has malicious code
+            const roleMessage = user.role === 'admin' 
+                ? 'PRIVILEGES: [ ADMIN_ROOT_ACCESS ]' 
+                : 'PRIVILEGES: [ STANDARD_USER ]';
+
+            // SECURITY: IDOR Protection Note
+            // In a real app, the server would send only the data this specific user is allowed to see.
+            // Relying on `user.role` from the client-side to determine what to show is insecure.
+            // This is just a UI reflection of the state.
+
+            const roleInfo = document.getElementById('roleInfo');
+            const welcomeMsg = document.getElementById('dashboardWelcome');
+
+            roleInfo.textContent = roleMessage;
+            welcomeMsg.textContent = 'WELCOME, USER ' + user.user.toUpperCase() + '!'; 
+        }
+
+        handleLogout() {
+            this.dashboardElement.style.display = 'none';
+            document.querySelector('.cyber-content').style.display = 'block';
+
+            this.form.style.display = 'block';
+            document.querySelector('.matrix-social').style.display = 'flex';
+            document.querySelector('.matrix-signup').style.display = 'block';
+            document.querySelector('.cyber-divider').style.display = 'flex';
+            
+            this.form.style.transform = 'scale(1)';
+            this.form.style.opacity = '1';
+            this.form.style.filter = '';
+            this.emailInput.value = '';
+            this.passwordInput.value = '';
+            this.clearError('email');
+            this.clearError('password');
+            
+            // SECURITY: Rotate CSRF Token on logout/new session
+            this.sessionCsrfToken = this.generateSecureToken();
+            this.csrfTokenInput.value = this.sessionCsrfToken;
+
+            console.log('[ SESSION_TERMINATED - LOGOUT_SUCCESSFUL ]');
+        }
+        
+        triggerSuccessGlitch() {
+            setTimeout(() => {
+                const successTitle = document.querySelector('.success-title');
+                successTitle.style.animation = 'textGlitch 0.5s ease-in-out';
+                
+                setTimeout(() => {
+                    successTitle.style.animation = '';
+                }, 500);
+            }, 1500);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        new NeonCyberLoginForm();
+    });
+    </script>
+</body>
+</html>
