@@ -42,18 +42,18 @@ export const initialNodes: any[] = [
     {
         id: 'cert-google',
         data: {
-            label: 'Google Cybersecurity',
-            labelEn: 'Google Cybersecurity',
+            label: 'Google Cybersecurity Professional Certificate – Coursera',
+            labelEn: 'Google Cybersecurity Professional Certificate – Coursera',
             category: 'certificates',
-            description: 'شهادة مهنية من كورسيرا.',
-            descriptionEn: 'Professional certificate from Coursera.'
+            description: 'شهادة مهنية من كورسيرا في الأمن السيبراني.',
+            descriptionEn: 'Professional certificate from Coursera in Cybersecurity.'
         },
     },
     {
         id: 'cert-webdev',
         data: {
-            label: 'Web Developer',
-            labelEn: 'Web Developer',
+            label: 'Professional Web Developer Certificate',
+            labelEn: 'Professional Web Developer Certificate',
             category: 'certificates',
             description: 'شهادة مطور ويب محترف.',
             descriptionEn: 'Professional web developer certificate.'
@@ -62,11 +62,21 @@ export const initialNodes: any[] = [
     {
         id: 'cert-icdl',
         data: {
-            label: 'ICDL',
-            labelEn: 'ICDL',
+            label: 'ICDL – International Computer Driving License',
+            labelEn: 'ICDL – International Computer Driving License',
             category: 'certificates',
             description: 'رخصة قيادة الحاسوب الدولية.',
             descriptionEn: 'International Computer Driving License.'
+        },
+    },
+    {
+        id: 'cert-english',
+        data: {
+            label: 'English American Files – Starter',
+            labelEn: 'English American Files – Starter',
+            category: 'certificates',
+            description: 'سلسلة English American Files – المستوى المبتدئ.',
+            descriptionEn: 'English American Files series – Starter level.'
         },
     },
 
