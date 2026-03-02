@@ -1,0 +1,61 @@
+---
+interface Props {
+    icon: string;
+    label: string;
+    issuer: string;
+    color?: string;
+    link?: string;
+}
+
+const { icon, label, issuer, color = "emerald", link = "#" } = Astro.props;
+
+const colorClasses = {
+    emerald:
+        "group-hover:text-emerald-400 group-hover:border-emerald-500/50 bg-emerald-500/5",
+    blue: "group-hover:text-blue-400 group-hover:border-blue-500/50 bg-blue-500/5",
+    purple: "group-hover:text-purple-400 group-hover:border-purple-500/50 bg-purple-500/5",
+    orange: "group-hover:text-orange-400 group-hover:border-orange-500/50 bg-orange-500/5",
+    green: "group-hover:text-green-400 group-hover:border-green-500/50 bg-green-500/5",
+};
+---
+
+<a
+    href={link}
+    target="_blank"
+    class={`group relative p-4 rounded-2xl border border-white/5 transition-all duration-300 hover:scale-[1.02] active:scale-95 block h-full ${
+        colorClasses[color as keyof typeof colorClasses]
+    }`}
+>
+    <div
+        class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity rounded-2xl"
+    >
+    </div>
+
+    <div class="relative z-10 flex flex-col items-center text-center gap-3">
+        <div
+            class="w-16 h-16 rounded-full flex items-center justify-center text-3xl bg-black/40 border border-white/10 shadow-inner transition-transform duration-500 group-hover:scale-110"
+        >
+            {icon}
+        </div>
+        <div>
+            <h4 class="text-white font-bold text-sm tracking-tight">{label}</h4>
+            <div class="flex flex-col items-center mt-1">
+                <p
+                    class="text-zinc-500 text-[10px] font-mono uppercase tracking-widest"
+                >
+                    {issuer}
+                </p>
+                <span
+                    class="text-[8px] text-zinc-600 mt-2 font-mono group-hover:text-white/40 transition-colors uppercase"
+                    >[ VIEW_IMAGE ]</span
+                >
+            </div>
+        </div>
+    </div>
+
+    {/* Glow Effect */}
+    <div
+        class={`absolute -inset-px rounded-2xl border border-transparent group-hover:border-white/10 opacity-50 transition-colors pointer-events-none`}
+    >
+    </div>
+</a>

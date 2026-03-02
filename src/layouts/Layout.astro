@@ -1,0 +1,131 @@
+---
+import "../styles/global.css";
+import Sidebar from "../components/Sidebar.astro";
+import { SoundManager } from "../components/SoundManager";
+import { AchievementManager } from "../components/AchievementManager";
+
+const { pathname } = Astro.url;
+---
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>Saeed | OS Dashboard Portfolio</title>
+  </head>
+  <body
+    class="bg-cyber-dark text-zinc-100 min-h-screen selection:bg-cyber-purple/30 selection:text-white overflow-x-hidden"
+  >
+    <div class="fixed inset-0 pointer-events-none z-[9999]" id="cyber-cursor">
+      <div
+        class="absolute w-8 h-8 border border-cyber-purple/50 rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-100 ease-out"
+        id="cursor-ring"
+      >
+      </div>
+      <div
+        class="absolute w-1.5 h-1.5 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+        id="cursor-dot"
+      >
+      </div>
+    </div>
+
+    <script>
+      const ring = document.getElementById("cursor-ring");
+      const dot = document.getElementById("cursor-dot");
+
+      document.addEventListener("mousemove", (e) => {
+        if (ring && dot) {
+          const x = e.clientX;
+          const y = e.clientY;
+
+          dot.style.left = `${x}px`;
+          dot.style.top = `${y}px`;
+
+          ring.animate(
+            {
+              left: `${x}px`,
+              top: `${y}px`,
+            },
+            { duration: 500, fill: "forwards" }
+          );
+        }
+      });
+    </script>
+    
+    <SoundManager client:only="react" />
+    <AchievementManager client:only="react" />
+
+    <div
+      class="relative flex h-screen w-full overflow-hidden bg-cyber-grid flex-col"
+    >
+      {/* Top Status Marquee Ticker */}
+      <div
+        class="h-6 w-full bg-black/40 border-b border-white/5 backdrop-blur-md flex items-center overflow-hidden z-[60] relative"
+      >
+        <div
+          class="whitespace-nowrap flex animate-marquee-slower items-center gap-12 px-6"
+        >
+          <div
+            class="flex items-center gap-2 text-[10px] text-cyber-purple/80 font-mono tracking-[0.2em] uppercase"
+          >
+            <span class="w-1 h-1 bg-cyber-purple rounded-full animate-ping"
+            ></span>
+            SYSTEM_UPTIME: 99.99% ONLINE
+          </div>
+          <div
+            class="flex items-center gap-2 text-[10px] text-zinc-500 font-mono tracking-[0.2em] uppercase"
+          >
+            <span class="w-1 h-1 bg-zinc-600 rounded-full"></span>
+            DEFENSE_LAYER: CLOUD_FIREWALL_LOADED
+          </div>
+          <div
+            class="flex items-center gap-2 text-[10px] text-cyber-blue/80 font-mono tracking-[0.2em] uppercase"
+          >
+            <span class="w-1 h-1 bg-cyber-blue rounded-full"></span>
+            ACTIVE_ENCRYPTION: AES_256_GCM
+          </div>
+          <div
+            class="flex items-center gap-2 text-[10px] text-emerald-500/80 font-mono tracking-[0.2em] uppercase"
+          >
+            <span class="w-1 h-1 bg-emerald-500 rounded-full animate-pulse"
+            ></span>
+            0xSB3LR_VIRTUAL_OS_READY
+          </div>
+        </div>
+      </div>
+
+      <div class="relative flex-1 flex overflow-hidden">
+        {/* Dynamic Background Glows */}
+        <div
+          class="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] rounded-full bg-cyber-purple/20 blur-[150px] pointer-events-none animate-pulse"
+        >
+        </div>
+        <div
+          class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] rounded-full bg-cyber-blue/20 blur-[120px] pointer-events-none animate-pulse"
+          style="animation-delay: 2s"
+        >
+        </div>
+
+        {/* Main Content Area */}
+        <main
+          id="main-content"
+          class="flex-1 h-full overflow-y-auto w-full relative z-10 scrollbar-hide main-content opacity-100"
+        >
+          <div class="max-w-7xl mx-auto p-4 md:p-8 lg:p-16">
+            <slot />
+          </div>
+
+          <div
+            class="fixed inset-0 pointer-events-none bg-scanline opacity-[0.05] z-50"
+          >
+          </div>
+        </main>
+
+        <Sidebar />
+      </div>
+    </div>
+  </body>
+</html>

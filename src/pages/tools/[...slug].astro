@@ -1,0 +1,73 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const tools = await getCollection("cybertools");
+  return tools.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<Layout>
+  <article class="max-w-4xl mx-auto space-y-12 pb-32">
+    <header class="space-y-6">
+      <a
+        href="/tools"
+        class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-cyber-blue transition-colors font-mono uppercase tracking-widest group"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="14"
+          height="14"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform"
+          ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
+        </svg>
+        <span class="lang-ar">العودة للأدوات</span>
+        <span class="lang-en">Back to Tools</span>
+      </a>
+
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <span
+            class={`px-3 py-1 rounded-full ${
+              entry.data.category === "offensive"
+                ? "bg-red-500/10 border-red-500/20 text-red-400"
+                : "bg-cyber-blue/10 border-cyber-blue/20 text-cyber-blue"
+            } border text-[10px] font-mono uppercase`}
+          >
+            {entry.data.category} // {entry.data.subcategory}
+          </span>
+        </div>
+        <h1
+          class="text-4xl md:text-5xl font-black tracking-tight text-white uppercase font-mono"
+        >
+          {entry.data.title}
+        </h1>
+        <p class="text-lg text-zinc-400 font-mono">{entry.data.description}</p>
+      </div>
+
+      <div
+        class="h-[1px] w-full bg-gradient-to-r from-cyber-blue/30 via-white/5 to-transparent"
+      >
+      </div>
+    </header>
+
+    <div
+      class="prose prose-invert prose-cyber max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-2 prose-p:text-zinc-400 prose-p:leading-relaxed prose-code:text-cyber-blue prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-pre:bg-zinc-950/50 prose-pre:border prose-pre:border-white/5 prose-pre:rounded-2xl prose-pre:p-6 prose-strong:text-white prose-a:text-cyber-blue prose-a:no-underline hover:prose-a:underline"
+    >
+      <Content />
+    </div>
+  </article>
+</Layout>

@@ -1,0 +1,89 @@
+---
+interface Props {
+  title?: string;
+  className?: string;
+  id?: string;
+  glowColor?: "blue" | "purple" | "green" | "orange" | "pink" | "indigo";
+}
+
+const { title, className = "", id, glowColor = "blue" } = Astro.props;
+
+const glowClasses = {
+  blue: "group-hover:shadow-[0_0_40px_-10px_rgba(59,130,246,0.5)] group-hover:border-blue-500/50",
+  purple:
+    "group-hover:shadow-[0_0_40px_-10px_rgba(168,85,247,0.5)] group-hover:border-purple-500/50",
+  green:
+    "group-hover:shadow-[0_0_40px_-10px_rgba(34,197,94,0.5)] group-hover:border-green-500/50",
+  orange:
+    "group-hover:shadow-[0_0_40px_-10px_rgba(249,115,22,0.5)] group-hover:border-orange-500/50",
+  pink: "group-hover:shadow-[0_0_40px_-10px_rgba(236,72,153,0.5)] group-hover:border-pink-500/50",
+  indigo:
+    "group-hover:shadow-[0_0_40px_-10px_rgba(99,102,241,0.5)] group-hover:border-indigo-500/50",
+};
+
+const glowColors = {
+  blue: "rgb(59,130,246)",
+  purple: "rgb(168,85,247)",
+  green: "rgb(34,197,94)",
+  orange: "rgb(249,115,22)",
+  pink: "rgb(236,72,153)",
+  indigo: "rgb(99,102,241)",
+};
+---
+
+<div
+  id={id}
+  class={`group relative rounded-[2.5rem] bg-zinc-950/40 border border-white/5 backdrop-blur-xl p-8 transition-all duration-700 hover:-translate-y-2 hover:bg-white/[0.03] overflow-hidden ${className} ${glowClasses[glowColor]}`}
+>
+  {/* Layered Glow Backgrounds */}
+  <div
+    class={`absolute -inset-[100%] opacity-0 group-hover:opacity-100 transition-opacity duration-1000 bg-[radial-gradient(circle_at_center,${glowColors[glowColor]},transparent_70%)] blur-[100px] pointer-events-none z-0`}
+  >
+  </div>
+
+  {/* Reflective Shine Effect */}
+  <div class="absolute inset-0 z-10 pointer-events-none">
+    <div
+      class="absolute inset-x-0 top-0 h-[100%] bg-gradient-to-b from-white/[0.05] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+    >
+    </div>
+    <div
+      class="absolute -inset-x-[100%] top-0 h-[2px] bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-[1.5s] ease-in-out"
+    >
+    </div>
+  </div>
+
+  <div class="relative z-20 flex flex-col h-full">
+    {
+      (title || Astro.slots.has("title")) && (
+        <div class="mb-5 pb-3 border-b border-white/5 flex items-center justify-between">
+          <h3 class="text-xl font-bold text-zinc-100 font-heading tracking-tight flex items-center gap-2">
+            <div
+              class={`w-1.5 h-1.5 rounded-full animate-pulse bg-${
+                glowColor === "purple"
+                  ? "cyber-purple"
+                  : glowColor === "blue"
+                  ? "cyber-blue"
+                  : "zinc-500"
+              }`}
+            />
+            {title && <span>{title}</span>}
+            <slot name="title" />
+          </h3>
+          <div class="flex gap-2">
+            <div class="w-2 h-2 rounded-full bg-zinc-800 group-hover:bg-red-500/60 transition-colors duration-300" />
+            <div class="w-2 h-2 rounded-full bg-zinc-800 group-hover:bg-yellow-500/60 transition-colors duration-300" />
+            <div class="w-2 h-2 rounded-full bg-zinc-800 group-hover:bg-emerald-500/60 transition-colors duration-300" />
+          </div>
+        </div>
+      )
+    }
+    <slot />
+  </div>
+
+  {/* Corner Accents */}
+  <div
+    class="absolute top-0 left-0 w-8 h-8 border-t border-l border-white/10 rounded-tl-[2.5rem] pointer-events-none transition-colors group-hover:border-white/20"
+  >
+  </div>
+</div>
