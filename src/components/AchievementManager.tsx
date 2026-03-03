@@ -51,21 +51,14 @@ export const AchievementManager = () => {
                         {toast.icon}
                     </div>
                     <div className="flex flex-col">
-                        <span className="text-[10px] font-mono text-cyber-purple uppercase tracking-[0.3em] font-bold">SECURITY CLEARANCE INCREASED</span>
+                        <span className="text-[10px] font-mono text-cyber-purple uppercase tracking-[0.3em] font-bold">ACHIEVEMENT UNLOCKED</span>
                         <span className="text-white font-bold font-mono tracking-tighter">{toast.label}</span>
                     </div>
                     <div className="absolute bottom-0 left-0 h-1 bg-cyber-purple animate-progress" style={{ animationDuration: '5s' }}></div>
                 </div>
             )}
 
-            {/* Floating Badge Counter */}
-            <div className="fixed bottom-8 left-8 z-[100] flex gap-2">
-                <div className="flex items-center gap-3 px-4 py-2 rounded-full bg-zinc-900/50 border border-white/10 backdrop-blur-md">
-                    <span className="w-2 h-2 rounded-full bg-cyber-purple animate-pulse shadow-[0_0_8px_rgba(168,85,247,0.4)]"></span>
-                    <span className="text-[10px] font-mono text-zinc-400 uppercase tracking-widest">CLEARANCE_LEVEL:</span>
-                    <span className="text-cyber-purple font-bold font-mono text-xs">{unlocked.length}/{BADGES.length}</span>
-                </div>
-            </div>
+            {/* Floating Badge Counter removed as per user request */}
         </>
     );
 };
