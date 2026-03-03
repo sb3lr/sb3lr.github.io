@@ -1,7 +1,7 @@
 <button
-    id="lang-toggle"
-    class="relative group px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-cyber-purple/50 transition-all active:scale-95 flex items-center justify-center gap-3 overflow-hidden"
+    class="lang-toggle relative group px-4 py-2 rounded-xl bg-white/5 border border-white/10 hover:border-cyber-purple/50 transition-all active:scale-95 flex items-center justify-center gap-3 overflow-hidden"
 >
+    <!-- ... same internal content ... -->
     <div
         class="absolute inset-0 bg-gradient-to-r from-cyber-purple/10 to-cyber-blue/10 opacity-0 group-hover:opacity-100 transition-opacity"
     >
@@ -23,26 +23,32 @@
 </button>
 
 <script>
-    const toggle = document.getElementById("lang-toggle");
+    const toggles = document.querySelectorAll(".lang-toggle");
     const html = document.documentElement;
+
+    const updateUI = (lang: string) => {
+        html.setAttribute("lang", lang);
+        html.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+        localStorage.setItem("portfolio-lang", lang);
+    };
 
     // Load saved language
     const savedLang = localStorage.getItem("portfolio-lang") || "ar";
-    html.setAttribute("lang", savedLang);
-    html.setAttribute("dir", savedLang === "ar" ? "rtl" : "ltr");
+    updateUI(savedLang);
 
-    toggle?.addEventListener("click", () => {
-        const currentLang = html.getAttribute("lang");
-        const newLang = currentLang === "ar" ? "en" : "ar";
+    toggles.forEach((toggle) => {
+        toggle.addEventListener("click", () => {
+            const currentLang = html.getAttribute("lang");
+            const newLang = currentLang === "ar" ? "en" : "ar";
+            updateUI(newLang);
 
-        html.setAttribute("lang", newLang);
-        html.setAttribute("dir", newLang === "ar" ? "rtl" : "ltr");
-        localStorage.setItem("portfolio-lang", newLang);
-
-        // Aesthetic feedback
-        toggle.style.transform = "scale(0.95)";
-        setTimeout(() => {
-            toggle.style.transform = "";
-        }, 100);
+            // Aesthetic feedback for all toggles
+            toggles.forEach((t) => {
+                (t as HTMLElement).style.transform = "scale(0.95)";
+                setTimeout(() => {
+                    (t as HTMLElement).style.transform = "";
+                }, 100);
+            });
+        });
     });
 </script>
