@@ -26,7 +26,7 @@ const { pathname } = Astro.url;
       >
       </div>
       <div
-        class="absolute w-1.5 h-1.5 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.8)]"
+        class="absolute w-1.5 h-1.5 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.8)] hidden md:block"
         id="cursor-dot"
       >
       </div>
@@ -37,13 +37,14 @@ const { pathname } = Astro.url;
       const dot = document.getElementById("cursor-dot");
 
       document.addEventListener("mousemove", (e) => {
+        if (window.innerWidth < 768) return;
         if (ring && dot) {
           const x = e.clientX;
           const y = e.clientY;
-
+          dot.style.display = "block";
+          ring.style.display = "block";
           dot.style.left = `${x}px`;
           dot.style.top = `${y}px`;
-
           ring.animate(
             {
               left: `${x}px`,
@@ -53,8 +54,16 @@ const { pathname } = Astro.url;
           );
         }
       });
+
+      // Hide cursor on touch
+      document.addEventListener("touchstart", () => {
+        if (ring && dot) {
+          ring.style.display = "none";
+          dot.style.display = "none";
+        }
+      });
     </script>
-    
+
     <SoundManager client:only="react" />
     <AchievementManager client:only="react" />
 
@@ -112,7 +121,7 @@ const { pathname } = Astro.url;
         {/* Main Content Area */}
         <main
           id="main-content"
-          class="flex-1 h-full overflow-y-auto w-full relative z-10 scrollbar-hide main-content opacity-100"
+          class="flex-1 h-full overflow-y-auto w-full relative z-10 scrollbar-hide main-content opacity-100 pb-32 md:pb-8"
         >
           <div class="max-w-7xl mx-auto p-4 md:p-8 lg:p-16">
             <slot />
