@@ -1,0 +1,129 @@
+<div
+  id="terminal-widget"
+  class="w-full h-full min-h-0 flex flex-col font-mono text-sm bg-black/40 rounded-xl overflow-hidden border border-white/5 shadow-2xl"
+>
+  <div
+    class="bg-zinc-900/80 px-4 py-2 flex items-center justify-between border-b border-white/5"
+  >
+    <div class="flex items-center gap-2 text-zinc-400">
+      <span class="text-xs">saeed@security-lab:~</span>
+    </div>
+    <span class="text-[10px] uppercase tracking-widest text-emerald-400">live</span>
+  </div>
+
+  <div class="p-4 flex-1 overflow-y-auto text-left" dir="ltr" data-body>
+    <div class="mb-2 whitespace-pre-wrap pl-6 leading-relaxed text-zinc-400">
+      SYSTEM_LOGS online. Auto command stream enabled.
+    </div>
+    <div class="flex items-center gap-2 text-emerald-400" data-current>
+      <span class="text-sky-400">➜</span>
+      <span class="text-zinc-300">~</span>
+      <span class="text-emerald-300" data-typed></span>
+      <span class="inline-block w-2 h-4 ml-1 bg-emerald-400 animate-pulse" data-cursor>
+      </span>
+    </div>
+  </div>
+</div>
+
+<script is:inline>
+  (() => {
+    const root = document.getElementById("terminal-widget");
+    if (!root) return;
+
+    const body = root.querySelector("[data-body]");
+    const typedEl = root.querySelector("[data-typed]");
+    const currentEl = root.querySelector("[data-current]");
+    if (!body || !typedEl || !currentEl) return;
+
+    const commands = [
+      {
+        cmd: "nmap -sV 10.0.0.15",
+        out: "22/tcp open ssh OpenSSH 9.3p1\\n80/tcp open http nginx 1.24\\n443/tcp open https nginx 1.24",
+      },
+      {
+        cmd: "gobuster dir -u https://target.local -w common.txt",
+        out: "/admin (301)\\n/uploads (200)\\n/backup (403)",
+      },
+      {
+        cmd: "nikto -h https://target.local",
+        out: "+ /admin/: Admin login page found\\n+ /phpinfo.php: Information disclosure risk",
+      },
+      {
+        cmd: "sqlmap -u https://target.local/login --batch",
+        out: "[INFO] checking target connection\\n[INFO] testing injectable parameters\\n[INFO] no SQLi found",
+      },
+      {
+        cmd: "tcpdump -i eth0",
+        out: "IP 192.168.1.20.52344 > 1.1.1.1.53: A? example.com\\nIP 1.1.1.1.53 > 192.168.1.20.52344: A 93.184.216.34",
+      },
+      {
+        cmd: "msfconsole",
+        out: "msf6 > search eternalblue\\nexploit/windows/smb/ms17_010_eternalblue",
+      },
+      {
+        cmd: "snort -V",
+        out: "Snort 3.1.75.0\\nCompiled with Hyperscan support",
+      },
+    ];
+
+    let cmdIndex = 0;
+    let disposed = false;
+
+    const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+    const appendLine = (kind, text) => {
+      const wrap = document.createElement("div");
+      wrap.className = "mb-2 whitespace-pre-wrap";
+
+      if (kind === "cmd") {
+        wrap.innerHTML =
+          '<div class="flex items-center gap-2 text-emerald-400"><span class="text-sky-400">➜</span><span class="text-zinc-300">~</span><span></span></div>';
+        wrap.querySelector("span:last-child").textContent = text;
+      } else {
+        const out = document.createElement("div");
+        out.className = "pl-6 leading-relaxed text-zinc-400";
+        out.textContent = text;
+        wrap.appendChild(out);
+      }
+
+      body.insertBefore(wrap, currentEl);
+
+      const rows = body.querySelectorAll(":scope > div");
+      if (rows.length > 30) {
+        for (let i = 0; i < rows.length - 30; i += 1) {
+          if (rows[i] !== currentEl) rows[i].remove();
+        }
+      }
+      body.scrollTop = body.scrollHeight;
+    };
+
+    const run = async () => {
+      await sleep(400);
+      while (!disposed) {
+        const item = commands[cmdIndex % commands.length];
+        cmdIndex += 1;
+        typedEl.textContent = "";
+
+        for (let i = 1; i <= item.cmd.length; i += 1) {
+          if (disposed) return;
+          typedEl.textContent = item.cmd.slice(0, i);
+          await sleep(34);
+        }
+
+        appendLine("cmd", item.cmd);
+        appendLine("out", item.out);
+        typedEl.textContent = "";
+        await sleep(1600);
+      }
+    };
+
+    run();
+    window.addEventListener(
+      "beforeunload",
+      () => {
+        disposed = true;
+      },
+      { once: true }
+    );
+  })();
+</script>

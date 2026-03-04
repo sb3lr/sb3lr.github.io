@@ -18,9 +18,17 @@ const rendered = await Promise.all(
     return { tutorial, Content };
   })
 );
+
+const seoTitle = "الشروحات التقنية | سعيد بران";
+const seoDescription =
+  "مكتبة شروحات الأمن السيبراني والبرمجة من سعيد بران مع أدلة عملية ومحتوى محدث.";
 ---
 
-<Layout>
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+  keywords={["شروحات أمن سيبراني", "Cybersecurity Tutorials", "Programming Guides"]}
+>
   <div class="space-y-8 md:space-y-12">
     <header class="space-y-4">
       <div class="flex items-center gap-3">
@@ -184,7 +192,7 @@ const rendered = await Promise.all(
 
           {/* Scrollable Body */}
           <div
-            class="flex-1 overflow-y-auto p-6 prose prose-invert max-w-none
+            class="content-body flex-1 overflow-y-auto p-6 prose prose-invert max-w-none
           prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-right
           prose-h1:text-2xl prose-h1:text-white
           prose-h2:text-xl prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-2 prose-h2:mt-8

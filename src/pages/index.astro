@@ -1,15 +1,12 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import Card from "../components/BentoGrid/Card.astro";
-import { TerminalWidget } from "../components/TerminalWidget";
+import TerminalWidget from "../components/TerminalWidget.astro";
 import SecurityBadge from "../components/SecurityBadge.astro";
 import { initialNodes } from "../data/portfolioData";
 import { ThreatMap } from "../components/ThreatMap";
 
 // Filter data for easy rendering
-const certs = initialNodes.filter(
-  (n) => n.data.category === "certificates" && n.id !== "certs-root"
-);
 const skills = initialNodes.find((n) => n.id === "skills")?.data.details || [];
 const projects = initialNodes.filter(
   (n) => n.data.category === "projects" && !n.id.includes("-root")
@@ -22,9 +19,34 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
   label: "سعيد",
   description: "طالب أمن سيبراني",
 };
+
+const seoTitle = "سعيد بران | ملف أعمال الأمن السيبراني";
+const seoDescription =
+  "موقع سعيد بران لعرض مشاريع الأمن السيبراني، الأدوات، الشروحات، والإنجازات التقنية باللغة العربية والإنجليزية.";
+const personSchema = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Saeed Barran",
+  jobTitle: "Cybersecurity Student",
+  description:
+    "BSc cybersecurity student (expected 2027), focused on social engineering, network assessment, and web penetration testing.",
+  email: "mailto:sb3ly@proton.me",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Al-Mukalla",
+    addressCountry: "YE",
+  },
+  sameAs: ["https://github.com/sb3lr", "https://youtube.com/@0xsb3lr"],
+};
 ---
 
-<Layout>
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+  ogImage="/profile.jpg"
+  keywords={["أمن سيبراني", "اختبار اختراق", "Cybersecurity Portfolio", "OSINT"]}
+  schema={personSchema}
+>
   <div class="space-y-20 md:space-y-32">
     {/* Aesthetic Background Blobs */}
     <div
@@ -99,11 +121,14 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
                 >
                   <span class="lang-ar block">
                     <span class="text-cyber-purple/60 font-bold">#</span> طالب أمن
-                    سيبراني متخصص في حماية البيانات واختراق الأنظمة الأخلاقي.
+                    سيبراني بكالوريوس (تخرج 2027) ملم بالهندسة الاجتماعية، فحص
+                    الشبكات، واختبار اختراق المواقع، وباحث في المجال لأكثر من 5 سنوات.
                   </span>
                   <span class="lang-en block">
-                    <span class="text-cyber-blue/60 font-bold">#</span> Cybersecurity
-                    Student specializing in data protection & ethical hacking.
+                    <span class="text-cyber-blue/60 font-bold">#</span> BSc
+                    cybersecurity student (2027) focused on social engineering,
+                    network assessment, and web pentesting with 5+ years of
+                    independent research.
                   </span>
                 </p>
               </div>
@@ -116,10 +141,9 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
             >
               <span
                 class="text-[9px] text-zinc-600 font-mono uppercase tracking-widest block mb-2"
-                >Threat_Shield</span
+                >Research_Years</span
               >
-              <span class="text-cyber-blue font-bold text-xl font-mono"
-                >ENCRYPTED</span
+              <span class="text-cyber-blue font-bold text-xl font-mono">5+ YEARS</span
               >
             </div>
             <div
@@ -127,10 +151,9 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
             >
               <span
                 class="text-[9px] text-zinc-600 font-mono uppercase tracking-widest block mb-2"
-                >Global_Rank</span
+                >Degree_Status</span
               >
-              <span class="text-cyber-purple font-bold text-xl font-mono"
-                >TOP_1%_OSINT</span
+              <span class="text-cyber-purple font-bold text-xl font-mono">BSc_2027</span
               >
             </div>
             <div
@@ -138,10 +161,9 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
             >
               <span
                 class="text-[9px] text-zinc-600 font-mono uppercase tracking-widest block mb-2"
-                >Auth_Status</span
+                >Current_Goal</span
               >
-              <span class="text-emerald-500 font-bold text-xl font-mono"
-                >VERIFIED</span
+              <span class="text-emerald-500 font-bold text-[13px] md:text-lg font-mono whitespace-nowrap">eJPT_IN_PROGRESS</span
               >
             </div>
           </div>
@@ -160,6 +182,15 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
             >
               <span class="lang-ar">عرض المشاريع_</span>
               <span class="lang-en">View_Projects_</span>
+            </a>
+            <a
+              href="/cv/Saeed_Barran_CV.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="w-full sm:w-auto px-6 md:px-8 py-3 md:py-4 rounded-xl md:rounded-2xl bg-cyber-purple/15 border border-cyber-purple/30 text-cyber-purple font-bold hover:bg-cyber-purple/25 transition-all text-center text-sm md:text-base"
+            >
+              <span class="lang-ar">تحميل السيرة الذاتية (PDF)</span>
+              <span class="lang-en">Download CV (PDF)</span>
             </a>
           </div>
         </div>
@@ -180,6 +211,9 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
             <img
               src="/profile.jpg"
               alt="سعيد بران"
+              loading="eager"
+              fetchpriority="high"
+              decoding="async"
               class="w-full h-full object-cover grayscale-[0.2] transition-transform duration-700 group-hover:scale-110"
             />
 
@@ -257,6 +291,8 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
               <img
                 src="/profile.jpg"
                 alt="سعيد بران"
+                loading="lazy"
+                decoding="async"
                 class="w-full h-full object-cover"
                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'"
               />
@@ -270,12 +306,13 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
           <div class="flex-1 space-y-4 text-right">
             <p class="text-zinc-400 text-base md:text-lg leading-relaxed">
               <span class="lang-ar"
-                >{saeed.description} بشغف كبير لحماية الفضاء الرقمي، أركز على تبسيط
-                مفاهيم الأمن السيبراني وجعلها في متناول الجميع.</span
+                >{saeed.description} لم أعمل بوظيفة رسمية بعد، لكنني نفذت مشاريع
+                تقنية كبيرة بشكل فردي وأركز على التطبيق العملي الحقيقي.</span
               >
               <span class="lang-en"
-                >{saeed.descriptionEn} With a great passion for protecting the digital
-                space, I focus on simplifying cybersecurity concepts.</span
+                >{saeed.descriptionEn} I have not held a formal job role yet,
+                but I have built major solo projects and focus on real hands-on
+                execution.</span
               >
             </p>
             <div class="flex flex-wrap gap-3 justify-end uppercase">
@@ -299,14 +336,14 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
       {/* Terminal Widget Section */}
       <Card
         glowColor="blue"
-        className="md:col-span-2 hidden md:block overflow-hidden"
+        className="md:col-span-2 overflow-hidden"
       >
         <div slot="title">
           <span class="lang-ar">سجل النظام / SYSTEM_LOGS</span>
           <span class="lang-en">SYSTEM_LOGS / CLI</span>
         </div>
-        <div class="h-48 overflow-hidden">
-          <TerminalWidget client:only="react" />
+        <div class="h-64 md:h-72 overflow-hidden">
+          <TerminalWidget />
         </div>
       </Card>
 
@@ -337,29 +374,27 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
 
       <Card glowColor="purple" className="md:col-span-3">
         <div slot="title">
-          <span class="lang-ar">الحالة / SYSTEM_STATUS</span>
-          <span class="lang-en">SYSTEM / STATUS</span>
+          <span class="lang-ar">أهم الإنجازات / HIGHLIGHTS</span>
+          <span class="lang-en">TOP / HIGHLIGHTS</span>
         </div>
-        <div class="grid grid-cols-2 gap-4">
-          <div class="flex flex-col items-end">
-            <span class="text-zinc-500 text-[10px] uppercase font-mono">
-              <span class="lang-ar">الوضع</span>
-              <span class="lang-en">STATUS</span>
-            </span>
-            <div class="text-emerald-500 font-bold font-mono uppercase">
-              <span class="lang-ar">نشط / ACTIVE</span>
-              <span class="lang-en">ONLINE</span>
-            </div>
+        <div class="space-y-3 text-right">
+          <div class="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+            <p class="text-zinc-300 text-sm">
+              <span class="lang-ar">الإشراف على فعالية سلامة توعوية في جامعة العلوم والتكنولوجيا.</span>
+              <span class="lang-en">Supervised a SAFETY awareness event at the University of Science and Technology.</span>
+            </p>
           </div>
-          <div class="flex flex-col items-end">
-            <span class="text-zinc-500 text-[10px] uppercase font-mono">
-              <span class="lang-ar">المنطقة</span>
-              <span class="lang-en">REGION</span>
-            </span>
-            <div class="text-cyber-purple font-bold font-mono uppercase">
-              <span class="lang-ar">اليمن / YEMEN</span>
-              <span class="lang-en">YEMEN</span>
-            </div>
+          <div class="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+            <p class="text-zinc-300 text-sm">
+              <span class="lang-ar">اكتشاف والإبلاغ عن عدة ثغرات في موقع الجامعة بشكل مسؤول.</span>
+              <span class="lang-en">Discovered and responsibly reported multiple vulnerabilities in the university website.</span>
+            </p>
+          </div>
+          <div class="rounded-xl border border-white/5 bg-white/[0.02] p-3">
+            <p class="text-zinc-300 text-sm">
+              <span class="lang-ar">تنفيذ 3 مشاريع أمنية كبيرة بشكل فردي كامل.</span>
+              <span class="lang-en">Built 3 major cybersecurity projects fully solo.</span>
+            </p>
           </div>
         </div>
       </Card>
@@ -431,7 +466,11 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
               <div class="group/proj p-6 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.05] transition-all hover:-translate-y-1">
                 <div class="flex items-center gap-4 mb-4">
                   <div class="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center text-2xl">
-                    {project.data.label.includes("YouTube") ? "📹" : "💻"}
+                    {project.id === "exp-arp"
+                      ? "🕸️"
+                      : project.id === "exp-monitor"
+                      ? "📡"
+                      : "🧩"}
                   </div>
                   <h4 class="text-white font-bold text-lg">
                     <span class="lang-ar">{project.data.label}</span>
@@ -502,8 +541,19 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
                         {i === 0 ? "EMAIL" : i === 1 ? "PHONE" : "LOCATION"}
                       </span>
                     </span>
-                    <h4 class="text-zinc-300 text-lg font-bold font-mono tracking-tight break-all">
-                      {info}
+                    <h4
+                      class={`text-zinc-300 text-lg font-bold font-mono tracking-tight ${
+                        i === 0 ? "break-all" : "break-words"
+                      }`}
+                    >
+                      <span
+                        dir={i === 0 || i === 1 ? "ltr" : "auto"}
+                        class={i === 0 || i === 1
+                          ? "inline-block text-left [unicode-bidi:isolate]"
+                          : "inline-block"}
+                      >
+                        {info}
+                      </span>
                     </h4>
                   </div>
                 </div>
@@ -573,7 +623,7 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
         class="md:col-span-6 h-[320px] md:h-[400px]"
         onmouseenter="unlockAchievement('threat')"
       >
-        <ThreatMap client:only="react" />
+        <ThreatMap client:visible />
       </div>
     </div>
   </div>

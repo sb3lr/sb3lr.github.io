@@ -24,9 +24,17 @@ const rendered = await Promise.all(
         return { item, Content };
     })
 );
+
+const seoTitle = "الإنجازات | سعيد بران";
+const seoDescription =
+    "سجل الإنجازات والشهادات والتحديات التقنية في مسيرة سعيد بران في الأمن السيبراني.";
 ---
 
-<Layout>
+<Layout
+    title={seoTitle}
+    description={seoDescription}
+    keywords={["إنجازات", "شهادات", "Hall of Fame", "Cybersecurity Achievements"]}
+>
     <div class="space-y-10 md:space-y-16 pb-20">
         {/* Page Header */}
         <header class="relative py-10">
@@ -119,6 +127,8 @@ const rendered = await Promise.all(
                                 <img
                                     src={item.data.image}
                                     alt={item.data.title}
+                                    loading="lazy"
+                                    decoding="async"
                                     class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110 group-hover:rotate-1"
                                 />
                             ) : (
@@ -217,6 +227,8 @@ const rendered = await Promise.all(
                             <img
                                 src={item.data.image}
                                 alt={item.data.title}
+                                loading="lazy"
+                                decoding="async"
                                 class="w-full h-full object-cover"
                             />
                             <div class="absolute inset-0 bg-gradient-to-t from-zinc-950 to-transparent" />
@@ -267,7 +279,7 @@ const rendered = await Promise.all(
                     </div>
 
                     <div
-                        class="flex-1 overflow-y-auto p-8 prose prose-invert prose-cyber max-w-none
+                        class="content-body flex-1 overflow-y-auto p-8 prose prose-invert prose-cyber max-w-none
           prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-right
           prose-h2:text-2xl prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-2 prose-h2:mt-8
           prose-p:text-zinc-400 prose-p:leading-relaxed prose-p:text-right

@@ -17,8 +17,8 @@ export const initialNodes: any[] = [
             label: 'سعيد بران',
             labelEn: 'Saeed Barran',
             category: 'saeed',
-            description: 'طالب أمن سيبراني وصانع محتوى تقني متخصص في التوعية الأمنية وتبسيط المفاهيم المعقدة.',
-            descriptionEn: 'Cybersecurity student and technical content creator specialized in security awareness and simplifying complex concepts.',
+            description: 'طالب بكالوريوس أمن سيبراني (تخرج متوقع 2027) مع خبرة بحثية عملية لأكثر من 5 سنوات في الهندسة الاجتماعية، فحص الشبكات، واختبار اختراق المواقع.',
+            descriptionEn: 'BSc Cybersecurity student (expected graduation in 2027) with 5+ years of hands-on research in social engineering, network assessment, and web penetration testing.',
         },
     },
 
@@ -88,19 +88,17 @@ export const initialNodes: any[] = [
             labelEn: 'Technical Skills',
             category: 'skills',
             details: [
-                'Cybersecurity Awareness',
-                'Phishing Attacks',
-                'Web Security Fundamentals',
-                'Network Security Basics',
+                'الهندسة الاجتماعية (Social Engineering)',
+                'فحص الشبكات وتحليلها (Network Assessment)',
+                'فحص واختبار اختراق المواقع (Web Pentesting)',
                 'Nmap, Wireshark, Burp Suite',
                 'Linux (Kali, Ubuntu)',
                 'Python Scripting'
             ],
             detailsEn: [
-                'Cybersecurity Awareness',
-                'Phishing Attacks',
-                'Web Security Fundamentals',
-                'Network Security Basics',
+                'Social Engineering',
+                'Network Assessment and Scanning',
+                'Web Penetration Testing',
                 'Nmap, Wireshark, Burp Suite',
                 'Linux (Kali, Ubuntu)',
                 'Python Scripting'
@@ -114,35 +112,35 @@ export const initialNodes: any[] = [
         data: { label: 'الخبرات والمشاريع', labelEn: 'Experience & Projects', category: 'projects' },
     },
     {
-        id: 'exp-youtube',
+        id: 'exp-portfolio',
         data: {
-            label: 'صانع محتوى - YouTube',
-            labelEn: 'Content Creator - YouTube',
+            label: 'منصة البورتفوليو الشخصية',
+            labelEn: 'Personal Portfolio Platform',
             category: 'projects',
-            description: 'نشر محتوى تعليمي حول التهديدات السيبرانية والهندسة الاجتماعية (@0xsb3lr).',
-            descriptionEn: 'Publishing educational content about cyber threats and social engineering (@0xsb3lr).',
-            link: 'https://youtube.com/@0xsb3lr'
-        },
-    },
-    {
-        id: 'exp-github',
-        data: {
-            label: 'مشاريع GitHub',
-            labelEn: 'GitHub Projects',
-            category: 'projects',
-            description: 'توثيق مختبرات عملية وسكربتات Python للأمن السيبراني.',
-            descriptionEn: 'Documenting practical labs and Python scripts for cybersecurity.',
+            description: 'تصميم وتطوير موقع شخصي كامل بهوية أمنية احترافية لعرض المشاريع والأدوات والشروحات.',
+            descriptionEn: 'Designed and developed a full personal cybersecurity-styled platform to showcase projects, tools, and tutorials.',
             link: 'https://github.com/sb3lr'
         },
     },
     {
-        id: 'exp-speaker',
+        id: 'exp-arp',
         data: {
-            label: 'متحدث تقني',
-            labelEn: 'Technical Speaker',
+            label: 'محاكاة هجمات ARP ومراقبة حركة الشبكة',
+            labelEn: 'ARP Attack Simulation & Network Sniffing',
             category: 'projects',
-            description: 'تقديم جلسات توعوية حول تقنيات التصيد والوقاية منها.',
-            descriptionEn: 'Delivering awareness sessions on phishing techniques and prevention.'
+            description: 'تنفيذ مختبر عملي لمحاكاة ARP Spoofing داخل بيئة اختبارية وتحليل تأثيره على أمن الشبكة.',
+            descriptionEn: 'Built a practical lab to simulate ARP spoofing in a controlled environment and analyze its network security impact.',
+            link: 'https://github.com/sb3lr'
+        },
+    },
+    {
+        id: 'exp-monitor',
+        data: {
+            label: 'نظام مراقبة شبكة مصغر (Mini-SIEM)',
+            labelEn: 'Mini Network Monitoring System',
+            category: 'projects',
+            description: 'تطوير مشروع لمراقبة أحداث الشبكة وتحليلها بشكل مبسط، مستوحى من فكرة Splunk ولكن بحجم أخف.',
+            descriptionEn: 'Developed a lightweight network event monitoring and analysis project inspired by Splunk concepts.'
         },
     },
 

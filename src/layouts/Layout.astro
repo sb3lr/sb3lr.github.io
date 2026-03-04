@@ -5,6 +5,77 @@ import { SoundManager } from "../components/SoundManager";
 import { AchievementManager } from "../components/AchievementManager";
 
 const { pathname } = Astro.url;
+interface Props {
+  title?: string;
+  description?: string;
+  ogImage?: string;
+  type?: "website" | "article";
+  noindex?: boolean;
+  keywords?: string[];
+  publishedTime?: string | Date;
+  modifiedTime?: string | Date;
+  schema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const {
+  title = "Saeed Barran | Cybersecurity Portfolio",
+  description = "Portfolio of Saeed Barran showcasing cybersecurity projects, tools, tutorials, and achievements in Arabic and English.",
+  ogImage = "/profile.jpg",
+  type = "website",
+  noindex = false,
+  keywords = [],
+  publishedTime,
+  modifiedTime,
+  schema,
+} = Astro.props;
+
+const siteBase = Astro.site ?? new URL(Astro.url.origin);
+const canonicalUrl = Astro.site
+  ? new URL(pathname, Astro.site).toString()
+  : undefined;
+const ogImageUrl = new URL(ogImage, siteBase).toString();
+const robots = noindex
+  ? "noindex, nofollow"
+  : "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+const keywordsContent = [
+  "Saeed Barran",
+  "Cybersecurity",
+  "Ethical Hacking",
+  "OSINT",
+  "Portfolio",
+  ...keywords,
+].join(", ");
+const publishedIso = publishedTime
+  ? new Date(publishedTime).toISOString()
+  : undefined;
+const modifiedIso = modifiedTime ? new Date(modifiedTime).toISOString() : undefined;
+
+const pageSchema = {
+  "@context": "https://schema.org",
+  "@type": type === "article" ? "Article" : "WebPage",
+  name: title,
+  description,
+  inLanguage: ["ar", "en"],
+  ...(canonicalUrl ? { url: canonicalUrl } : {}),
+  ...(publishedIso ? { datePublished: publishedIso } : {}),
+  ...(modifiedIso ? { dateModified: modifiedIso } : {}),
+};
+
+const websiteSchema = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  name: "0xsb3lr Portfolio",
+  alternateName: "Saeed Barran Portfolio",
+  inLanguage: ["ar", "en"],
+  ...(Astro.site ? { url: Astro.site.toString() } : {}),
+};
+
+const additionalSchema = schema
+  ? Array.isArray(schema)
+    ? schema
+    : [schema]
+  : [];
+const structuredData = [websiteSchema, pageSchema, ...additionalSchema];
 ---
 
 <!DOCTYPE html>
@@ -12,9 +83,41 @@ const { pathname } = Astro.url;
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywordsContent} />
+    <meta name="author" content="Saeed Barran" />
+    <meta name="robots" content={robots} />
+    <meta name="theme-color" content="#050507" />
+    {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+    {canonicalUrl && <link rel="alternate" hrefLang="ar" href={canonicalUrl} />}
+    {canonicalUrl && <link rel="alternate" hrefLang="en" href={canonicalUrl} />}
+    {canonicalUrl && (
+      <link rel="alternate" hrefLang="x-default" href={canonicalUrl} />
+    )}
+
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={title} />
+    <meta property="og:site_name" content="0xsb3lr Portfolio" />
+    <meta property="og:locale" content="ar_YE" />
+    <meta property="og:locale:alternate" content="en_US" />
+    {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
+    {publishedIso && <meta property="article:published_time" content={publishedIso} />}
+    {modifiedIso && <meta property="article:modified_time" content={modifiedIso} />}
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={title} />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>Saeed | OS Dashboard Portfolio</title>
+    <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify(structuredData)}></script>
   </head>
   <body
     class="bg-cyber-dark text-zinc-100 min-h-screen selection:bg-cyber-purple/30 selection:text-white overflow-x-hidden"
@@ -35,37 +138,64 @@ const { pathname } = Astro.url;
     <script>
       const ring = document.getElementById("cursor-ring");
       const dot = document.getElementById("cursor-dot");
+      const desktopPointer = window.matchMedia(
+        "(min-width: 768px) and (pointer: fine)"
+      ).matches;
 
-      document.addEventListener("mousemove", (e) => {
-        if (window.innerWidth < 768) return;
-        if (ring && dot) {
-          const x = e.clientX;
-          const y = e.clientY;
+      if (!desktopPointer && ring && dot) {
+        ring.style.display = "none";
+        dot.style.display = "none";
+      }
+
+      let targetX = 0;
+      let targetY = 0;
+      let ringX = 0;
+      let ringY = 0;
+      let rafId = 0;
+
+      const renderCursor = () => {
+        if (!ring || !dot || !desktopPointer) return;
+        ringX += (targetX - ringX) * 0.18;
+        ringY += (targetY - ringY) * 0.18;
+
+        dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%)`;
+        ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
+        rafId = window.requestAnimationFrame(renderCursor);
+      };
+
+      document.addEventListener(
+        "mousemove",
+        (e) => {
+          if (!ring || !dot || !desktopPointer) return;
+          targetX = e.clientX;
+          targetY = e.clientY;
           dot.style.display = "block";
           ring.style.display = "block";
-          dot.style.left = `${x}px`;
-          dot.style.top = `${y}px`;
-          ring.animate(
-            {
-              left: `${x}px`,
-              top: `${y}px`,
-            },
-            { duration: 500, fill: "forwards" }
-          );
-        }
-      });
+          if (!rafId) {
+            rafId = window.requestAnimationFrame(renderCursor);
+          }
+        },
+        { passive: true }
+      );
 
-      // Hide cursor on touch
-      document.addEventListener("touchstart", () => {
-        if (ring && dot) {
-          ring.style.display = "none";
-          dot.style.display = "none";
-        }
-      });
+      document.addEventListener(
+        "touchstart",
+        () => {
+          if (ring && dot) {
+            ring.style.display = "none";
+            dot.style.display = "none";
+          }
+          if (rafId) {
+            window.cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+        },
+        { passive: true }
+      );
     </script>
 
-    <SoundManager client:only="react" />
-    <AchievementManager client:only="react" />
+    <SoundManager client:idle />
+    <AchievementManager client:idle />
 
     <div
       class="layout-shell relative flex min-h-dvh w-full overflow-hidden bg-cyber-grid flex-col"

@@ -315,31 +315,6 @@ html[lang="en"] .sidebar-container {
   border-right: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-/* Main Content Padding Adjustments */
-html[lang="ar"] .main-content {
-  padding-right: 5rem;
-  /* mobile */
-}
-
-@media (min-width: 768px) {
-  html[lang="ar"] .main-content {
-    padding-right: 16rem;
-    padding-left: 0;
-  }
-
-  html[lang="en"] .main-content {
-    padding-left: 16rem;
-    padding-right: 0;
-  }
-}
-
-@media (max-width: 767px) {
-  html[lang="en"] .main-content {
-    padding-left: 5rem;
-    padding-right: 0;
-  }
-}
-
 /* Hide scrollbar but allow scrolling */
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
@@ -402,4 +377,9 @@ html[lang="en"] .justify-end {
 
 html[lang="en"] .flex-row-reverse {
   flex-direction: row;
+}
+
+/* Keep one visible H1 per page for better heading hierarchy */
+.content-body h1:first-of-type {
+  display: none;
 }

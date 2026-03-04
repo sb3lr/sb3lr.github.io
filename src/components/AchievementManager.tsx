@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 const BADGES = [
     { id: 'boot', label: 'SYSTEM_UPTIME', icon: '🚀', requirement: 'BOOT SEQUENCE COMPLETED' },

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 
 const ATTACKS = [
     { id: 1, type: "DDOS", origin: "DE-01", target: "PORT:80", status: "BLOCKED", color: "text-red-500" },

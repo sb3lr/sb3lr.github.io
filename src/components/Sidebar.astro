@@ -428,7 +428,12 @@ const navItems = [
     <Award className="w-6 h-6" />
   </a>
 
-  <div class="relative group -translate-y-5">
+  <button
+    id="mobile-menu-toggle"
+    type="button"
+    aria-label="Open mobile menu"
+    class="relative group -translate-y-5"
+  >
     <div
       class="absolute inset-0 bg-cyber-purple blur-xl opacity-20 group-hover:opacity-40 transition-opacity"
     >
@@ -446,7 +451,7 @@ const navItems = [
         </div>
       </div>
     </div>
-  </div>
+  </button>
 
   <a
     href="/#projects"
@@ -464,11 +469,71 @@ const navItems = [
   </a>
 </div>
 
+{/* Mobile Expanded Menu */}
+<div id="mobile-menu-overlay" class="fixed inset-0 z-[75] hidden md:hidden">
+  <button
+    id="mobile-menu-backdrop"
+    type="button"
+    aria-label="Close mobile menu"
+    class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+  >
+  </button>
+  <div
+    id="mobile-menu-panel"
+    class="absolute bottom-24 left-1/2 -translate-x-1/2 w-[92%] max-w-md rounded-3xl border border-white/10 bg-zinc-950/90 backdrop-blur-2xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+  >
+    <div class="grid grid-cols-2 gap-2">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="mobile-menu-link flex items-center gap-2 rounded-xl border border-white/5 bg-white/[0.02] px-3 py-2.5 text-zinc-300 hover:border-cyber-purple/40 hover:text-white transition-colors"
+          >
+            <item.icon className="h-4 w-4 text-cyber-purple/80" />
+            <div class="leading-tight">
+              <span class="lang-ar block text-xs font-bold">{item.name}</span>
+              <span class="lang-en block text-[11px] font-mono text-zinc-500 uppercase">
+                {item.nameEn}
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
 <script>
-  // Mobile Active State Detection
-  const setupNav = () => {
+  const win = window;
+  // Prevent stacked listeners when the page swaps.
+  if (win.__mobileNavInitialized) {
+    // no-op: already initialized on current document
+  } else {
+    win.__mobileNavInitialized = true;
     const navLinks = document.querySelectorAll(".mobile-nav-link");
     const indicator = document.getElementById("mobile-dock-indicator");
+    const menuToggle = document.getElementById("mobile-menu-toggle");
+    const menuOverlay = document.getElementById("mobile-menu-overlay");
+    const menuBackdrop = document.getElementById("mobile-menu-backdrop");
+    const menuLinks = document.querySelectorAll(".mobile-menu-link");
+    let rafId = 0;
+
+    const closeMobileMenu = () => {
+      if (!menuOverlay) return;
+      menuOverlay.classList.add("hidden");
+      if (menuToggle) menuToggle.setAttribute("aria-expanded", "false");
+    };
+
+    const toggleMobileMenu = () => {
+      if (!menuOverlay) return;
+      const isHidden = menuOverlay.classList.contains("hidden");
+      if (isHidden) {
+        menuOverlay.classList.remove("hidden");
+        if (menuToggle) menuToggle.setAttribute("aria-expanded", "true");
+      } else {
+        closeMobileMenu();
+      }
+    };
 
     const updateActiveState = () => {
       const hash = window.location.hash || "#home";
@@ -505,20 +570,29 @@ const navItems = [
       });
     };
 
-    window.addEventListener("hashchange", updateActiveState);
-    updateActiveState();
-
-    // Check on scroll too
-    window.addEventListener(
-      "scroll",
-      () => {
-        // Debounce or throttle would be better, but for now simple check
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
         updateActiveState();
-      },
-      { passive: true }
-    );
-  };
+        rafId = 0;
+      });
+    };
 
-  setupNav();
-  document.addEventListener("astro:after-swap", setupNav);
+    window.addEventListener("hashchange", updateActiveState);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    if (menuToggle) {
+      menuToggle.addEventListener("click", toggleMobileMenu);
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+    if (menuBackdrop) {
+      menuBackdrop.addEventListener("click", closeMobileMenu);
+    }
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", closeMobileMenu);
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+    updateActiveState();
+  }
 </script>
