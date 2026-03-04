@@ -21,7 +21,7 @@ const rendered = await Promise.all(
 ---
 
 <Layout>
-  <div class="space-y-12">
+  <div class="space-y-8 md:space-y-12">
     <header class="space-y-4">
       <div class="flex items-center gap-3">
         <div class="h-[1px] w-12 bg-cyber-purple"></div>
@@ -30,7 +30,7 @@ const rendered = await Promise.all(
           >Knowledge_Base</span
         >
       </div>
-      <h1 class="text-4xl md:text-6xl font-black tracking-tighter">
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter">
         <span class="lang-ar">الشروحات البرمجية</span>
         <span class="lang-en text-2xl text-zinc-500 block"
           >SYSTEM_TUTORIALS</span
@@ -49,15 +49,15 @@ const rendered = await Promise.all(
     </header>
 
     {/* Tutorial Cards Grid */}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {
         rendered.map(({ tutorial }) => (
           <button
             onclick={`openTutorial('tut-${tutorial.slug}')`}
-            class="group relative p-[1px] rounded-3xl overflow-hidden bg-white/5 hover:bg-cyber-purple/20 transition-all duration-500 text-right w-full"
+            class="group relative p-[1px] rounded-2xl md:rounded-3xl overflow-hidden bg-white/5 hover:bg-cyber-purple/20 transition-all duration-500 text-right w-full"
           >
             <div class="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-purple to-transparent top-0 opacity-0 group-hover:opacity-100 transition-opacity" />
-            <div class="p-8 bg-zinc-950/40 backdrop-blur-xl rounded-[23px] h-full flex flex-col justify-between space-y-6">
+            <div class="p-5 md:p-8 bg-zinc-950/40 backdrop-blur-xl rounded-[15px] md:rounded-[23px] h-full flex flex-col justify-between space-y-6">
               <div class="space-y-4">
                 <div class="flex justify-between items-start">
                   <div class="p-3 rounded-2xl bg-white/5 border border-white/5 text-cyber-purple group-hover:scale-110 transition-transform">

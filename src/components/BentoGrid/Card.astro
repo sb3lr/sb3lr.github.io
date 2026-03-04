@@ -33,7 +33,7 @@ const glowColors = {
 
 <div
   id={id}
-  class={`group relative rounded-[2.5rem] bg-zinc-950/40 border border-white/5 backdrop-blur-xl p-8 transition-all duration-700 hover:-translate-y-2 hover:bg-white/[0.03] overflow-hidden ${className} ${glowClasses[glowColor]}`}
+  class={`group relative rounded-3xl md:rounded-[2.5rem] bg-zinc-950/40 border border-white/5 backdrop-blur-xl p-5 md:p-8 transition-all duration-700 hover:-translate-y-1 md:hover:-translate-y-2 hover:bg-white/[0.03] overflow-hidden ${className} ${glowClasses[glowColor]}`}
 >
   {/* Layered Glow Backgrounds */}
   <div
@@ -56,8 +56,8 @@ const glowColors = {
   <div class="relative z-20 flex flex-col h-full">
     {
       (title || Astro.slots.has("title")) && (
-        <div class="mb-5 pb-3 border-b border-white/5 flex items-center justify-between">
-          <h3 class="text-xl font-bold text-zinc-100 font-heading tracking-tight flex items-center gap-2">
+        <div class="mb-4 md:mb-5 pb-3 border-b border-white/5 flex items-center justify-between">
+          <h3 class="text-lg md:text-xl font-bold text-zinc-100 font-heading tracking-tight flex items-center gap-2">
             <div
               class={`w-1.5 h-1.5 rounded-full animate-pulse bg-${
                 glowColor === "purple"

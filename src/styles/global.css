@@ -27,6 +27,21 @@ body {
   overflow-x: hidden;
 }
 
+/* Layout offsets */
+.layout-shell {
+  min-height: 100dvh;
+}
+
+@media (min-width: 768px) {
+  [lang="ar"] .main-scroll {
+    padding-right: 16rem;
+  }
+
+  [lang="en"] .main-scroll {
+    padding-left: 16rem;
+  }
+}
+
 h1,
 h2,
 h3,

@@ -25,7 +25,7 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
 ---
 
 <Layout>
-  <div class="space-y-32">
+  <div class="space-y-20 md:space-y-32">
     {/* Aesthetic Background Blobs */}
     <div
       class="absolute top-20 left-10 w-64 h-64 bg-cyber-purple/20 blur-[120px] rounded-full animate-pulse pointer-events-none"
@@ -40,9 +40,9 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
     {/* Hero Section */}
     <section
       id="home"
-      class="relative min-h-[90vh] flex items-center pt-24 overflow-hidden"
+      class="relative min-h-[80vh] md:min-h-[90vh] flex items-center pt-6 md:pt-24 overflow-hidden"
     >
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 w-full items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 md:gap-12 w-full items-center">
         {/* Left Side: Identity Dashboard */}
         <div class="lg:col-span-7 space-y-8 relative z-20">
           <div class="space-y-4">
@@ -70,11 +70,11 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
             <div class="space-y-4">
               <div class="space-y-1">
                 <span
-                  class="text-[9px] text-zinc-500 font-mono tracking-[0.4em] uppercase block opacity-50"
+                  class="text-[9px] text-zinc-500 font-mono tracking-[0.25em] md:tracking-[0.4em] uppercase block opacity-50"
                   >Resident_Cyber_specialist</span
                 >
                 <h1
-                  class="text-4xl md:text-5xl font-bold font-heading tracking-tight leading-tight group"
+                  class="text-3xl sm:text-4xl md:text-5xl font-bold font-heading tracking-tight leading-tight group"
                 >
                   <span
                     class="lang-ar text-gradient bg-gradient-to-r from-white via-white to-cyber-purple block drop-shadow-[0_0_15px_rgba(168,85,247,0.2)] pb-2"
@@ -171,7 +171,7 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
           >
           </div>
           <div
-            class="relative aspect-square md:aspect-[4/5] rounded-[3rem] overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl overflow-hidden group"
+              class="relative aspect-square md:aspect-[4/5] rounded-3xl md:rounded-[3rem] overflow-hidden border border-white/10 bg-zinc-900 shadow-2xl overflow-hidden group"
           >
             <div
               class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10 opacity-60"
@@ -203,7 +203,7 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
 
             <div class="absolute bottom-8 left-8 right-8 z-20">
               <div
-                class="bg-black/40 backdrop-blur-md border border-white/10 p-6 rounded-2xl"
+                class="bg-black/40 backdrop-blur-md border border-white/10 p-4 md:p-6 rounded-2xl"
               >
                 <div class="flex justify-between items-end">
                   <div class="space-y-1">
@@ -211,7 +211,7 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
                       class="text-[10px] font-mono text-zinc-500 uppercase tracking-tighter"
                       >Identity_Scan</span
                     >
-                    <h3 class="text-white font-bold text-lg tracking-tight">
+                    <h3 class="text-white font-bold text-base md:text-lg tracking-tight">
                       Saeed_Bran.data
                     </h3>
                   </div>
@@ -268,7 +268,7 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
             </div>
           </div>
           <div class="flex-1 space-y-4 text-right">
-            <p class="text-zinc-400 text-lg leading-relaxed">
+            <p class="text-zinc-400 text-base md:text-lg leading-relaxed">
               <span class="lang-ar"
                 >{saeed.description} بشغف كبير لحماية الفضاء الرقمي، أركز على تبسيط
                 مفاهيم الأمن السيبراني وجعلها في متناول الجميع.</span
@@ -570,7 +570,7 @@ const saeed = initialNodes.find((n) => n.id === "saeed")?.data || {
 
       {/* Threat Map Section (End of Grid) */}
       <div
-        class="md:col-span-6 h-[400px]"
+        class="md:col-span-6 h-[320px] md:h-[400px]"
         onmouseenter="unlockAchievement('threat')"
       >
         <ThreatMap client:only="react" />

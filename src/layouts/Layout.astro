@@ -68,7 +68,7 @@ const { pathname } = Astro.url;
     <AchievementManager client:only="react" />
 
     <div
-      class="relative flex h-screen w-full overflow-hidden bg-cyber-grid flex-col"
+      class="layout-shell relative flex min-h-dvh w-full overflow-hidden bg-cyber-grid flex-col"
     >
       {/* Top Status Marquee Ticker */}
       <div
@@ -121,7 +121,7 @@ const { pathname } = Astro.url;
         {/* Main Content Area */}
         <main
           id="main-content"
-          class="flex-1 h-full overflow-y-auto w-full relative z-10 scrollbar-hide main-content opacity-100 pb-32 md:pb-8"
+          class="main-scroll flex-1 h-full overflow-y-auto w-full relative z-10 scrollbar-hide main-content opacity-100 pb-28 md:pb-8 pt-20 md:pt-0"
         >
           <div class="max-w-7xl mx-auto p-4 md:p-8 lg:p-16">
             <slot />

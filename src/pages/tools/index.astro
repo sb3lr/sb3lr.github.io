@@ -38,7 +38,7 @@ const defensiveRendered = await Promise.all(
 ---
 
 <Layout>
-   <div class="space-y-12">
+   <div class="space-y-8 md:space-y-12">
       <header class="space-y-4">
          <div class="flex items-center gap-3">
             <div class="h-[1px] w-12 bg-cyber-blue"></div>
@@ -47,7 +47,7 @@ const defensiveRendered = await Promise.all(
                >Arsenal_Manager</span
             >
          </div>
-         <h1 class="text-4xl md:text-6xl font-black tracking-tighter">
+         <h1 class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter">
             <span class="lang-ar">ترسانة الأدوات</span>
             <span class="lang-en text-2xl text-zinc-500 block"
                >CYBER_ARSENAL</span
@@ -56,14 +56,14 @@ const defensiveRendered = await Promise.all(
       </header>
 
       {/* Folder Selection View */}
-      <div id="folder-selection" class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div id="folder-selection" class="grid grid-cols-1 md:grid-cols-2 gap-5 md:gap-8">
          {/* Offensive Folder Card */}
          <button
             onclick="showView('offensive-view')"
-            class="group relative p-12 rounded-[3rem] bg-zinc-900/50 border border-white/5 backdrop-blur-xl hover:border-red-500/30 transition-all duration-500 text-right"
+            class="group relative p-6 md:p-12 rounded-3xl md:rounded-[3rem] bg-zinc-900/50 border border-white/5 backdrop-blur-xl hover:border-red-500/30 transition-all duration-500 text-right"
          >
             <div
-               class="absolute -inset-1 bg-gradient-to-r from-red-500/10 to-transparent rounded-[3rem] blur opacity-0 group-hover:opacity-100 transition duration-500"
+               class="absolute -inset-1 bg-gradient-to-r from-red-500/10 to-transparent rounded-3xl md:rounded-[3rem] blur opacity-0 group-hover:opacity-100 transition duration-500"
             >
             </div>
             <div class="relative space-y-8">
@@ -87,7 +87,7 @@ const defensiveRendered = await Promise.all(
                </div>
                <div class="space-y-2">
                   <h2
-                     class="text-4xl font-black tracking-tighter text-white uppercase italic"
+                     class="text-2xl md:text-4xl font-black tracking-tighter text-white uppercase italic"
                   >
                      <span class="lang-ar">الأدوات الهجومية</span>
                      <span class="lang-en">OFFENSIVE</span>
@@ -110,10 +110,10 @@ const defensiveRendered = await Promise.all(
          {/* Defensive Folder Card */}
          <button
             onclick="showView('defensive-view')"
-            class="group relative p-12 rounded-[3rem] bg-zinc-900/50 border border-white/5 backdrop-blur-xl hover:border-cyber-blue/30 transition-all duration-500 text-right"
+            class="group relative p-6 md:p-12 rounded-3xl md:rounded-[3rem] bg-zinc-900/50 border border-white/5 backdrop-blur-xl hover:border-cyber-blue/30 transition-all duration-500 text-right"
          >
             <div
-               class="absolute -inset-1 bg-gradient-to-r from-cyber-blue/10 to-transparent rounded-[3rem] blur opacity-0 group-hover:opacity-100 transition duration-500"
+               class="absolute -inset-1 bg-gradient-to-r from-cyber-blue/10 to-transparent rounded-3xl md:rounded-[3rem] blur opacity-0 group-hover:opacity-100 transition duration-500"
             >
             </div>
             <div class="relative space-y-8">
@@ -137,7 +137,7 @@ const defensiveRendered = await Promise.all(
                </div>
                <div class="space-y-2">
                   <h2
-                     class="text-4xl font-black tracking-tighter text-white uppercase italic"
+                     class="text-2xl md:text-4xl font-black tracking-tighter text-white uppercase italic"
                   >
                      <span class="lang-ar">الأدوات الدفاعية</span>
                      <span class="lang-en">DEFENSIVE</span>

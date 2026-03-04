@@ -27,7 +27,7 @@ const rendered = await Promise.all(
 ---
 
 <Layout>
-    <div class="space-y-16 pb-20">
+    <div class="space-y-10 md:space-y-16 pb-20">
         {/* Page Header */}
         <header class="relative py-10">
             <div
@@ -41,12 +41,12 @@ const rendered = await Promise.all(
                     >
                     </div>
                     <span
-                        class="text-[10px] text-cyber-pink font-mono tracking-[0.4em] uppercase font-bold animate-pulse"
+                    class="text-[9px] md:text-[10px] text-cyber-pink font-mono tracking-[0.25em] md:tracking-[0.4em] uppercase font-bold animate-pulse"
                         >Hall_of_Fame_v2.0</span
                     >
                 </div>
                 <h1
-                    class="text-5xl md:text-7xl font-black tracking-tighter text-white leading-none"
+                    class="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter text-white leading-none"
                 >
                     <span class="lang-ar block">الأنجازات</span>
                     <span
@@ -103,18 +103,18 @@ const rendered = await Promise.all(
         </header>
 
         {/* Achievements Grid */}
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-10">
             {
                 rendered.map(({ item }) => (
                     <button
                         onclick={`openAchievement('ach-${item.slug}')`}
-                        class="group relative flex flex-col rounded-[3rem] bg-zinc-900/20 border border-white/5 backdrop-blur-3xl overflow-hidden hover:border-cyber-pink/40 hover:bg-zinc-900/40 transition-all duration-700 text-right w-full h-full shadow-2xl hover:shadow-cyber-pink/10"
+                        class="group relative flex flex-col rounded-3xl md:rounded-[3rem] bg-zinc-900/20 border border-white/5 backdrop-blur-3xl overflow-hidden hover:border-cyber-pink/40 hover:bg-zinc-900/40 transition-all duration-700 text-right w-full h-full shadow-2xl hover:shadow-cyber-pink/10"
                     >
                         {/* Animated Glow on Hover */}
                         <div class="absolute inset-0 bg-gradient-to-br from-cyber-pink/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
 
                         {/* Image Header */}
-                        <div class="relative h-60 overflow-hidden">
+                        <div class="relative h-52 md:h-60 overflow-hidden">
                             {item.data.image ? (
                                 <img
                                     src={item.data.image}
@@ -156,7 +156,7 @@ const rendered = await Promise.all(
                             </div>
                         </div>
 
-                        <div class="p-10 pt-4 space-y-6 flex-1 flex flex-col justify-between relative z-10">
+                        <div class="p-5 md:p-10 pt-4 space-y-6 flex-1 flex flex-col justify-between relative z-10">
                             <div class="space-y-4">
                                 <h3 class="text-2xl font-black text-white group-hover:text-cyber-pink transition-colors leading-tight font-heading group-hover:translate-x-[-4px] duration-500">
                                     {item.data.title}
