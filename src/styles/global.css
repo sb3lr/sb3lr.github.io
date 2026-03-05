@@ -383,3 +383,262 @@ html[lang="en"] .flex-row-reverse {
 .content-body h1:first-of-type {
   display: none;
 }
+
+/* Shared article prose styles (tutorials / tools / achievements) */
+.article-prose {
+  --prose-h2: #ddd6fe;
+  --prose-h3: #93c5fd;
+  --prose-strong: #f5d0fe;
+  --prose-link: #93c5fd;
+  --prose-marker: #c4b5fd;
+  --prose-code-fg: #bfdbfe;
+  --prose-code-bg: rgba(59, 130, 246, 0.12);
+  --prose-code-border: rgba(96, 165, 250, 0.2);
+  --prose-pre-border: rgba(96, 165, 250, 0.22);
+  --prose-pre-bg: rgba(10, 15, 26, 0.85);
+  --prose-hr-mid: rgba(168, 85, 247, 0.5);
+  --prose-table-border: rgba(168, 85, 247, 0.24);
+  --prose-th-fg: #ddd6fe;
+  --prose-th-bg: rgba(139, 92, 246, 0.12);
+  --prose-th-border: rgba(168, 85, 247, 0.22);
+  --prose-zebra: rgba(59, 130, 246, 0.045);
+  --prose-hover: rgba(99, 102, 241, 0.09);
+  --prose-quote-border: rgba(168, 85, 247, 0.55);
+  --prose-quote-bg: rgba(139, 92, 246, 0.08);
+  --prose-quote-ring: rgba(168, 85, 247, 0.18);
+  --prose-h2-accent-top: #a78bfa;
+  --prose-h2-accent-bottom: #60a5fa;
+
+  color: #d4d4d8;
+  direction: rtl;
+  text-align: right;
+  line-height: 1.95;
+  font-size: 1.03rem;
+  overflow-wrap: anywhere;
+}
+
+.article-prose h1 {
+  color: #f4f4f5;
+  line-height: 1.4;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.article-prose h2 {
+  color: var(--prose-h2);
+  border-bottom: 1px solid var(--prose-table-border);
+  position: relative;
+  padding: 0 0.8rem 0.45rem 0;
+  margin-top: 2.3rem;
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.article-prose h2::before {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 0.55em;
+  width: 0.32rem;
+  height: 1.05rem;
+  border-radius: 999px;
+  background: linear-gradient(180deg, var(--prose-h2-accent-top), var(--prose-h2-accent-bottom));
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--prose-h2-accent-bottom) 35%, transparent);
+}
+
+.article-prose h3 {
+  color: var(--prose-h3);
+  margin-top: 1.7rem;
+  margin-bottom: 0.6rem;
+  line-height: 1.5;
+}
+
+.article-prose p {
+  color: #d4d4d8;
+  text-align: right;
+  margin: 0.9rem 0;
+}
+
+.article-prose strong {
+  color: var(--prose-strong);
+  font-weight: 700;
+}
+
+.article-prose a {
+  color: var(--prose-link);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.article-prose code {
+  color: var(--prose-code-fg);
+  background: var(--prose-code-bg);
+  padding: 0.12rem 0.4rem;
+  border-radius: 0.42rem;
+}
+
+.article-prose pre {
+  border: 1px solid var(--prose-pre-border);
+  background: var(--prose-pre-bg);
+  direction: ltr;
+  text-align: left;
+  line-height: 1.8;
+  margin: 1.2rem 0;
+  padding: 1rem 1.1rem;
+  border-radius: 0.95rem;
+}
+
+.article-prose hr {
+  background: linear-gradient(90deg, rgba(96, 165, 250, 0), var(--prose-hr-mid), rgba(96, 165, 250, 0));
+  height: 1px;
+  border: 0;
+  margin: 1.8rem 0;
+}
+
+.article-prose ul,
+.article-prose ol {
+  margin: 1rem 0;
+  padding-right: 1.4rem;
+}
+
+.article-prose ul li,
+.article-prose ol li {
+  padding-right: 0.2rem;
+  text-align: right;
+  margin: 0.35rem 0;
+}
+
+.article-prose li::marker {
+  color: var(--prose-marker);
+}
+
+.article-prose table {
+  display: table;
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border: 1px solid var(--prose-table-border);
+  border-radius: 0.85rem;
+  white-space: nowrap;
+  margin: 1.2rem 0;
+  overflow: hidden;
+}
+
+.article-prose th {
+  color: var(--prose-th-fg);
+  border-bottom: 1px solid var(--prose-th-border);
+  background: var(--prose-th-bg);
+  text-align: right;
+  padding: 0.72rem 0.88rem;
+  font-weight: 700;
+}
+
+.article-prose td {
+  color: #d4d4d8;
+  border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+  text-align: right;
+  padding: 0.66rem 0.88rem;
+}
+
+.article-prose tr:nth-child(even) td {
+  background: var(--prose-zebra);
+}
+
+.article-prose tr:hover td {
+  background: var(--prose-hover);
+}
+
+.article-prose blockquote {
+  border-right: 3px solid var(--prose-quote-border);
+  background: var(--prose-quote-bg);
+  color: #e4e4e7;
+  box-shadow: inset 0 0 0 1px var(--prose-quote-ring);
+  border-radius: 0.8rem;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+
+.article-prose :not(pre) > code {
+  border: 1px solid var(--prose-code-border);
+  direction: ltr;
+}
+
+.article-prose pre code {
+  color: var(--prose-code-fg);
+  background: transparent;
+  border: 0;
+  padding: 0;
+}
+
+.article-prose > :where(h2, h3, p, ul, ol, blockquote, hr) {
+  max-width: 68ch;
+  margin-inline: auto;
+}
+
+.article-prose > :where(pre, table, img) {
+  max-width: 100%;
+}
+
+/* Variants */
+.article-prose--tutorial {}
+
+.article-prose--tools-offensive {
+  --prose-h2: #fda4af;
+  --prose-h3: #fda4af;
+  --prose-strong: #fda4af;
+  --prose-link: #fda4af;
+  --prose-code-fg: #fecdd3;
+  --prose-code-bg: rgba(244, 63, 94, 0.12);
+  --prose-code-border: rgba(251, 113, 133, 0.24);
+  --prose-hr-mid: rgba(244, 63, 94, 0.6);
+  --prose-th-fg: #fecdd3;
+  --prose-th-bg: rgba(244, 63, 94, 0.12);
+  --prose-h2-accent-top: #fb7185;
+  --prose-h2-accent-bottom: #f43f5e;
+}
+
+.article-prose--tools-defensive {
+  --prose-h2: #93c5fd;
+  --prose-h3: #93c5fd;
+  --prose-strong: #93c5fd;
+  --prose-link: #93c5fd;
+  --prose-code-fg: #bfdbfe;
+  --prose-code-bg: rgba(59, 130, 246, 0.12);
+  --prose-code-border: rgba(59, 130, 246, 0.24);
+  --prose-hr-mid: rgba(59, 130, 246, 0.6);
+  --prose-th-fg: #bfdbfe;
+  --prose-th-bg: rgba(59, 130, 246, 0.12);
+  --prose-h2-accent-top: #38bdf8;
+  --prose-h2-accent-bottom: #3b82f6;
+}
+
+.article-prose--achievement {
+  --prose-h2: #fbcfe8;
+  --prose-h3: #f9a8d4;
+  --prose-strong: #fbcfe8;
+  --prose-link: #f9a8d4;
+  --prose-marker: #f472b6;
+  --prose-code-fg: #fbcfe8;
+  --prose-code-bg: rgba(236, 72, 153, 0.12);
+  --prose-code-border: rgba(244, 114, 182, 0.2);
+  --prose-pre-border: rgba(244, 114, 182, 0.22);
+  --prose-pre-bg: rgba(26, 10, 20, 0.85);
+  --prose-hr-mid: rgba(236, 72, 153, 0.6);
+  --prose-table-border: rgba(236, 72, 153, 0.24);
+  --prose-th-fg: #fbcfe8;
+  --prose-th-bg: rgba(236, 72, 153, 0.12);
+  --prose-th-border: rgba(236, 72, 153, 0.22);
+  --prose-zebra: rgba(236, 72, 153, 0.05);
+  --prose-hover: rgba(236, 72, 153, 0.1);
+  --prose-quote-border: rgba(236, 72, 153, 0.55);
+  --prose-quote-bg: rgba(236, 72, 153, 0.08);
+  --prose-quote-ring: rgba(244, 114, 182, 0.18);
+  --prose-h2-accent-top: #f472b6;
+  --prose-h2-accent-bottom: #ec4899;
+}
+
+.article-prose--achievement img {
+  border-radius: 1rem;
+  border: 1px solid rgba(244, 114, 182, 0.2);
+  margin: 1rem auto;
+}
