@@ -124,23 +124,23 @@ const structuredData = [websiteSchema, pageSchema, ...additionalSchema];
   >
     <div class="fixed inset-0 pointer-events-none z-[9999]" id="cyber-cursor">
       <div
-        class="absolute w-8 h-8 border border-cyber-purple/50 rounded-full -translate-x-1/2 -translate-y-1/2 transition-all duration-100 ease-out"
+        class="absolute w-9 h-9 border-2 border-cyber-purple/65 bg-cyber-purple/5 rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_26px_rgba(168,85,247,0.35)] [will-change:transform]"
         id="cursor-ring"
       >
       </div>
       <div
-        class="absolute w-1.5 h-1.5 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_15px_rgba(255,255,255,0.8)] hidden md:block"
+        class="absolute w-2 h-2 bg-white rounded-full -translate-x-1/2 -translate-y-1/2 shadow-[0_0_18px_rgba(255,255,255,0.9)] [will-change:transform]"
         id="cursor-dot"
       >
       </div>
     </div>
 
     <script>
-      const ring = document.getElementById("cursor-ring");
-      const dot = document.getElementById("cursor-dot");
-      const desktopPointer = window.matchMedia(
-        "(min-width: 768px) and (pointer: fine)"
-      ).matches;
+      const ring = document.getElementById("cursor-ring") as HTMLDivElement | null;
+      const dot = document.getElementById("cursor-dot") as HTMLDivElement | null;
+      const desktopPointer =
+        window.matchMedia("(hover: hover)").matches ||
+        window.matchMedia("(pointer: fine)").matches;
 
       if (!desktopPointer && ring && dot) {
         ring.style.display = "none";
@@ -155,8 +155,8 @@ const structuredData = [websiteSchema, pageSchema, ...additionalSchema];
 
       const renderCursor = () => {
         if (!ring || !dot || !desktopPointer) return;
-        ringX += (targetX - ringX) * 0.18;
-        ringY += (targetY - ringY) * 0.18;
+        ringX += (targetX - ringX) * 0.14;
+        ringY += (targetY - ringY) * 0.14;
 
         dot.style.transform = `translate3d(${targetX}px, ${targetY}px, 0) translate(-50%, -50%)`;
         ring.style.transform = `translate3d(${ringX}px, ${ringY}px, 0) translate(-50%, -50%)`;
@@ -165,7 +165,7 @@ const structuredData = [websiteSchema, pageSchema, ...additionalSchema];
 
       document.addEventListener(
         "mousemove",
-        (e) => {
+        (e: MouseEvent) => {
           if (!ring || !dot || !desktopPointer) return;
           targetX = e.clientX;
           targetY = e.clientY;
