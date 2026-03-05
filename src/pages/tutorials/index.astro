@@ -4,20 +4,11 @@ import { getCollection } from "astro:content";
 
 const tutorials = await getCollection("tutorials");
 
-// Sort by publish date (newest first)
 const sorted = tutorials.sort((a, b) => {
   const dateA = a.data.publishDate ? new Date(a.data.publishDate).getTime() : 0;
   const dateB = b.data.publishDate ? new Date(b.data.publishDate).getTime() : 0;
   return dateB - dateA;
 });
-
-// Pre-render all tutorial content for modals
-const rendered = await Promise.all(
-  sorted.map(async (tutorial) => {
-    const { Content } = await tutorial.render();
-    return { tutorial, Content };
-  })
-);
 
 const seoTitle = "الشروحات التقنية | سعيد بران";
 const seoDescription =
@@ -33,36 +24,30 @@ const seoDescription =
     <header class="space-y-4">
       <div class="flex items-center gap-3">
         <div class="h-[1px] w-12 bg-cyber-purple"></div>
-        <span
-          class="text-[10px] text-cyber-purple font-mono tracking-[.3em] uppercase"
-          >Knowledge_Base</span
-        >
+        <span class="text-[10px] text-cyber-purple font-mono tracking-[.3em] uppercase">
+          Knowledge_Base
+        </span>
       </div>
       <h1 class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter">
         <span class="lang-ar">الشروحات البرمجية</span>
-        <span class="lang-en text-2xl text-zinc-500 block"
-          >SYSTEM_TUTORIALS</span
-        >
+        <span class="lang-en text-2xl text-zinc-500 block">SYSTEM_TUTORIALS</span>
       </h1>
       <p class="text-zinc-500 max-w-2xl font-mono text-sm">
-        <span class="lang-ar"
-          >هنا أشارككم خبراتي وشروحاتي في مجال الأمن السيبراني والبرمجة. يتم
-          تحديث هذه القائمة باستمرار.</span
-        >
-        <span class="lang-en"
-          >Documentation and walkthroughs for various cybersecurity and
-          development topics.</span
-        >
+        <span class="lang-ar">
+          هنا أشارككم خبراتي وشروحاتي في مجال الأمن السيبراني والبرمجة. يتم تحديث هذه القائمة باستمرار.
+        </span>
+        <span class="lang-en">
+          Documentation and walkthroughs for various cybersecurity and development topics.
+        </span>
       </p>
     </header>
 
-    {/* Tutorial Cards Grid */}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {
-        rendered.map(({ tutorial }) => (
-          <button
-            onclick={`openTutorial('tut-${tutorial.slug}')`}
-            class="group relative p-[1px] rounded-2xl md:rounded-3xl overflow-hidden bg-white/5 hover:bg-cyber-purple/20 transition-all duration-500 text-right w-full"
+        sorted.map((tutorial) => (
+          <a
+            href={`/tutorials/${tutorial.slug}`}
+            class="group relative block p-[1px] rounded-2xl md:rounded-3xl overflow-hidden bg-white/5 hover:bg-cyber-purple/20 transition-all duration-500 text-right"
           >
             <div class="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-purple to-transparent top-0 opacity-0 group-hover:opacity-100 transition-opacity" />
             <div class="p-5 md:p-8 bg-zinc-950/40 backdrop-blur-xl rounded-[15px] md:rounded-[23px] h-full flex flex-col justify-between space-y-6">
@@ -86,17 +71,18 @@ const seoDescription =
                   </div>
                   {tutorial.data.publishDate && (
                     <span class="text-[9px] font-mono text-zinc-600 uppercase tracking-widest">
-                      {new Date(tutorial.data.publishDate).toLocaleDateString(
-                        "ar-SA",
-                        { year: "numeric", month: "short", day: "numeric" }
-                      )}
+                      {new Date(tutorial.data.publishDate).toLocaleDateString("ar-SA", {
+                        year: "numeric",
+                        month: "short",
+                        day: "numeric",
+                      })}
                     </span>
                   )}
                 </div>
                 <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors leading-tight">
                   {tutorial.data.title}
                 </h3>
-                <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed font-mono">
+                <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">
                   {tutorial.data.description}
                 </p>
               </div>
@@ -104,7 +90,7 @@ const seoDescription =
               <div class="pt-4 border-t border-white/5 flex items-center justify-between">
                 <div class="flex gap-2 flex-wrap">
                   {tutorial.data.tags.map((tag: string) => (
-                    <span class="text-[8px] px-2 py-0.5 rounded-full bg-white/5 text-zinc-500 border border-white/5">
+                    <span class="text-[9px] px-2.5 py-1 rounded-full bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20">
                       #{tag}
                     </span>
                   ))}
@@ -127,153 +113,9 @@ const seoDescription =
                 </div>
               </div>
             </div>
-          </button>
+          </a>
         ))
       }
     </div>
   </div>
-
-  {/* ===== MODALS ===== */}
-  {
-    rendered.map(({ tutorial, Content }) => (
-      <div
-        id={`tut-${tutorial.slug}`}
-        class="fixed inset-0 z-50 hidden items-center justify-center p-4 md:p-8"
-        onclick="closeTutorialOnBackdrop(event, this)"
-      >
-        {/* Backdrop */}
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" />
-
-        {/* Modal Content */}
-        <div class="relative w-full max-w-3xl max-h-[88vh] flex flex-col rounded-3xl bg-zinc-950 border border-cyber-purple/20 shadow-2xl shadow-cyber-purple/5 overflow-hidden">
-          {/* Sticky Header */}
-          <div class="flex-shrink-0 flex items-start justify-between gap-4 p-6 bg-zinc-950/95 backdrop-blur-sm border-b border-white/5">
-            <div class="space-y-1 text-right flex-1 min-w-0">
-              <div class="flex items-center gap-2 justify-end flex-wrap">
-                {tutorial.data.publishDate && (
-                  <span class="text-[9px] font-mono text-zinc-600 uppercase tracking-widest">
-                    {new Date(tutorial.data.publishDate).toLocaleDateString(
-                      "ar-SA",
-                      { year: "numeric", month: "long", day: "numeric" }
-                    )}
-                  </span>
-                )}
-                <span class="text-[9px] font-mono px-2 py-1 rounded-md bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20 uppercase">
-                  Tutorial
-                </span>
-              </div>
-              <h2 class="text-xl md:text-2xl font-black tracking-tighter text-white">
-                {tutorial.data.title}
-              </h2>
-              <p class="text-sm text-zinc-400 font-mono leading-relaxed">
-                {tutorial.data.description}
-              </p>
-            </div>
-            <button
-              onclick={`closeTutorial('tut-${tutorial.slug}')`}
-              class="mt-1 flex-shrink-0 w-8 h-8 rounded-full bg-white/5 hover:bg-cyber-purple/20 flex items-center justify-center text-zinc-400 hover:text-cyber-purple transition-colors"
-            >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="14"
-                height="14"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                stroke-width="2"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              >
-                <path d="M18 6 6 18" />
-                <path d="m6 6 12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Scrollable Body */}
-          <div
-            class="content-body flex-1 overflow-y-auto p-6 prose prose-invert max-w-none
-          prose-headings:font-black prose-headings:tracking-tighter prose-headings:text-right
-          prose-h1:text-2xl prose-h1:text-white
-          prose-h2:text-xl prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-2 prose-h2:mt-8
-          prose-h3:text-base prose-h3:text-cyber-purple/80 prose-h3:font-mono prose-h3:uppercase prose-h3:tracking-widest
-          prose-p:text-zinc-400 prose-p:leading-relaxed prose-p:text-right prose-p:my-3
-          prose-code:text-cyber-purple prose-code:bg-cyber-purple/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-code:text-sm
-          prose-pre:bg-zinc-900/80 prose-pre:border prose-pre:border-cyber-purple/10 prose-pre:rounded-2xl prose-pre:p-4 prose-pre:shadow-inner prose-pre:my-4
-          prose-strong:text-white
-          prose-a:text-cyber-purple prose-a:no-underline hover:prose-a:underline
-          prose-ul:text-right prose-li:text-zinc-400 prose-li:my-1
-          prose-ol:text-right prose-ol:text-zinc-400
-          prose-table:w-full prose-table:border-collapse
-          prose-th:text-right prose-th:text-zinc-300 prose-th:font-mono prose-th:text-xs prose-th:uppercase prose-th:tracking-wider prose-th:pb-2 prose-th:border-b prose-th:border-white/10
-          prose-td:text-zinc-400 prose-td:py-2 prose-td:border-b prose-td:border-white/5 prose-td:text-right prose-td:text-sm
-          prose-blockquote:border-l-cyber-purple/50 prose-blockquote:bg-cyber-purple/5 prose-blockquote:rounded-r-xl prose-blockquote:px-4 prose-blockquote:py-2 prose-blockquote:my-4 prose-blockquote:not-italic
-          prose-blockquote:text-zinc-300 prose-blockquote:border-l-2
-          prose-hr:border-white/5 prose-hr:my-6"
-          >
-            <Content />
-          </div>
-
-          {/* Footer with tags */}
-          {tutorial.data.tags && tutorial.data.tags.length > 0 && (
-            <div class="flex-shrink-0 px-6 py-4 border-t border-white/5 flex flex-wrap gap-2 justify-end bg-zinc-950/80">
-              {tutorial.data.tags.map((tag: string) => (
-                <span class="text-[9px] font-mono px-2 py-1 rounded-full bg-cyber-purple/10 text-cyber-purple/70 border border-cyber-purple/20">
-                  #{tag}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-      </div>
-    ))
-  }
 </Layout>
-
-<script>
-  function openTutorial(id: string) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-      document.body.style.overflow = "hidden";
-    }
-  }
-
-  function closeTutorial(id: string) {
-    const modal = document.getElementById(id);
-    if (modal) {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-      document.body.style.overflow = "";
-    }
-  }
-
-  function closeTutorialOnBackdrop(event: MouseEvent, modal: HTMLElement) {
-    if (
-      event.target === modal ||
-      (event.target as HTMLElement).closest(".absolute.inset-0")
-    ) {
-      modal.classList.add("hidden");
-      modal.classList.remove("flex");
-      document.body.style.overflow = "";
-    }
-  }
-
-  // Close all on Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      document.querySelectorAll('[id^="tut-"]').forEach((modal) => {
-        if (!modal.classList.contains("hidden")) {
-          (modal as HTMLElement).classList.add("hidden");
-          (modal as HTMLElement).classList.remove("flex");
-          document.body.style.overflow = "";
-        }
-      });
-    }
-  });
-
-  (window as any).openTutorial = openTutorial;
-  (window as any).closeTutorial = closeTutorial;
-  (window as any).closeTutorialOnBackdrop = closeTutorialOnBackdrop;
-</script>

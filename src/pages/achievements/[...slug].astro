@@ -3,16 +3,18 @@ import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
 export async function getStaticPaths() {
-  const tutorials = await getCollection("tutorials");
-  return tutorials.map((entry) => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  const achievements = await getCollection("achievements");
+  return achievements
+    .filter((entry) => !entry.id.startsWith("_"))
+    .map((entry) => ({
+      params: { slug: entry.slug },
+      props: { entry },
+    }));
 }
 
 const { entry } = Astro.props;
 const { Content } = await entry.render();
-const seoTitle = `${entry.data.title} | شروحات الأمن السيبراني | سعيد بران`;
+const seoTitle = `${entry.data.title} | الإنجازات | سعيد بران`;
 ---
 
 <Layout
@@ -20,15 +22,22 @@ const seoTitle = `${entry.data.title} | شروحات الأمن السيبران
   description={entry.data.description}
   type="article"
   publishedTime={entry.data.publishDate}
-  keywords={["tutorial", "cybersecurity", ...entry.data.tags]}
+  keywords={["achievement", "cybersecurity", ...entry.data.tags]}
 >
   <section class="min-h-[75vh] flex items-center justify-center">
-    <article class="w-full max-w-4xl max-h-[88vh] flex flex-col rounded-3xl bg-zinc-950/95 border border-cyber-purple/20 shadow-2xl shadow-cyber-purple/10 overflow-hidden">
+    <article class="w-full max-w-4xl max-h-[88vh] flex flex-col rounded-3xl bg-zinc-950/95 border border-cyber-pink/30 shadow-2xl shadow-cyber-pink/10 overflow-hidden">
+      {entry.data.image && (
+        <div class="flex-shrink-0 h-56 md:h-72 overflow-hidden relative">
+          <img src={entry.data.image} alt={entry.data.title} loading="lazy" decoding="async" class="w-full h-full object-cover" />
+          <div class="absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-zinc-950/25 to-transparent" />
+        </div>
+      )}
+
       <header class="flex-shrink-0 p-5 md:p-6 border-b border-white/10 bg-zinc-950/90 text-center space-y-3">
-        <a href="/tutorials" class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-cyber-purple transition-colors font-mono uppercase tracking-widest group">
+        <a href="/achievements" class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-cyber-pink transition-colors font-mono uppercase tracking-widest group">
           <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          <span class="lang-ar">العودة للشروحات</span>
-          <span class="lang-en">Back to Tutorials</span>
+          <span class="lang-ar">العودة للإنجازات</span>
+          <span class="lang-en">Back to Achievements</span>
         </a>
 
         <div class="flex items-center gap-2 justify-center flex-wrap">
@@ -41,21 +50,25 @@ const seoTitle = `${entry.data.title} | شروحات الأمن السيبران
               })}
             </span>
           )}
-          <span class="text-[10px] font-mono px-2.5 py-1 rounded-md bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20 uppercase">Tutorial</span>
+          {entry.data.category && (
+            <span class="text-[10px] font-mono px-2.5 py-1 rounded-md bg-cyber-pink/10 text-cyber-pink border border-cyber-pink/25 uppercase tracking-widest">
+              {entry.data.category}
+            </span>
+          )}
         </div>
 
         <h1 class="text-2xl md:text-4xl font-black tracking-tight text-white leading-tight">{entry.data.title}</h1>
         <p class="text-zinc-400 text-sm md:text-base leading-relaxed">{entry.data.description}</p>
       </header>
 
-      <div class="tutorial-prose content-body flex-1 overflow-y-auto p-5 md:p-7 prose prose-invert max-w-none">
+      <div class="achievement-prose content-body flex-1 overflow-y-auto p-5 md:p-7 prose prose-invert max-w-none">
         <Content />
       </div>
 
       {entry.data.tags && entry.data.tags.length > 0 && (
         <footer class="flex-shrink-0 px-5 py-4 md:px-6 border-t border-white/10 flex flex-wrap gap-2 justify-end bg-zinc-950/90">
           {entry.data.tags.map((tag: string) => (
-            <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/25">
+            <span class="text-[10px] font-mono px-2.5 py-1 rounded-full bg-cyber-pink/10 text-cyber-pink border border-cyber-pink/25">
               #{tag}
             </span>
           ))}
@@ -66,7 +79,7 @@ const seoTitle = `${entry.data.title} | شروحات الأمن السيبران
 </Layout>
 
 <style is:global>
-  .tutorial-prose {
+  .achievement-prose {
     color: #d4d4d8;
     direction: rtl;
     text-align: right;
@@ -75,17 +88,16 @@ const seoTitle = `${entry.data.title} | شروحات الأمن السيبران
     overflow-wrap: anywhere;
   }
 
-  .tutorial-prose h1 {
+  .achievement-prose h1 {
     color: #f4f4f5;
-    text-shadow: none;
     line-height: 1.4;
     margin-top: 0.5rem;
     margin-bottom: 1rem;
   }
 
-  .tutorial-prose h2 {
-    color: #ddd6fe;
-    border-bottom: 1px solid rgba(168, 85, 247, 0.24);
+  .achievement-prose h2 {
+    color: #fbcfe8;
+    border-bottom: 1px solid rgba(236, 72, 153, 0.28);
     position: relative;
     padding: 0 0.8rem 0.45rem 0;
     margin-top: 2.3rem;
@@ -93,7 +105,7 @@ const seoTitle = `${entry.data.title} | شروحات الأمن السيبران
     line-height: 1.5;
   }
 
-  .tutorial-prose h2::before {
+  .achievement-prose h2::before {
     content: "";
     position: absolute;
     right: 0;
@@ -101,146 +113,137 @@ const seoTitle = `${entry.data.title} | شروحات الأمن السيبران
     width: 0.32rem;
     height: 1.05rem;
     border-radius: 999px;
-    background: linear-gradient(180deg, #a78bfa, #60a5fa);
-    box-shadow: 0 0 0 1px rgba(96, 165, 250, 0.25);
+    background: linear-gradient(180deg, #f472b6, #ec4899);
+    box-shadow: 0 0 0 1px rgba(244, 114, 182, 0.25);
   }
 
-  .tutorial-prose h3 {
-    color: #93c5fd;
+  .achievement-prose h3 {
+    color: #f9a8d4;
     margin-top: 1.7rem;
     margin-bottom: 0.6rem;
     line-height: 1.5;
   }
 
-  .tutorial-prose p {
+  .achievement-prose p {
     color: #d4d4d8;
     text-align: right;
     margin: 0.9rem 0;
   }
 
-  .tutorial-prose p:first-of-type {
-    color: #e4e4e7;
-    font-size: 1.06rem;
-  }
-
-  .tutorial-prose strong {
-    color: #f5d0fe;
+  .achievement-prose strong {
+    color: #fbcfe8;
     font-weight: 700;
   }
 
-  .tutorial-prose a {
-    color: #93c5fd;
+  .achievement-prose a {
+    color: #f9a8d4;
     text-decoration: underline;
     text-underline-offset: 2px;
   }
 
-  .tutorial-prose code {
-    color: #bfdbfe;
-    background: rgba(59, 130, 246, 0.12);
+  .achievement-prose code {
+    color: #fbcfe8;
+    background: rgba(236, 72, 153, 0.12);
     padding: 0.12rem 0.4rem;
     border-radius: 0.42rem;
+    border: 1px solid rgba(244, 114, 182, 0.2);
+    direction: ltr;
   }
 
-  .tutorial-prose pre {
-    border: 1px solid rgba(96, 165, 250, 0.22);
-    background: rgba(10, 15, 26, 0.85);
+  .achievement-prose pre {
+    border: 1px solid rgba(244, 114, 182, 0.22);
+    background: rgba(26, 10, 20, 0.85);
     direction: ltr;
     text-align: left;
     line-height: 1.8;
     margin: 1.2rem 0;
     padding: 1rem 1.1rem;
     border-radius: 0.95rem;
-    box-shadow: none;
   }
 
-  .tutorial-prose hr {
-    background: linear-gradient(90deg, rgba(96, 165, 250, 0), rgba(168, 85, 247, 0.5), rgba(96, 165, 250, 0));
+  .achievement-prose hr {
+    background: linear-gradient(90deg, rgba(244, 114, 182, 0), rgba(236, 72, 153, 0.6), rgba(244, 114, 182, 0));
     height: 1px;
     border: 0;
     margin: 1.8rem 0;
   }
 
-  .tutorial-prose ul,
-  .tutorial-prose ol {
+  .achievement-prose ul,
+  .achievement-prose ol {
     margin: 1rem 0;
     padding-right: 1.4rem;
   }
 
-  .tutorial-prose ul li,
-  .tutorial-prose ol li {
-    padding-right: 0.2rem;
+  .achievement-prose ul li,
+  .achievement-prose ol li {
     text-align: right;
     margin: 0.35rem 0;
   }
 
-  .tutorial-prose li::marker {
-    color: #c4b5fd;
+  .achievement-prose li::marker {
+    color: #f472b6;
   }
 
-  .tutorial-prose table {
+  .achievement-prose img {
+    border-radius: 1rem;
+    border: 1px solid rgba(244, 114, 182, 0.2);
+    margin: 1rem auto;
+  }
+
+  .achievement-prose table {
     display: table;
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    border: 1px solid rgba(168, 85, 247, 0.24);
+    border: 1px solid rgba(236, 72, 153, 0.24);
     border-radius: 0.85rem;
     white-space: nowrap;
     margin: 1.2rem 0;
     overflow: hidden;
   }
 
-  .tutorial-prose th {
-    color: #ddd6fe;
-    border-bottom: 1px solid rgba(168, 85, 247, 0.22);
-    background: rgba(139, 92, 246, 0.12);
+  .achievement-prose th {
+    color: #fbcfe8;
+    border-bottom: 1px solid rgba(236, 72, 153, 0.22);
+    background: rgba(236, 72, 153, 0.12);
     text-align: right;
     padding: 0.72rem 0.88rem;
     font-weight: 700;
   }
 
-  .tutorial-prose td {
+  .achievement-prose td {
     color: #d4d4d8;
     border-bottom: 1px solid rgba(148, 163, 184, 0.15);
     text-align: right;
     padding: 0.66rem 0.88rem;
   }
 
-  .tutorial-prose tr:nth-child(even) td {
-    background: rgba(59, 130, 246, 0.045);
+  .achievement-prose tr:nth-child(even) td {
+    background: rgba(236, 72, 153, 0.05);
   }
 
-  .tutorial-prose tr:hover td {
-    background: rgba(99, 102, 241, 0.09);
-  }
-
-  .tutorial-prose blockquote {
-    border-right: 3px solid rgba(168, 85, 247, 0.55);
-    background: rgba(139, 92, 246, 0.08);
-    color: #e4e4e7;
-    box-shadow: inset 0 0 0 1px rgba(168, 85, 247, 0.18);
+  .achievement-prose blockquote {
+    border-right: 3px solid rgba(236, 72, 153, 0.55);
+    background: rgba(236, 72, 153, 0.08);
+    color: #f1f5f9;
+    box-shadow: inset 0 0 0 1px rgba(244, 114, 182, 0.18);
     border-radius: 0.8rem;
     padding: 0.75rem 1rem;
     margin: 1rem 0;
   }
 
-  .tutorial-prose :not(pre) > code {
-    border: 1px solid rgba(96, 165, 250, 0.2);
-    direction: ltr;
-  }
-
-  .tutorial-prose pre code {
-    color: #bfdbfe;
+  .achievement-prose pre code {
     background: transparent;
     border: 0;
     padding: 0;
   }
 
-  .tutorial-prose > :where(h2, h3, p, ul, ol, blockquote, hr) {
+  .achievement-prose > :where(h2, h3, p, ul, ol, blockquote, hr) {
     max-width: 68ch;
     margin-inline: auto;
   }
 
-  .tutorial-prose > :where(pre, table) {
+  .achievement-prose > :where(pre, table, img) {
     max-width: 100%;
   }
 </style>

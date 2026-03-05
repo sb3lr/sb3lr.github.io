@@ -13,69 +13,265 @@ export async function getStaticPaths() {
 const { entry } = Astro.props;
 const { Content } = await entry.render();
 const seoTitle = `${entry.data.title} | أدوات الأمن السيبراني | سعيد بران`;
+const isOffensive = entry.data.category === "offensive";
+const accent = isOffensive
+  ? {
+      text: "text-rose-300",
+      softBg: "bg-rose-500/10",
+      border: "border-rose-400/30",
+      glow: "shadow-rose-500/10",
+    }
+  : {
+      text: "text-sky-300",
+      softBg: "bg-sky-500/10",
+      border: "border-sky-400/30",
+      glow: "shadow-sky-500/10",
+    };
 ---
 
 <Layout
   title={seoTitle}
   description={entry.data.description}
   type="article"
-  keywords={[entry.data.category, entry.data.subcategory, ...entry.data.tags].filter(
-    Boolean
-  )}
+  keywords={[entry.data.category, entry.data.subcategory, ...entry.data.tags].filter(Boolean)}
 >
-  <article class="max-w-4xl mx-auto space-y-12 pb-32">
-    <header class="space-y-6">
-      <a
-        href="/tools"
-        class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-cyber-blue transition-colors font-mono uppercase tracking-widest group"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="14"
-          height="14"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          class="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform"
-          ><path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>
-        </svg>
-        <span class="lang-ar">العودة للأدوات</span>
-        <span class="lang-en">Back to Tools</span>
-      </a>
+  <section class="min-h-[75vh] flex items-center justify-center">
+    <article class={`w-full max-w-4xl max-h-[88vh] flex flex-col rounded-3xl bg-zinc-950/95 border ${accent.border} shadow-2xl ${accent.glow} overflow-hidden`}>
+      <header class="flex-shrink-0 p-5 md:p-6 border-b border-white/10 bg-zinc-950/90 text-center space-y-3">
+        <a
+          href="/tools"
+          class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-white transition-colors font-mono uppercase tracking-widest group"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <span class="lang-ar">العودة للأدوات</span>
+          <span class="lang-en">Back to Tools</span>
+        </a>
 
-      <div class="space-y-4">
-        <div class="flex items-center gap-2">
-          <span
-            class={`px-3 py-1 rounded-full ${
-              entry.data.category === "offensive"
-                ? "bg-red-500/10 border-red-500/20 text-red-400"
-                : "bg-cyber-blue/10 border-cyber-blue/20 text-cyber-blue"
-            } border text-[10px] font-mono uppercase`}
-          >
-            {entry.data.category} // {entry.data.subcategory}
+        <div class="flex items-center gap-2 justify-center flex-wrap">
+          <span class={`text-[10px] font-mono px-2.5 py-1 rounded-md border uppercase tracking-widest ${accent.softBg} ${accent.text} ${accent.border}`}>
+            {entry.data.category} / {entry.data.subcategory}
           </span>
         </div>
-        <h1
-          class="text-4xl md:text-5xl font-black tracking-tight text-white uppercase font-mono"
-        >
-          {entry.data.title}
-        </h1>
-        <p class="text-lg text-zinc-400 font-mono">{entry.data.description}</p>
+
+        <h1 class="text-2xl md:text-4xl font-black tracking-tight text-white leading-tight">{entry.data.title}</h1>
+        <p class="text-zinc-400 text-sm md:text-base leading-relaxed">{entry.data.description}</p>
+      </header>
+
+      <div class={`tool-prose content-body flex-1 overflow-y-auto p-5 md:p-7 prose prose-invert max-w-none ${isOffensive ? "tool-prose-offensive" : "tool-prose-defensive"}`}>
+        <Content />
       </div>
 
-      <div
-        class="h-[1px] w-full bg-gradient-to-r from-cyber-blue/30 via-white/5 to-transparent"
-      >
-      </div>
-    </header>
-
-    <div
-      class="content-body prose prose-invert prose-cyber max-w-none prose-headings:font-black prose-headings:tracking-tighter prose-h1:text-3xl prose-h2:text-2xl prose-h2:border-b prose-h2:border-white/5 prose-h2:pb-2 prose-p:text-zinc-400 prose-p:leading-relaxed prose-code:text-cyber-blue prose-code:bg-white/5 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none prose-pre:bg-zinc-950/50 prose-pre:border prose-pre:border-white/5 prose-pre:rounded-2xl prose-pre:p-6 prose-strong:text-white prose-a:text-cyber-blue prose-a:no-underline hover:prose-a:underline"
-    >
-      <Content />
-    </div>
-  </article>
+      {entry.data.tags && entry.data.tags.length > 0 && (
+        <footer class="flex-shrink-0 px-5 py-4 md:px-6 border-t border-white/10 flex flex-wrap gap-2 justify-end bg-zinc-950/90">
+          {entry.data.tags.map((tag: string) => (
+            <span class={`text-[10px] font-mono px-2.5 py-1 rounded-full border ${accent.softBg} ${accent.text} ${accent.border}`}>
+              #{tag}
+            </span>
+          ))}
+        </footer>
+      )}
+    </article>
+  </section>
 </Layout>
+
+<style is:global>
+  .tool-prose {
+    color: #d4d4d8;
+    direction: rtl;
+    text-align: right;
+    line-height: 1.95;
+    font-size: 1.03rem;
+    overflow-wrap: anywhere;
+  }
+
+  .tool-prose h1 {
+    color: #f4f4f5;
+    line-height: 1.4;
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .tool-prose h2 {
+    position: relative;
+    padding: 0 0.8rem 0.45rem 0;
+    margin-top: 2.3rem;
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  .tool-prose h2::before {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 0.55em;
+    width: 0.32rem;
+    height: 1.05rem;
+    border-radius: 999px;
+  }
+
+  .tool-prose h3 {
+    margin-top: 1.7rem;
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+  }
+
+  .tool-prose p {
+    color: #d4d4d8;
+    text-align: right;
+    margin: 0.9rem 0;
+  }
+
+  .tool-prose strong {
+    font-weight: 700;
+  }
+
+  .tool-prose a {
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .tool-prose code {
+    padding: 0.12rem 0.4rem;
+    border-radius: 0.42rem;
+  }
+
+  .tool-prose pre {
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(10, 15, 26, 0.85);
+    direction: ltr;
+    text-align: left;
+    line-height: 1.8;
+    margin: 1.2rem 0;
+    padding: 1rem 1.1rem;
+    border-radius: 0.95rem;
+  }
+
+  .tool-prose hr {
+    height: 1px;
+    border: 0;
+    margin: 1.8rem 0;
+  }
+
+  .tool-prose ul,
+  .tool-prose ol {
+    margin: 1rem 0;
+    padding-right: 1.4rem;
+  }
+
+  .tool-prose ul li,
+  .tool-prose ol li {
+    padding-right: 0.2rem;
+    text-align: right;
+    margin: 0.35rem 0;
+  }
+
+  .tool-prose table {
+    display: table;
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 0.85rem;
+    white-space: nowrap;
+    margin: 1.2rem 0;
+    overflow: hidden;
+  }
+
+  .tool-prose th {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    text-align: right;
+    padding: 0.72rem 0.88rem;
+    font-weight: 700;
+  }
+
+  .tool-prose td {
+    border-bottom: 1px solid rgba(148, 163, 184, 0.15);
+    text-align: right;
+    padding: 0.66rem 0.88rem;
+  }
+
+  .tool-prose tr:nth-child(even) td {
+    background: rgba(59, 130, 246, 0.045);
+  }
+
+  .tool-prose blockquote {
+    border-right: 3px solid rgba(255, 255, 255, 0.35);
+    background: rgba(148, 163, 184, 0.1);
+    color: #e4e4e7;
+    box-shadow: inset 0 0 0 1px rgba(148, 163, 184, 0.18);
+    border-radius: 0.8rem;
+    padding: 0.75rem 1rem;
+    margin: 1rem 0;
+  }
+
+  .tool-prose :not(pre) > code {
+    direction: ltr;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  }
+
+  .tool-prose pre code {
+    background: transparent;
+    border: 0;
+    padding: 0;
+  }
+
+  .tool-prose > :where(h2, h3, p, ul, ol, blockquote, hr) {
+    max-width: 68ch;
+    margin-inline: auto;
+  }
+
+  .tool-prose > :where(pre, table) {
+    max-width: 100%;
+  }
+
+  .tool-prose-offensive h2,
+  .tool-prose-offensive h3,
+  .tool-prose-offensive a,
+  .tool-prose-offensive strong {
+    color: #fda4af;
+  }
+
+  .tool-prose-offensive h2::before {
+    background: linear-gradient(180deg, #fb7185, #f43f5e);
+  }
+
+  .tool-prose-offensive hr {
+    background: linear-gradient(90deg, rgba(251, 113, 133, 0), rgba(244, 63, 94, 0.6), rgba(251, 113, 133, 0));
+  }
+
+  .tool-prose-offensive code {
+    color: #fecdd3;
+    background: rgba(244, 63, 94, 0.12);
+  }
+
+  .tool-prose-offensive th {
+    color: #fecdd3;
+    background: rgba(244, 63, 94, 0.12);
+  }
+
+  .tool-prose-defensive h2,
+  .tool-prose-defensive h3,
+  .tool-prose-defensive a,
+  .tool-prose-defensive strong {
+    color: #93c5fd;
+  }
+
+  .tool-prose-defensive h2::before {
+    background: linear-gradient(180deg, #38bdf8, #3b82f6);
+  }
+
+  .tool-prose-defensive hr {
+    background: linear-gradient(90deg, rgba(56, 189, 248, 0), rgba(59, 130, 246, 0.6), rgba(56, 189, 248, 0));
+  }
+
+  .tool-prose-defensive code {
+    color: #bfdbfe;
+    background: rgba(59, 130, 246, 0.12);
+  }
+
+  .tool-prose-defensive th {
+    color: #bfdbfe;
+    background: rgba(59, 130, 246, 0.12);
+  }
+</style>
