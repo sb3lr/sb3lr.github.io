@@ -1,0 +1,616 @@
+---
+import {
+  Home,
+  Award,
+  Briefcase,
+  Wrench,
+  FileText,
+  UserSquare2,
+  BookOpen,
+  Terminal,
+  ShieldCheck,
+} from "lucide-react";
+import LanguageToggle from "./LanguageToggle.astro";
+
+const navItems = [
+  {
+    name: "الرئيسية",
+    nameEn: "Home",
+    icon: Home,
+    href: "/#home",
+    command: "/bin/home",
+    commandEn: "/bin/home",
+  },
+  {
+    name: "من أنا",
+    nameEn: "About",
+    icon: UserSquare2,
+    href: "/#about",
+    command: "whoami",
+    commandEn: "whoami",
+  },
+  {
+    name: "الأنجازات",
+    nameEn: "Achievements",
+    icon: Award,
+    href: "/achievements",
+    command: "ls ./achievements",
+    commandEn: "ls ./achievements",
+  },
+  {
+    name: "الشروحات",
+    nameEn: "Tutorials",
+    icon: BookOpen,
+    href: "/tutorials",
+    command: "./list-tutorials",
+    commandEn: "./list-tutorials",
+  },
+  {
+    name: "التقارير",
+    nameEn: "Reports",
+    icon: ShieldCheck,
+    href: "/reports",
+    command: "ls ./reports",
+    commandEn: "ls ./reports",
+  },
+  {
+    name: "الأدوات",
+    nameEn: "Tools",
+    icon: Terminal,
+    href: "/tools",
+    command: "ls /usr/bin/tools",
+    commandEn: "ls /usr/bin/tools",
+  },
+  {
+    name: "الشهادات",
+    nameEn: "Certs",
+    icon: Award,
+    href: "/#certificates",
+    command: "ls ./certs",
+    commandEn: "ls ./certs",
+  },
+  {
+    name: "المهارات",
+    nameEn: "Skills",
+    icon: Wrench,
+    href: "/#skills",
+    command: "cat skills.txt",
+    commandEn: "cat skills.txt",
+  },
+  {
+    name: "المشاريع",
+    nameEn: "Projects",
+    icon: Briefcase,
+    href: "/#projects",
+    command: "./execute-projects",
+    commandEn: "./execute-projects",
+  },
+  {
+    name: "التواصل",
+    nameEn: "Contact",
+    icon: FileText,
+    href: "/#contact",
+    command: "ping -c 4 contact",
+    commandEn: "ping -c 4 contact",
+  },
+];
+---
+
+<aside
+  class="fixed sidebar-container top-0 h-full w-20 md:w-64 glass-pane z-50 hidden md:flex flex-col justify-between py-6 scrollbar-hide transition-all duration-500 left-0 border-r border-white/5"
+>
+  <style is:inline>
+    /* Ensure the sidebar flips position based on language */
+    [lang="ar"] .sidebar-container {
+      left: auto !important;
+      right: 0 !important;
+      border-right: none !important;
+      border-left: 1px solid rgba(255, 255, 255, 0.05) !important;
+    }
+
+    /* Language specific visibility */
+    [lang="en"] .lang-ar {
+      display: none !important;
+    }
+    [lang="ar"] .lang-en {
+      display: none !important;
+    }
+  </style>
+
+  {/* Logo / Brand */}
+  <div
+    class="px-0 md:px-6 flex items-center justify-center md:justify-start gap-4 lang-en"
+  >
+    <div class="relative group/logo cursor-pointer">
+      <div
+        class="absolute -inset-1.5 rounded-full border border-cyber-purple/30 border-dashed animate-[spin_10s_linear_infinite] opacity-50"
+      >
+      </div>
+      <div
+        class="absolute -inset-1 rounded-full bg-gradient-to-tr from-cyber-purple via-purple-500 to-cyber-purple opacity-20 blur-sm group-hover/logo:opacity-50 transition-opacity duration-1000"
+      >
+      </div>
+      <div
+        class="relative h-11 w-11 rounded-full bg-black border border-white/10 flex items-center justify-center overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-cyber-purple/20 to-purple-800/10"
+        >
+        </div>
+        <span
+          class="text-white font-mono font-black text-sm relative z-10 group-hover/logo:scale-110 transition-transform duration-500 tracking-tighter"
+          >SL</span
+        >
+        <div
+          class="absolute inset-x-0 h-[1px] bg-white/40 top-0 animate-[scan_2s_ease-in-out_infinite] opacity-30 shadow-[0_0_8px_white]"
+        >
+        </div>
+      </div>
+    </div>
+    <div class="hidden md:block text-left">
+      <h1
+        class="text-zinc-100 font-black text-lg tracking-tighter hover:text-cyber-purple transition-colors cursor-default"
+      >
+        0xsb3lr
+      </h1>
+      <div class="flex items-center gap-1.5 justify-start">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"
+        ></span>
+        <p
+          class="text-[9px] font-mono text-zinc-500 uppercase tracking-widest text-left"
+        >
+          Authorized_User
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="px-0 md:px-6 flex flex-row-reverse items-center justify-center md:justify-start gap-4 lang-ar"
+  >
+    <div class="relative group/logo cursor-pointer">
+      <div
+        class="absolute -inset-1.5 rounded-full border border-cyber-purple/30 border-dashed animate-[spin_10s_linear_infinite] opacity-50"
+      >
+      </div>
+      <div
+        class="absolute -inset-1 rounded-full bg-gradient-to-tr from-cyber-purple via-purple-500 to-cyber-purple opacity-20 blur-sm group-hover/logo:opacity-50 transition-opacity duration-1000"
+      >
+      </div>
+      <div
+        class="relative h-11 w-11 rounded-full bg-black border border-white/10 flex items-center justify-center overflow-hidden"
+      >
+        <div
+          class="absolute inset-0 bg-gradient-to-br from-cyber-purple/20 to-purple-800/10"
+        >
+        </div>
+        <span
+          class="text-white font-mono font-black text-sm relative z-10 group-hover/logo:scale-110 transition-transform duration-500 tracking-tighter"
+          >SL</span
+        >
+        <div
+          class="absolute inset-x-0 h-[1px] bg-white/40 top-0 animate-[scan_2s_ease-in-out_infinite] opacity-30 shadow-[0_0_8px_white]"
+        >
+        </div>
+      </div>
+    </div>
+    <div class="hidden md:block text-right">
+      <h1
+        class="text-zinc-100 font-black text-lg tracking-tighter hover:text-cyber-purple transition-colors cursor-default"
+      >
+        0xsb3lr
+      </h1>
+      <div class="flex items-center gap-1.5 justify-end">
+        <p
+          class="text-[9px] font-mono text-zinc-500 uppercase tracking-widest text-right"
+        >
+          مستخدم_مصرح
+        </p>
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"
+        ></span>
+      </div>
+    </div>
+  </div>
+
+  {/* Navigation */}
+  <nav class="flex-1 w-full mt-10 space-y-2 px-3 md:px-4 relative group/nav">
+    {/* Decorative vertical data line with animated pulse */}
+    <div
+      class="absolute left-7 top-0 bottom-0 w-[1px] bg-white/5 hidden md:block overflow-hidden lang-en"
+    >
+      <div
+        class="absolute inset-x-0 h-20 bg-gradient-to-b from-transparent via-cyber-purple to-transparent animate-[data-pulse_4s_linear_infinite]"
+      >
+      </div>
+    </div>
+    <div
+      class="absolute right-7 top-0 bottom-0 w-[1px] bg-white/5 hidden md:block overflow-hidden lang-ar"
+    >
+      <div
+        class="absolute inset-x-0 h-20 bg-gradient-to-b from-transparent via-cyber-purple to-transparent animate-[data-pulse_4s_linear_infinite]"
+      >
+      </div>
+    </div>
+
+    {
+      navItems.map((item) => (
+        <>
+          <a
+            href={item.href}
+            class="group flex flex-row lang-en items-center px-4 py-4 rounded-xl transition-all duration-500 hover:bg-white/[0.03] border border-transparent hover:border-white/5 relative active:scale-[0.98] mb-1 overflow-hidden"
+          >
+            <div class="absolute inset-y-4 right-0 w-[2px] bg-cyber-purple shadow-[0_0_15px_#a855f7] rounded-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-center" />
+
+            <div class="relative mr-4 z-10">
+              <div class="p-2.5 rounded-xl bg-zinc-950 border border-white/5 group-hover:border-cyber-purple/50">
+                <item.icon className="w-4 h-4 text-zinc-500 group-hover:text-white" />
+              </div>
+            </div>
+
+            <div class="hidden md:block flex-1 text-left relative z-10">
+              <span class="text-zinc-400 group-hover:text-white font-bold text-xs block capitalize transition-colors">
+                {item.nameEn}
+              </span>
+              <div class="flex items-center gap-1.5">
+                <span class="text-[9px] text-zinc-600 font-mono tracking-tighter">
+                  0x{Math.floor(Math.random() * 999).toString(16)} :ADDR
+                </span>
+                <span class="text-cyber-purple/40 font-mono text-[10px]">
+                  $
+                </span>
+              </div>
+            </div>
+          </a>
+
+          <a
+            href={item.href}
+            class="group flex flex-row lang-ar items-center px-4 py-4 rounded-xl transition-all duration-500 hover:bg-white/[0.03] border border-transparent hover:border-white/5 relative active:scale-[0.98] mb-1 overflow-hidden text-right"
+          >
+            {/* Active Highlight Line on the Right (the leading edge in RTL) */}
+            <div class="absolute inset-y-4 right-0 w-[2px] bg-cyber-purple shadow-[0_0_15px_#a855f7] rounded-full scale-y-0 group-hover:scale-y-100 transition-transform duration-500 origin-center" />
+
+            <div class="relative mr-4 z-10">
+              <div class="p-2.5 rounded-xl bg-zinc-950 border border-white/5 group-hover:border-cyber-purple/50">
+                <item.icon className="w-4 h-4 text-zinc-500 group-hover:text-white" />
+              </div>
+            </div>
+
+            <div class="hidden md:block flex-1 text-right relative z-10">
+              <span class="text-zinc-400 group-hover:text-white font-bold text-xs block transition-colors">
+                {item.name}
+              </span>
+              <div class="flex items-center justify-end gap-1.5">
+                <span class="text-cyber-purple/40 font-mono text-[10px]">
+                  $
+                </span>
+                <span class="text-[9px] text-zinc-600 font-mono tracking-tighter">
+                  0x{Math.floor(Math.random() * 999).toString(16)} :ADDR
+                </span>
+              </div>
+            </div>
+          </a>
+        </>
+      ))
+    }
+  </nav>
+
+  {/* Language Toggle */}
+  <div class="px-3 md:px-6 mb-4 relative z-10">
+    <div
+      class="p-[1px] rounded-2xl bg-gradient-to-r from-white/5 to-transparent hover:from-cyber-purple/20 transition-all"
+    >
+      <LanguageToggle />
+    </div>
+  </div>
+
+  {/* Status Footer */}
+  <div class="px-6 space-y-4 hidden md:block relative z-10">
+    <div
+      class="h-[1px] w-full bg-gradient-to-r from-transparent via-white/5 to-transparent mb-6"
+    >
+    </div>
+
+    <div class="lang-en space-y-4">
+      <div
+        class="p-4 rounded-2xl bg-white/[0.01] border border-white/5 text-[8px] font-mono"
+      >
+        <div class="flex justify-between mb-2">
+          <span>SYS_STABILITY</span>
+          <span class="text-emerald-500">98.4%</span>
+        </div>
+        <div class="h-1 bg-zinc-900 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-cyber-purple w-[98%] shadow-[0_0_10px_rgba(168,85,247,0.3)]"
+          >
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2 px-1">
+        <div class="flex items-center justify-between text-[9px] font-mono">
+          <span class="flex items-center gap-1.5 uppercase">
+            <span class="w-1 h-1 bg-zinc-800"></span>
+            <span class="text-zinc-600">NODE</span>
+          </span>
+          <span class="text-zinc-400">YEM_01</span>
+        </div>
+        <div class="flex items-center justify-between text-[9px] font-mono">
+          <span class="flex items-center gap-1.5 uppercase">
+            <span class="w-1 h-1 bg-zinc-800"></span>
+            <span class="text-zinc-600">PROTO</span>
+          </span>
+          <span class="text-cyber-purple/80 font-bold">TLS_v1.3</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="lang-ar space-y-4">
+      <div
+        class="p-4 rounded-2xl bg-white/[0.01] border border-white/5 text-[8px] font-mono text-right"
+      >
+        <div class="flex flex-row-reverse justify-between mb-2">
+          <span>استقرار_النظام</span>
+          <span class="text-emerald-500">98.4%</span>
+        </div>
+        <div class="h-1 bg-zinc-900 rounded-full overflow-hidden">
+          <div
+            class="h-full bg-cyber-purple w-[98%] shadow-[0_0_10px_rgba(168,85,247,0.3)]"
+          >
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-col gap-2 px-1">
+        <div class="flex items-center justify-between text-[9px] font-mono">
+          <span class="text-zinc-400">YEM_01</span>
+          <span
+            class="flex items-center justify-end gap-1.5 uppercase text-right"
+          >
+            <span class="text-zinc-600">المنطقة</span>
+            <span class="w-1 h-1 bg-zinc-800"></span>
+          </span>
+        </div>
+        <div class="flex items-center justify-between text-[9px] font-mono">
+          <span class="text-cyber-purple/80 font-bold">TLS_v1.3</span>
+          <span
+            class="flex items-center justify-end gap-1.5 uppercase text-right"
+          >
+            <span class="text-zinc-600">البروتوكول</span>
+            <span class="w-1 h-1 bg-zinc-800"></span>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
+
+{/* Mobile Header */}
+<div
+  class="fixed top-0 left-0 right-0 h-16 glass-pane border-b border-white/5 z-[70] flex items-center justify-between px-6 md:hidden shadow-[0_4px_30px_rgba(0,0,0,0.5)]"
+>
+  <div
+    class="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-purple/30 to-transparent"
+  >
+  </div>
+  <div class="flex items-center gap-3">
+    <div
+      class="relative h-9 w-9 rounded-xl bg-gradient-to-tr from-cyber-purple to-purple-800 flex items-center justify-center overflow-hidden shadow-[0_0_15px_rgba(168,85,247,0.4)]"
+    >
+      <span class="text-white font-mono font-black text-[11px]">SL</span>
+      <div class="absolute inset-x-0 top-0 h-[1px] bg-white/30"></div>
+    </div>
+    <div class="flex flex-col">
+      <span class="text-white font-bold tracking-tighter text-sm leading-none"
+        >0xsb3lr</span
+      >
+      <span
+        class="text-[8px] text-zinc-500 font-mono tracking-[0.2em] mt-1 uppercase"
+        >security_protocol: active</span
+      >
+    </div>
+  </div>
+  <div class="flex items-center gap-4">
+    <LanguageToggle />
+  </div>
+</div>
+
+{/* Mobile Bottom Dock */}
+<div
+  class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[92%] max-w-md h-16 bg-zinc-950/80 backdrop-blur-2xl border border-white/10 rounded-2xl z-[70] flex items-center justify-around px-2 md:hidden shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+>
+  <div
+    id="mobile-dock-indicator"
+    class="absolute top-1 w-1 h-1 bg-cyber-purple rounded-full shadow-[0_0_8px_rgba(168,85,247,0.8)] transition-all duration-500 opacity-0"
+  >
+  </div>
+
+  <a
+    href="/#home"
+    data-section="home"
+    class="mobile-nav-link p-3 text-zinc-500 hover:text-white transition-all duration-300"
+  >
+    <Home className="w-6 h-6" />
+  </a>
+  <a
+    href="/reports"
+    data-section="reports"
+    class="mobile-nav-link p-3 text-zinc-500 hover:text-white transition-all duration-300"
+  >
+    <ShieldCheck className="w-6 h-6" />
+  </a>
+  <a
+    href="/achievements"
+    data-section="achievements"
+    class="mobile-nav-link p-3 text-zinc-500 hover:text-white transition-all duration-300"
+  >
+    <Award className="w-6 h-6" />
+  </a>
+
+  <button
+    id="mobile-menu-toggle"
+    type="button"
+    aria-label="Open mobile menu"
+    class="relative group -translate-y-5"
+  >
+    <div
+      class="absolute inset-0 bg-cyber-purple blur-xl opacity-20 group-hover:opacity-40 transition-opacity"
+    >
+    </div>
+    <div
+      class="relative w-14 h-14 rounded-2xl bg-gradient-to-b from-cyber-purple to-purple-800 flex items-center justify-center text-white shadow-[0_8px_20px_rgba(168,85,247,0.4)] border-t border-white/30 transform active:scale-90 transition-transform cursor-pointer"
+    >
+      <Terminal className="w-7 h-7" />
+      <div
+        class="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none opacity-20"
+      >
+        <div
+          class="w-full h-full bg-[linear-gradient(transparent_50%,rgba(0,0,0,0.5)_50%)] bg-[length:100%_4px]"
+        >
+        </div>
+      </div>
+    </div>
+  </button>
+
+  <a
+    href="/#projects"
+    data-section="projects"
+    class="mobile-nav-link p-3 text-zinc-500 hover:text-white transition-all duration-300"
+  >
+    <Briefcase className="w-6 h-6" />
+  </a>
+  <a
+    href="/#contact"
+    data-section="contact"
+    class="mobile-nav-link p-3 text-zinc-500 hover:text-white transition-all duration-300"
+  >
+    <FileText className="w-6 h-6" />
+  </a>
+</div>
+
+{/* Mobile Expanded Menu */}
+<div id="mobile-menu-overlay" class="fixed inset-0 z-[75] hidden md:hidden">
+  <button
+    id="mobile-menu-backdrop"
+    type="button"
+    aria-label="Close mobile menu"
+    class="absolute inset-0 bg-black/60 backdrop-blur-sm"
+  >
+  </button>
+  <div
+    id="mobile-menu-panel"
+    class="absolute bottom-24 left-1/2 -translate-x-1/2 w-[92%] max-w-md rounded-3xl border border-white/10 bg-zinc-950/90 backdrop-blur-2xl p-3 shadow-[0_20px_50px_rgba(0,0,0,0.8)]"
+  >
+    <div class="grid grid-cols-2 gap-2">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            class="mobile-menu-link flex items-center gap-2 rounded-xl border border-white/5 bg-white/[0.02] px-3 py-2.5 text-zinc-300 hover:border-cyber-purple/40 hover:text-white transition-colors"
+          >
+            <item.icon className="h-4 w-4 text-cyber-purple/80" />
+            <div class="leading-tight">
+              <span class="lang-ar block text-xs font-bold">{item.name}</span>
+              <span class="lang-en block text-[11px] font-mono text-zinc-500 uppercase">
+                {item.nameEn}
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</div>
+
+<script>
+  const win = window;
+  // Prevent stacked listeners when the page swaps.
+  if (win.__mobileNavInitialized) {
+    // no-op: already initialized on current document
+  } else {
+    win.__mobileNavInitialized = true;
+    const navLinks = document.querySelectorAll(".mobile-nav-link");
+    const indicator = document.getElementById("mobile-dock-indicator");
+    const menuToggle = document.getElementById("mobile-menu-toggle");
+    const menuOverlay = document.getElementById("mobile-menu-overlay");
+    const menuBackdrop = document.getElementById("mobile-menu-backdrop");
+    const menuLinks = document.querySelectorAll(".mobile-menu-link");
+    let rafId = 0;
+
+    const closeMobileMenu = () => {
+      if (!menuOverlay) return;
+      menuOverlay.classList.add("hidden");
+      if (menuToggle) menuToggle.setAttribute("aria-expanded", "false");
+    };
+
+    const toggleMobileMenu = () => {
+      if (!menuOverlay) return;
+      const isHidden = menuOverlay.classList.contains("hidden");
+      if (isHidden) {
+        menuOverlay.classList.remove("hidden");
+        if (menuToggle) menuToggle.setAttribute("aria-expanded", "true");
+      } else {
+        closeMobileMenu();
+      }
+    };
+
+    const updateActiveState = () => {
+      const hash = window.location.hash || "#home";
+      const path = window.location.pathname;
+
+      navLinks.forEach((link) => {
+        const section = link.getAttribute("data-section");
+        const href = link.getAttribute("href");
+
+        let isActive = false;
+        if (path === "/achievements" && section === "achievements") {
+          isActive = true;
+        } else if (path === "/reports" && section === "reports") {
+          isActive = true;
+        } else if (href && href.includes(hash) && hash !== "") {
+          isActive = true;
+        }
+
+        if (isActive) {
+          link.classList.add("text-cyber-purple", "scale-110");
+          link.classList.remove("text-zinc-500");
+
+          if (indicator) {
+            const rect = link.getBoundingClientRect();
+            const dockRect = indicator.parentElement?.getBoundingClientRect();
+            if (dockRect) {
+              const centerX = rect.left + rect.width / 2 - dockRect.left;
+              indicator.style.left = `${centerX}px`;
+              indicator.style.opacity = "1";
+            }
+          }
+        } else {
+          link.classList.remove("text-cyber-purple", "scale-110");
+          link.classList.add("text-zinc-500");
+        }
+      });
+    };
+
+    const handleScroll = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(() => {
+        updateActiveState();
+        rafId = 0;
+      });
+    };
+
+    window.addEventListener("hashchange", updateActiveState);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    if (menuToggle) {
+      menuToggle.addEventListener("click", toggleMobileMenu);
+      menuToggle.setAttribute("aria-expanded", "false");
+    }
+    if (menuBackdrop) {
+      menuBackdrop.addEventListener("click", closeMobileMenu);
+    }
+    menuLinks.forEach((link) => {
+      link.addEventListener("click", closeMobileMenu);
+    });
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMobileMenu();
+    });
+    updateActiveState();
+  }
+</script>

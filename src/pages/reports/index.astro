@@ -1,0 +1,126 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const reports = await getCollection("reports");
+
+const sorted = reports.sort((a, b) => {
+  const dateA = a.data.publishDate ? new Date(a.data.publishDate).getTime() : 0;
+  const dateB = b.data.publishDate ? new Date(b.data.publishDate).getTime() : 0;
+  return dateB - dateA;
+});
+
+const seoTitle = "تقارير اختبار الاختراق | سعيد بران";
+const seoDescription =
+  "مجموعة من تقارير اختبار الاختراق الاحترافية التي توضح الثغرات الأمنية وكيفية معالجتها.";
+---
+
+<Layout
+  title={seoTitle}
+  description={seoDescription}
+  keywords={["تقارير اختبار اختراق", "Penetration Testing Reports", "Security Research"]}
+>
+  <div class="space-y-8 md:space-y-12">
+    <header class="space-y-4">
+      <div class="flex items-center gap-3">
+        <div class="h-[1px] w-12 bg-cyber-purple"></div>
+        <span class="text-[10px] text-cyber-purple font-mono tracking-[.3em] uppercase">
+          Security_Intelligence
+        </span>
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-6xl font-black tracking-tighter">
+        <span class="lang-ar">تقارير اختبار الاختراق</span>
+        <span class="lang-en text-2xl text-zinc-500 block">PEN_TEST_REPORTS</span>
+      </h1>
+      <p class="text-zinc-500 max-w-2xl font-mono text-sm">
+        <span class="lang-ar">
+          هنا أشارككم بعض التقارير والنتائج التي توصلت إليها خلال ممارستي لاختبار الاختراق. تتضمن هذه التقارير شروحات فنية وإثباتات PoC.
+        </span>
+        <span class="lang-en">
+          Technical reports and proof-of-concepts from various penetration testing engagements.
+        </span>
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+      {
+        sorted.length > 0 ? (
+          sorted.map((report) => (
+            <a
+              href={`/reports/${report.slug}`}
+              class="group relative block p-[1px] rounded-2xl md:rounded-3xl overflow-hidden bg-white/5 hover:bg-cyber-purple/20 transition-all duration-500 text-right"
+            >
+              <div class="absolute inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-cyber-purple to-transparent top-0 opacity-0 group-hover:opacity-100 transition-opacity" />
+              <div class="p-5 md:p-8 bg-zinc-950/40 backdrop-blur-xl rounded-[15px] md:rounded-[23px] h-full flex flex-col justify-between space-y-6">
+                <div class="space-y-4">
+                  <div class="flex justify-between items-start">
+                    <div class="p-3 rounded-2xl bg-white/5 border border-white/5 text-cyber-purple group-hover:scale-110 transition-transform">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="20"
+                        height="20"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    </div>
+                    {report.data.publishDate && (
+                      <span class="text-[9px] font-mono text-zinc-600 uppercase tracking-widest">
+                        {new Date(report.data.publishDate).toLocaleDateString("ar-SA", {
+                          year: "numeric",
+                          month: "short",
+                          day: "numeric",
+                        })}
+                      </span>
+                    )}
+                  </div>
+                  <h3 class="text-xl font-bold text-zinc-100 group-hover:text-white transition-colors leading-tight">
+                    {report.data.title}
+                  </h3>
+                  <p class="text-xs text-zinc-500 line-clamp-2 leading-relaxed">
+                    {report.data.description}
+                  </p>
+                </div>
+
+                <div class="pt-4 border-t border-white/5 flex items-center justify-between">
+                  <div class="flex gap-2 flex-wrap">
+                    {report.data.tags.map((tag: string) => (
+                      <span class="text-[9px] px-2.5 py-1 rounded-full bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20">
+                        #{tag}
+                      </span>
+                    ))}
+                  </div>
+                  <div class="text-cyber-purple opacity-0 group-hover:opacity-100 transition-all -translate-x-2 group-hover:translate-x-0">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="m12 19-7-7 7-7" />
+                      <path d="M19 12H5" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </a>
+          ))
+        ) : (
+          <div class="col-span-full py-20 text-center">
+            <p class="text-zinc-500 font-mono">NO_REPORTS_FOUND_IN_DATABASE</p>
+          </div>
+        )
+      }
+    </div>
+  </div>
+</Layout>

@@ -1,0 +1,100 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const tutorials = await getCollection("tutorials");
+  return tutorials.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const seoTitle = `${entry.data.title} | شروحات الأمن السيبراني | سعيد بران`;
+---
+
+<Layout
+  title={seoTitle}
+  description={entry.data.description}
+  type="article"
+  publishedTime={entry.data.publishDate}
+  keywords={["tutorial", "cybersecurity", ...entry.data.tags]}
+>
+  <section class="py-12 md:py-20">
+    <article class="w-full max-w-4xl mx-auto space-y-12">
+      <header class="text-center space-y-8 pb-12 border-b border-white/5">
+        <div class="flex justify-center">
+          <a href="/tutorials" class="inline-flex items-center gap-3 px-6 py-2.5 rounded-full bg-white/5 border border-white/10 text-xs text-zinc-400 hover:text-white hover:bg-cyber-purple/20 hover:border-cyber-purple/50 transition-all duration-500 font-mono uppercase tracking-[0.2em] group backdrop-blur-md shadow-xl">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:-translate-x-1 transition-transform rotate-180"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            <span class="lang-ar">العودة للشروحات</span>
+            <span class="lang-en">Back to Tutorials</span>
+          </a>
+        </div>
+
+        <div class="flex items-center gap-2 justify-center flex-wrap">
+          {entry.data.publishDate && (
+            <span class="text-[10px] font-mono text-zinc-500 uppercase tracking-widest">
+              {new Date(entry.data.publishDate).toLocaleDateString("ar-SA", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </span>
+          )}
+          <span class="text-[10px] font-mono px-2.5 py-1 rounded-md bg-cyber-purple/10 text-cyber-purple border border-cyber-purple/20 uppercase">Tutorial</span>
+        </div>
+
+        <h1 class="text-xl md:text-3xl font-black tracking-tight text-white leading-tight">{entry.data.title}</h1>
+        <p class="text-zinc-400 text-sm md:text-base leading-relaxed">{entry.data.description}</p>
+      </header>
+
+      <div class="article-prose article-prose--tutorial prose prose-invert max-w-none">
+        <Content />
+      </div>
+
+      {entry.data.tags && entry.data.tags.length > 0 && (
+        <footer class="pt-12 border-t border-white/5 flex flex-wrap gap-3 justify-center">
+          {entry.data.tags.map((tag: string) => (
+            <span class="text-[10px] font-mono px-4 py-1.5 rounded-full bg-cyber-purple/5 text-cyber-purple/80 border border-cyber-purple/20 hover:bg-cyber-purple/10 transition-colors">
+              #{tag}
+            </span>
+          ))}
+        </footer>
+      )}
+    </article>
+  </section>
+</Layout>
+
+<style is:global>
+  .article-prose h2,
+  .article-prose h3 {
+    text-align: center;
+    background: linear-gradient(to right, #fff, #a855f7);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1.5rem !important;
+    font-size: 1.2rem !important;
+  }
+
+  .article-prose p {
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+
+  .article-prose img,
+  .article-prose video {
+    display: block;
+    margin: 3rem auto !important;
+    border-radius: 1.5rem;
+    border: 1px solid rgba(168, 85, 247, 0.2);
+    box-shadow: 0 20px 40px -20px rgba(0, 0, 0, 0.7);
+  }
+
+  .article-prose pre {
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: #09090b !important;
+    border-radius: 1rem !important;
+  }
+</style>

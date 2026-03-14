@@ -1,0 +1,75 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+export async function getStaticPaths() {
+  const tools = await getCollection("cybertools");
+  return tools.map((entry) => ({
+    params: { slug: entry.slug },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+const seoTitle = `${entry.data.title} | أدوات الأمن السيبراني | سعيد بران`;
+const isOffensive = entry.data.category === "offensive";
+const accent = isOffensive
+  ? {
+      text: "text-rose-300",
+      softBg: "bg-rose-500/10",
+      border: "border-rose-400/30",
+      glow: "shadow-rose-500/10",
+    }
+  : {
+      text: "text-sky-300",
+      softBg: "bg-sky-500/10",
+      border: "border-sky-400/30",
+      glow: "shadow-sky-500/10",
+    };
+---
+
+<Layout
+  title={seoTitle}
+  description={entry.data.description}
+  type="article"
+  keywords={[entry.data.category, entry.data.subcategory, ...entry.data.tags].filter(Boolean)}
+>
+  <section class="min-h-[75vh] flex items-center justify-center">
+    <article class={`w-full max-w-4xl max-h-[88vh] flex flex-col rounded-3xl bg-zinc-950/95 border ${accent.border} shadow-2xl ${accent.glow} overflow-hidden`}>
+      <header class="flex-shrink-0 p-5 md:p-6 border-b border-white/10 bg-zinc-950/90 text-center space-y-3">
+        <a
+          href="/tools"
+          class="inline-flex items-center gap-2 text-xs text-zinc-500 hover:text-white transition-colors font-mono uppercase tracking-widest group"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="group-hover:translate-x-1 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          <span class="lang-ar">العودة للأدوات</span>
+          <span class="lang-en">Back to Tools</span>
+        </a>
+
+        <div class="flex items-center gap-2 justify-center flex-wrap">
+          <span class={`text-[10px] font-mono px-2.5 py-1 rounded-md border uppercase tracking-widest ${accent.softBg} ${accent.text} ${accent.border}`}>
+            {entry.data.category} / {entry.data.subcategory}
+          </span>
+        </div>
+
+        <h1 class="text-2xl md:text-4xl font-black tracking-tight text-white leading-tight">{entry.data.title}</h1>
+        <p class="text-zinc-400 text-sm md:text-base leading-relaxed">{entry.data.description}</p>
+      </header>
+
+      <div class={`article-prose content-body flex-1 overflow-y-auto p-5 md:p-7 prose prose-invert max-w-none ${isOffensive ? "article-prose--tools-offensive" : "article-prose--tools-defensive"}`}>
+        <Content />
+      </div>
+
+      {entry.data.tags && entry.data.tags.length > 0 && (
+        <footer class="flex-shrink-0 px-5 py-4 md:px-6 border-t border-white/10 flex flex-wrap gap-2 justify-end bg-zinc-950/90">
+          {entry.data.tags.map((tag: string) => (
+            <span class={`text-[10px] font-mono px-2.5 py-1 rounded-full border ${accent.softBg} ${accent.text} ${accent.border}`}>
+              #{tag}
+            </span>
+          ))}
+        </footer>
+      )}
+    </article>
+  </section>
+</Layout>
